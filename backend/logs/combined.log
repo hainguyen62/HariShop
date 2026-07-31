@@ -1,0 +1,194 @@
+[2026-07-20 20:09:34] INFO: Server running in development mode on port 5000
+[2026-07-20 20:10:04] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-20 20:10:15] INFO: Server running in development mode on port 5000
+[2026-07-20 20:10:21] INFO: Server running in development mode on port 5000
+[2026-07-20 20:10:51] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-20 20:11:57] ERROR: [uncaughtException] listen EADDRINUSE: address already in use :::5000
+Error: listen EADDRINUSE: address already in use :::5000
+    at Server.setupListenHandle [as _listen2] (node:net:2008:16)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2170:7)
+    at start (file:///E:/HariShop_mern/backend/server.js:290:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-07-20 20:12:27] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-20 20:20:48] INFO: Server running in development mode on port 5000
+[2026-07-20 20:21:16] ERROR: [POST /api/chat] AI hiện chưa được cấu hình (thiếu ANTHROPIC_API_KEY). Vui lòng liên hệ shop qua hotline để được hỗ trợ.
+Error: AI hiện chưa được cấu hình (thiếu ANTHROPIC_API_KEY). Vui lòng liên hệ shop qua hotline để được hỗ trợ.
+    at callAnthropic (file:///E:/HariShop_mern/backend/utils/aiProvider.js:85:17)
+    at callProvider (file:///E:/HariShop_mern/backend/utils/aiProvider.js:215:7)
+    at callAI (file:///E:/HariShop_mern/backend/utils/aiProvider.js:219:21)
+    at file:///E:/HariShop_mern/backend/controllers/chatController.js:184:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-07-20 20:21:18] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-20 20:26:49] ERROR: [POST /api/chat] AI hiện chưa được cấu hình (thiếu ANTHROPIC_API_KEY). Vui lòng liên hệ shop qua hotline để được hỗ trợ.
+Error: AI hiện chưa được cấu hình (thiếu ANTHROPIC_API_KEY). Vui lòng liên hệ shop qua hotline để được hỗ trợ.
+    at callAnthropic (file:///E:/HariShop_mern/backend/utils/aiProvider.js:85:17)
+    at callProvider (file:///E:/HariShop_mern/backend/utils/aiProvider.js:215:7)
+    at callAI (file:///E:/HariShop_mern/backend/utils/aiProvider.js:219:21)
+    at file:///E:/HariShop_mern/backend/controllers/chatController.js:184:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-07-20 20:27:16] INFO: Server running in development mode on port 5000
+[2026-07-20 20:27:41] ERROR: [POST /api/chat] AI đang gặp sự cố, vui lòng thử lại sau.
+Error: AI đang gặp sự cố, vui lòng thử lại sau.
+    at callOpenAICompatible (file:///E:/HariShop_mern/backend/utils/aiProvider.js:180:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async callAI (file:///E:/HariShop_mern/backend/utils/aiProvider.js:219:15)
+    at async file:///E:/HariShop_mern/backend/controllers/chatController.js:184:15
+[2026-07-20 20:27:46] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-20 20:28:02] ERROR: [POST /api/chat] AI đang gặp sự cố, vui lòng thử lại sau.
+Error: AI đang gặp sự cố, vui lòng thử lại sau.
+    at callOpenAICompatible (file:///E:/HariShop_mern/backend/utils/aiProvider.js:180:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async callAI (file:///E:/HariShop_mern/backend/utils/aiProvider.js:219:15)
+    at async file:///E:/HariShop_mern/backend/controllers/chatController.js:184:15
+[2026-07-20 20:28:51] INFO: Server running in development mode on port 5000
+[2026-07-20 22:06:30] INFO: Server running in development mode on port 5000
+[2026-07-20 22:07:00] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-20 22:08:43] ERROR: [POST /api/chat] AI đang gặp sự cố, vui lòng thử lại sau.
+Error: AI đang gặp sự cố, vui lòng thử lại sau.
+    at callOpenAICompatible (file:///E:/HariShop_mern/backend/utils/aiProvider.js:180:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async callAI (file:///E:/HariShop_mern/backend/utils/aiProvider.js:219:15)
+    at async file:///E:/HariShop_mern/backend/controllers/chatController.js:184:15
+[2026-07-20 22:17:00] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-20 22:18:38] ERROR: [POST /api/chat] AI đang gặp sự cố, vui lòng thử lại sau.
+Error: AI đang gặp sự cố, vui lòng thử lại sau.
+    at callOpenAICompatible (file:///E:/HariShop_mern/backend/utils/aiProvider.js:180:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async callAI (file:///E:/HariShop_mern/backend/utils/aiProvider.js:219:15)
+    at async file:///E:/HariShop_mern/backend/controllers/chatController.js:184:15
+[2026-07-20 22:19:04] INFO: Server running in development mode on port 5000
+[2026-07-20 22:19:34] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-20 22:29:32] INFO: Server running in development mode on port 5000
+[2026-07-20 22:35:22] INFO: Server running in development mode on port 5000
+[2026-07-20 23:08:12] INFO: Server running in development mode on port 5000
+[2026-07-20 23:17:59] INFO: Server running in development mode on port 5000
+[2026-07-21 09:05:40] INFO: Server running in development mode on port 5000
+[2026-07-21 09:09:13] ERROR: [POST /api/upload] Images only!
+Error: Images only!
+    at checkFileType (file:///E:/HariShop_mern/backend/routes/uploadRoutes.js:31:8)
+    at fileFilter (file:///E:/HariShop_mern/backend/routes/uploadRoutes.js:39:5)
+    at wrappedFileFilter (E:\HariShop_mern\node_modules\.pnpm\multer@1.4.4\node_modules\multer\index.js:44:7)
+    at Busboy.<anonymous> (E:\HariShop_mern\node_modules\.pnpm\multer@1.4.4\node_modules\multer\lib\make-middleware.js:115:7)
+    at Busboy.emit (node:events:509:28)
+    at Busboy.emit (E:\HariShop_mern\node_modules\.pnpm\busboy@0.2.14\node_modules\busboy\lib\main.js:38:33)
+    at PartStream.<anonymous> (E:\HariShop_mern\node_modules\.pnpm\busboy@0.2.14\node_modules\busboy\lib\types\multipart.js:213:13)
+    at PartStream.emit (node:events:509:28)
+    at HeaderParser.<anonymous> (E:\HariShop_mern\node_modules\.pnpm\dicer@0.2.5\node_modules\dicer\lib\Dicer.js:51:16)
+    at HeaderParser.emit (node:events:509:28)
+    at HeaderParser._finish (E:\HariShop_mern\node_modules\.pnpm\dicer@0.2.5\node_modules\dicer\lib\HeaderParser.js:68:8)
+    at SBMH.<anonymous> (E:\HariShop_mern\node_modules\.pnpm\dicer@0.2.5\node_modules\dicer\lib\HeaderParser.js:40:12)
+    at SBMH.emit (node:events:509:28)
+    at SBMH._sbmh_feed (E:\HariShop_mern\node_modules\.pnpm\streamsearch@0.1.2\node_modules\streamsearch\lib\sbmh.js:159:14)
+    at SBMH.push (E:\HariShop_mern\node_modules\.pnpm\streamsearch@0.1.2\node_modules\streamsearch\lib\sbmh.js:56:14)
+    at HeaderParser.push (E:\HariShop_mern\node_modules\.pnpm\dicer@0.2.5\node_modules\dicer\lib\HeaderParser.js:46:19)
+[2026-07-21 09:15:10] INFO: Server running in development mode on port 5000
+[2026-07-21 09:20:50] INFO: Server running in development mode on port 5000
+[2026-07-21 09:24:47] INFO: Server running in development mode on port 5000
+[2026-07-21 09:24:53] INFO: Server running in development mode on port 5000
+[2026-07-21 09:41:37] INFO: Server running in development mode on port 5000
+[2026-07-21 18:18:57] INFO: Server running in development mode on port 5000
+[2026-07-21 18:42:10] INFO: Server running in development mode on port 5000
+[2026-07-21 23:43:02] INFO: Server running in development mode on port 5000
+[2026-07-22 10:08:43] INFO: Server running in development mode on port 5000
+[2026-07-22 10:09:13] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-22 10:09:29] INFO: Server running in development mode on port 5000
+[2026-07-22 10:09:42] INFO: Server running in development mode on port 5000
+[2026-07-22 10:09:55] INFO: Server running in development mode on port 5000
+[2026-07-22 10:10:02] INFO: Server running in development mode on port 5000
+[2026-07-22 10:10:32] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-22 10:12:07] WARN: [SePay Webhook] SEPAY_SECRET chưa được cấu hình — đang chạy KHÔNG xác thực chữ ký. Chỉ chấp nhận khi test nội bộ, KHÔNG dùng cho production.
+[2026-07-22 10:12:36] INFO: Server running in development mode on port 5000
+[2026-07-22 10:13:06] INFO: [Auto-sync GHTK] Đang kiểm tra 8 đơn hàng (lô 5 đơn/lần)...
+[2026-07-23 11:13:46] INFO: Server running in development mode on port 5000
+[2026-07-23 11:17:09] WARN: [SePay Webhook] Đơn #f63a03 chuyển thiếu tiền — Nhận được 4.451.900đ, thiếu so với tổng đơn 44.519.001đ — cần đối soát thủ công
+[2026-07-23 11:21:26] INFO: Server running in development mode on port 5000
+[2026-07-23 11:21:33] INFO: Server running in development mode on port 5000
+[2026-07-23 11:22:10] WARN: [SePay Webhook] Đơn #f63a03 chuyển thiếu tiền — Nhận được 4.451.900đ, thiếu so với tổng đơn 44.519.001đ — cần đối soát thủ công
+[2026-07-23 11:29:30] INFO: Server running in development mode on port 5000
+[2026-07-23 11:29:46] INFO: Server running in development mode on port 5000
+[2026-07-23 11:36:58] INFO: Server running in development mode on port 5000
+[2026-07-23 19:38:47] INFO: Server running in development mode on port 5000
+[2026-07-23 22:01:26] INFO: Server running in development mode on port 5000
+[2026-07-23 22:02:23] WARN: [SePay Webhook] Đơn #88a17a chuyển thiếu tiền — Đã nhận cộng dồn 4.001.900đ / 40.019.001đ — còn thiếu 36.017.101đ
+[2026-07-24 09:35:39] INFO: Server running in development mode on port 5000
+[2026-07-24 09:37:47] INFO: Server running in development mode on port 5000
+[2026-07-24 09:37:54] INFO: Server running in development mode on port 5000
+[2026-07-24 09:38:27] INFO: Server running in development mode on port 5000
+[2026-07-24 10:12:17] INFO: Server running in development mode on port 5000
+[2026-07-24 10:12:25] INFO: Server running in development mode on port 5000
+[2026-07-24 10:12:37] INFO: Server running in development mode on port 5000
+[2026-07-24 10:12:48] INFO: Server running in development mode on port 5000
+[2026-07-24 10:13:02] INFO: Server running in development mode on port 5000
+[2026-07-24 10:13:15] INFO: Server running in development mode on port 5000
+[2026-07-24 10:20:34] INFO: Server running in development mode on port 5000
+[2026-07-24 10:26:30] INFO: Server running in development mode on port 5000
+[2026-07-24 14:34:59] INFO: Server running in development mode on port 5000
+[2026-07-24 19:13:55] INFO: Server running in development mode on port 5000
+[2026-07-25 09:50:41] INFO: Server running in development mode on port 5000
+[2026-07-25 10:48:07] INFO: Server running in development mode on port 5000
+[2026-07-25 10:48:14] INFO: Server running in development mode on port 5000
+[2026-07-25 10:55:06] INFO: Server running in development mode on port 5000
+[2026-07-25 14:40:06] INFO: Server running in development mode on port 5000
+[2026-07-26 01:05:03] INFO: Server running in development mode on port 5000
+[2026-07-26 01:06:12] INFO: Server running in development mode on port 5000
+[2026-07-26 01:14:05] INFO: Server running in development mode on port 5000
+[2026-07-26 01:14:33] INFO: Server running in development mode on port 5000
+[2026-07-26 01:14:42] INFO: Server running in development mode on port 5000
+[2026-07-26 01:15:47] INFO: Server running in development mode on port 5000
+[2026-07-26 14:03:41] INFO: Server running in development mode on port 5000
+[2026-07-26 14:04:07] ERROR: [GET /api/upload] Not Found - /api/upload
+Error: Not Found - /api/upload
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:646:15
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:265:14)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+[2026-07-26 14:08:29] INFO: Server running in development mode on port 5000
+[2026-07-26 14:10:16] INFO: Server running in development mode on port 5000
+[2026-07-26 14:10:25] INFO: Server running in development mode on port 5000
+[2026-07-26 14:13:13] ERROR: [POST /api/upload] Not authorized, no token
+Error: Not authorized, no token
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:42:11
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-07-26 14:21:29] INFO: Server running in development mode on port 5000
+[2026-07-26 14:21:35] INFO: Server running in development mode on port 5000
+[2026-07-26 14:24:35] INFO: Server running in development mode on port 5000
+[2026-07-26 22:58:03] INFO: Server running in development mode on port 5000
+[2026-07-27 01:00:01] INFO: Server running in development mode on port 5000
+[2026-07-30 06:30:06] INFO: Server running in development mode on port 5000
+[2026-07-30 11:28:42] INFO: Server running in development mode on port 5000
+[2026-07-30 11:29:13] INFO: [Auto-cancel] Tự động hủy 4 đơn quá 24h chưa thanh toán...
+[2026-07-30 11:29:13] INFO: [Auto-cancel] Đã hủy đơn #ad3c46
+[2026-07-30 11:29:13] INFO: [Auto-cancel] Đã hủy đơn #493195
+[2026-07-30 11:29:13] INFO: [Auto-cancel] Đã hủy đơn #9ec751
+[2026-07-30 11:29:13] INFO: [Auto-cancel] Đã hủy đơn #381bdc
+[2026-07-31 18:41:59] INFO: Server running in development mode on port 5000
+[2026-07-31 18:42:29] INFO: [Auto-cancel] Tự động hủy 1 đơn quá 24h chưa thanh toán...
+[2026-07-31 18:42:30] INFO: [Auto-cancel] Đã hủy đơn #185a49
+[2026-07-31 19:17:47] INFO: Server running in development mode on port 5000
