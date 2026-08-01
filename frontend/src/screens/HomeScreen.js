@@ -27,8 +27,11 @@ const PRICE_RANGES = [
   { label: 'Trên 20 triệu', to: '/price/tren-20tr', sub: 'Flagship đỉnh cao, vượt trội', icon: 'fas fa-gem' },
 ]
 
+// Chỉ hiện điện thoại (không kèm phụ kiện như AirPods) của hãng Apple
+const IPHONE_PHONES_URL = '/brand/Apple?category=' + encodeURIComponent('Điện thoại')
+
 const QUICK_PICK = [
-  { label: 'iPhone', to: '/search/iphone', icon: 'fab fa-apple' },
+  { label: 'iPhone', to: IPHONE_PHONES_URL, icon: 'fab fa-apple' },
   { label: 'Samsung', to: '/brand/Samsung', icon: 'fab fa-android' },
   { label: 'Gaming', to: '/search/gaming', icon: 'fas fa-gamepad' },
   { label: 'Camera đẹp', to: '/search/camera', icon: 'fas fa-camera-retro' },
@@ -499,7 +502,7 @@ const HomeScreen = ({ match, location }) => {
                     <i className='fas fa-fire' /> Mua ngay
                   </Link>
                   <Link
-                    to='/search/iphone'
+                    to={IPHONE_PHONES_URL}
                     style={S.btnSecondary}
                     onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }}
                     onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)' }}
@@ -556,7 +559,7 @@ const HomeScreen = ({ match, location }) => {
                   </div>
                 </div>
                 <div style={S.promoBanners}>
-                  <Link to='/search/iphone' style={S.promoBanner}>
+                  <Link to={IPHONE_PHONES_URL} style={S.promoBanner}>
                     <img
                       src={LANDING_BANNERS.b1}
                       alt='iPhone'

@@ -192,3 +192,13 @@ Error: Not authorized, no token
 [2026-07-31 18:42:29] INFO: [Auto-cancel] Tự động hủy 1 đơn quá 24h chưa thanh toán...
 [2026-07-31 18:42:30] INFO: [Auto-cancel] Đã hủy đơn #185a49
 [2026-07-31 19:17:47] INFO: Server running in development mode on port 5000
+[2026-07-31 23:31:45] INFO: Server running in development mode on port 5000
+[2026-07-31 23:49:53] INFO: Server running in development mode on port 5000
+[2026-07-31 23:52:11] INFO: Server running in development mode on port 5000
+[2026-07-31 23:52:29] INFO: Server running in development mode on port 5000
+[2026-07-31 23:52:36] INFO: Server running in development mode on port 5000
+[2026-07-31 23:52:39] INFO: Server running in development mode on port 5000
+[2026-08-01 00:01:26] INFO: Server running in development mode on port 5000
+[2026-08-01 00:04:59] INFO: Server running in development mode on port 5000
+[2026-08-01 00:09:14] INFO: Server running in development mode on port 5000
+[2026-08-01 00:10:31] INFO: Server running in development mode on port 5000

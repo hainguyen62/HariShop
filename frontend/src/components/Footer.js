@@ -71,7 +71,7 @@ const Footer = () => {
           <Modal.Title>Quét mã Zalo</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ background: '#1a1a2e', textAlign: 'center' }}>
-          <img src="images/zalo.jpg" alt="Zalo QR Code" style={{ maxWidth: '100%', borderRadius: '10px' }} />
+          <img src="/images/zalo.jpg" alt="Zalo QR Code" style={{ maxWidth: '100%', borderRadius: '10px' }} />
         </Modal.Body>
       </Modal>
     </>

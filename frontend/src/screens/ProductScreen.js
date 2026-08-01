@@ -105,8 +105,11 @@ const ProductScreen = ({ history, match }) => {
 
   return (
     <>
-      <Link
-        to='/'
+      <div
+        role='button'
+        tabIndex={0}
+        onClick={() => history.goBack()}
+        onKeyPress={(e) => { if (e.key === 'Enter') history.goBack() }}
         style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -119,10 +122,12 @@ const ProductScreen = ({ history, match }) => {
           textDecoration: 'none',
           fontSize: '14px',
           fontWeight: '600',
+          cursor: 'pointer',
+          background: 'transparent',
         }}
       >
         <i className='fas fa-arrow-left'></i> Trở Về
-      </Link>
+      </div>
 
       {loading ? (
         <Loader />

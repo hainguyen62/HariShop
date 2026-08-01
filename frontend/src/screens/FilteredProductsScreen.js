@@ -9,6 +9,54 @@ import Paginate from '../components/Paginate'
 import Meta from '../components/Meta'
 import { listProducts } from '../actions/productActions'
 
+// ─── Breadcrumb style ──────────────────────────────────────────
+
+const BREADCRUMB_STYLE = `
+.lux-filter-breadcrumb .breadcrumb {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+}
+.lux-filter-breadcrumb .breadcrumb-item {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.lux-filter-breadcrumb .breadcrumb-item a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.lux-filter-breadcrumb .breadcrumb-item a:hover {
+  color: #33FFCC;
+}
+.lux-filter-breadcrumb .breadcrumb-item.active {
+  color: #33FFCC;
+  font-weight: 800;
+}
+.lux-filter-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  color: rgba(255,255,255,0.25);
+  font-weight: 700;
+  content: "/";
+  padding: 0 10px;
+}
+`
+
+if (typeof document !== 'undefined') {
+  const id = 'hs-breadcrumb-style'
+  const existing = document.getElementById(id)
+  if (!existing) {
+    const tag = document.createElement('style')
+    tag.id = id
+    tag.textContent = BREADCRUMB_STYLE
+    document.head.appendChild(tag)
+  } else {
+    existing.textContent = BREADCRUMB_STYLE
+  }
+}
+
 const FilteredProductsScreen = ({ match, location }) => {
   const value = match.params.value
   const pageNumber = match.params.pageNumber || 1
@@ -31,8 +79,14 @@ const FilteredProductsScreen = ({ match, location }) => {
   let minPrice = ''
   let maxPrice = ''
 
+  const queryParams = new URLSearchParams(location.search)
+  const categoryFromQuery = queryParams.get('category') || ''
+
   if (isBrand) {
     brand = value
+    // Cho phép thu hẹp thêm theo danh mục, vd: /brand/Apple?category=Điện thoại
+    // để không lẫn phụ kiện (tai nghe, sạc...) của cùng hãng vào kết quả
+    if (categoryFromQuery) category = categoryFromQuery
   }
 
   if (isCategory) {
@@ -62,7 +116,9 @@ const FilteredProductsScreen = ({ match, location }) => {
   }, [dispatch, brand, category, minPrice, maxPrice, sort, pageNumber])
 
   const getTitle = () => {
-    if (isBrand) return `Hãng: ${value}`
+    if (isBrand) {
+      return categoryFromQuery ? `Hãng: ${value} - ${categoryFromQuery}` : `Hãng: ${value}`
+    }
     if (isCategory) return `Danh mục: ${value}`
     if (isPrice) {
       if (value === 'duoi-10tr') return 'Giá dưới 10 triệu'
@@ -76,7 +132,7 @@ const FilteredProductsScreen = ({ match, location }) => {
     <>
       <Meta title={getTitle()} />
 
-      <Breadcrumb>
+      <Breadcrumb className="lux-filter-breadcrumb">
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
           Home
         </Breadcrumb.Item>
