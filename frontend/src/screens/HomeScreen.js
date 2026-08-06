@@ -27,11 +27,8 @@ const PRICE_RANGES = [
   { label: 'Trên 20 triệu', to: '/price/tren-20tr', sub: 'Flagship đỉnh cao, vượt trội', icon: 'fas fa-gem' },
 ]
 
-// Chỉ hiện điện thoại (không kèm phụ kiện như AirPods) của hãng Apple
-const IPHONE_PHONES_URL = '/brand/Apple?category=' + encodeURIComponent('Điện thoại')
-
 const QUICK_PICK = [
-  { label: 'iPhone', to: IPHONE_PHONES_URL, icon: 'fab fa-apple' },
+  { label: 'iPhone', to: '/search/iphone', icon: 'fab fa-apple' },
   { label: 'Samsung', to: '/brand/Samsung', icon: 'fab fa-android' },
   { label: 'Gaming', to: '/search/gaming', icon: 'fas fa-gamepad' },
   { label: 'Camera đẹp', to: '/search/camera', icon: 'fas fa-camera-retro' },
@@ -356,27 +353,31 @@ const KEYFRAME_STYLE = `
   transform: translateY(-1px);
 }
 @media (max-width:1199px) {
-  .luxHome .brandGrid { grid-template-columns: repeat(3,1fr); }
+  .luxHome .brandGrid { grid-template-columns: repeat(3,1fr) !important; }
 }
 @media (max-width:991px) {
-  .luxHome .heroInner { grid-template-columns: 1fr; padding: 32px 24px 28px; }
-  .luxHome .statsGrid { grid-template-columns: repeat(3,1fr); }
-  .luxHome .brandGrid { grid-template-columns: repeat(3,1fr); }
-  .luxHome .priceGrid { grid-template-columns: 1fr; }
+  .luxHome .heroInner { grid-template-columns: 1fr !important; padding: 32px 24px 28px !important; }
+  .luxHome .statsGrid { grid-template-columns: repeat(3,1fr) !important; }
+  .luxHome .brandGrid { grid-template-columns: repeat(3,1fr) !important; }
+  .luxHome .priceGrid { grid-template-columns: 1fr !important; }
+  .luxHome .promoBanners { grid-template-columns: 1fr 1fr !important; }
 }
 @media (max-width:767px) {
-  .luxHome .heroInner { padding: 24px 18px 20px; }
-  .luxHome .statsGrid { grid-template-columns: 1fr 1fr; }
-  .luxHome .brandGrid { grid-template-columns: 1fr 1fr; }
-  .luxHome .promoBanners { grid-template-columns: 1fr; }
+  .luxHome .heroInner { padding: 24px 18px 20px !important; }
+  .luxHome .heroTitle { font-size: 1.9rem !important; margin: 12px 0 10px !important; }
+  .luxHome .statsGrid { grid-template-columns: 1fr 1fr !important; }
+  .luxHome .brandGrid { grid-template-columns: 1fr 1fr !important; }
+  .luxHome .promoBanners { grid-template-columns: 1fr !important; }
   .luxHome .resultBar { flex-direction: column; align-items: flex-start; }
   .luxHome .sectionHead { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width:575px) {
-  .luxHome .brandGrid { grid-template-columns: 1fr; }
+  .luxHome .brandGrid { grid-template-columns: 1fr !important; }
+  .luxHome .heroTitle { font-size: 1.6rem !important; }
   .luxHome .heroActions { flex-direction: column; }
   .luxHome .heroActions a { width: 100%; text-align: center; }
   .luxHome .heroActions a:first-child { width: 100%; }
+  .luxHome .heroQuickRow { display: none !important; }
 }
 `
 
@@ -472,14 +473,14 @@ const HomeScreen = ({ match, location }) => {
           {/* ══════ HERO ══════ */}
           <section style={S.hero}>
             <div style={S.heroBg} />
-            <div style={S.heroInner}>
+            <div style={S.heroInner} className='heroInner'>
               {/* Left column */}
               <div>
                 <div style={S.heroLabel}>
                   <span style={S.heroDot} />
                   <span>Flagship chính hãng 2026</span>
                 </div>
-                <h1 style={S.heroTitle}>
+                <h1 style={S.heroTitle} className='heroTitle'>
                   Săn điện thoại hot{' '}
                   <span style={S.heroAccent}>giá tốt, giao nhanh</span>
                 </h1>
@@ -502,7 +503,7 @@ const HomeScreen = ({ match, location }) => {
                     <i className='fas fa-fire' /> Mua ngay
                   </Link>
                   <Link
-                    to={IPHONE_PHONES_URL}
+                    to='/search/iphone'
                     style={S.btnSecondary}
                     onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }}
                     onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)' }}
@@ -518,7 +519,7 @@ const HomeScreen = ({ match, location }) => {
                     <i className='fab fa-android' /> Samsung nổi bật
                   </Link>
                 </div>
-                <div style={S.quickRow}>
+                <div style={S.quickRow} className='heroQuickRow'>
                   {QUICK_PICK.map((item) => (
                     <Link
                       key={item.label}
@@ -544,7 +545,7 @@ const HomeScreen = ({ match, location }) => {
 
               {/* Right column — Stats + Promo */}
               <div>
-                <div style={S.statsGrid}>
+                <div style={S.statsGrid} className='statsGrid'>
                   {STATS.map((s) => (
                     <div key={s.label} style={S.statCard}>
                       <div style={S.statIcon}><i className={s.icon} /></div>
@@ -558,8 +559,8 @@ const HomeScreen = ({ match, location }) => {
                     <div style={S.statValue}>99% hài lòng</div>
                   </div>
                 </div>
-                <div style={S.promoBanners}>
-                  <Link to={IPHONE_PHONES_URL} style={S.promoBanner}>
+                <div style={S.promoBanners} className='promoBanners'>
+                  <Link to='/search/iphone' style={S.promoBanner}>
                     <img
                       src={LANDING_BANNERS.b1}
                       alt='iPhone'

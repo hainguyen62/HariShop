@@ -115,3 +115,39 @@ Error: Not Found - /sw.js
     at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
     at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
     at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-08-06 13:35:08] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-08-06 13:35:40] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
