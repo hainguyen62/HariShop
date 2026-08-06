@@ -7,7 +7,6 @@ import './bootstrap.min.css'
 import './index.css'
 import App from './App'
 
-// 🔧 FIXED: Robust global process polyfill (before ReactDOM.render)
 window.process = window.process || {
   env: { 
     NODE_ENV: 'development',
@@ -15,7 +14,6 @@ window.process = window.process || {
   }
 };
 
-// Init theme from localStorage
 document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
 
 ReactDOM.render(
@@ -26,3 +24,11 @@ ReactDOM.render(
   </HelmetProvider>,
   document.getElementById('root')
 )
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .catch((err) => console.warn('Đăng ký Service Worker thất bại:', err))
+  })
+}

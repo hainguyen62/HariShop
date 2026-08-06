@@ -110,6 +110,7 @@ const ProductEditScreen = ({ match, history }) => {
             name:         c.name,
             hexCode:      c.hexCode || '#888888',
             countInStock: c.countInStock,
+            image:        c.image || '',
           })))
         }
         // ── MỚI: load thông số kỹ thuật từ sản phẩm hiện tại ────
