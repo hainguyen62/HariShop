@@ -8,6 +8,7 @@ import CompareBar from './components/CompareBar'
 import SocketManager from './components/SocketManager'
 
 import HomeScreen from './screens/HomeScreen'
+import LandingPage from './screens/LandingPage'
 import SmartSearchScreen from './screens/SmartSearchScreen'
 import CompareScreen from './screens/CompareScreen'
 import ProductScreen from './screens/ProductScreen'
@@ -129,6 +130,7 @@ const App = () => {
           <Route path='/smart-search' component={SmartSearchScreen} exact />
           <Route path='/compare' component={CompareScreen} exact />
           <Route path='/page/:pageNumber' component={HomeScreen} exact />
+          <Route path='/landing' component={LandingPage} exact />
           <Route path='/' component={HomeScreen} exact />
           
           <ScrollToTop />
