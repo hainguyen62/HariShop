@@ -353,31 +353,27 @@ const KEYFRAME_STYLE = `
   transform: translateY(-1px);
 }
 @media (max-width:1199px) {
-  .luxHome .brandGrid { grid-template-columns: repeat(3,1fr) !important; }
+  .luxHome .brandGrid { grid-template-columns: repeat(3,1fr); }
 }
 @media (max-width:991px) {
-  .luxHome .heroInner { grid-template-columns: 1fr !important; padding: 32px 24px 28px !important; }
-  .luxHome .statsGrid { grid-template-columns: repeat(3,1fr) !important; }
-  .luxHome .brandGrid { grid-template-columns: repeat(3,1fr) !important; }
-  .luxHome .priceGrid { grid-template-columns: 1fr !important; }
-  .luxHome .promoBanners { grid-template-columns: 1fr 1fr !important; }
+  .luxHome .heroInner { grid-template-columns: 1fr; padding: 32px 24px 28px; }
+  .luxHome .statsGrid { grid-template-columns: repeat(3,1fr); }
+  .luxHome .brandGrid { grid-template-columns: repeat(3,1fr); }
+  .luxHome .priceGrid { grid-template-columns: 1fr; }
 }
 @media (max-width:767px) {
-  .luxHome .heroInner { padding: 24px 18px 20px !important; }
-  .luxHome .heroTitle { font-size: 1.9rem !important; margin: 12px 0 10px !important; }
-  .luxHome .statsGrid { grid-template-columns: 1fr 1fr !important; }
-  .luxHome .brandGrid { grid-template-columns: 1fr 1fr !important; }
-  .luxHome .promoBanners { grid-template-columns: 1fr !important; }
+  .luxHome .heroInner { padding: 24px 18px 20px; }
+  .luxHome .statsGrid { grid-template-columns: 1fr 1fr; }
+  .luxHome .brandGrid { grid-template-columns: 1fr 1fr; }
+  .luxHome .promoBanners { grid-template-columns: 1fr; }
   .luxHome .resultBar { flex-direction: column; align-items: flex-start; }
   .luxHome .sectionHead { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width:575px) {
-  .luxHome .brandGrid { grid-template-columns: 1fr !important; }
-  .luxHome .heroTitle { font-size: 1.6rem !important; }
+  .luxHome .brandGrid { grid-template-columns: 1fr; }
   .luxHome .heroActions { flex-direction: column; }
   .luxHome .heroActions a { width: 100%; text-align: center; }
   .luxHome .heroActions a:first-child { width: 100%; }
-  .luxHome .heroQuickRow { display: none !important; }
 }
 `
 
@@ -473,14 +469,14 @@ const HomeScreen = ({ match, location }) => {
           {/* ══════ HERO ══════ */}
           <section style={S.hero}>
             <div style={S.heroBg} />
-            <div style={S.heroInner} className='heroInner'>
+            <div style={S.heroInner}>
               {/* Left column */}
               <div>
                 <div style={S.heroLabel}>
                   <span style={S.heroDot} />
                   <span>Flagship chính hãng 2026</span>
                 </div>
-                <h1 style={S.heroTitle} className='heroTitle'>
+                <h1 style={S.heroTitle}>
                   Săn điện thoại hot{' '}
                   <span style={S.heroAccent}>giá tốt, giao nhanh</span>
                 </h1>
@@ -519,7 +515,7 @@ const HomeScreen = ({ match, location }) => {
                     <i className='fab fa-android' /> Samsung nổi bật
                   </Link>
                 </div>
-                <div style={S.quickRow} className='heroQuickRow'>
+                <div style={S.quickRow}>
                   {QUICK_PICK.map((item) => (
                     <Link
                       key={item.label}
@@ -545,7 +541,7 @@ const HomeScreen = ({ match, location }) => {
 
               {/* Right column — Stats + Promo */}
               <div>
-                <div style={S.statsGrid} className='statsGrid'>
+                <div style={S.statsGrid}>
                   {STATS.map((s) => (
                     <div key={s.label} style={S.statCard}>
                       <div style={S.statIcon}><i className={s.icon} /></div>
@@ -559,7 +555,7 @@ const HomeScreen = ({ match, location }) => {
                     <div style={S.statValue}>99% hài lòng</div>
                   </div>
                 </div>
-                <div style={S.promoBanners} className='promoBanners'>
+                <div style={S.promoBanners}>
                   <Link to='/search/iphone' style={S.promoBanner}>
                     <img
                       src={LANDING_BANNERS.b1}
@@ -737,7 +733,7 @@ const HomeScreen = ({ match, location }) => {
           <div style={S.productWrap}>
             <Row className='g-3'>
               {products.map((product) => (
-                <Col key={product._id} xs={12} sm={6} md={4} lg={4} xl={3}>
+                <Col key={product._id} xs={6} sm={6} md={4} lg={4} xl={3}>
                   <Product product={product} />
                 </Col>
               ))}

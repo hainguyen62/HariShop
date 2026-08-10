@@ -7,10 +7,6 @@ import Meta from '../components/Meta'
 import { naturalLanguageSearch } from '../actions/productActions'
 import { PRODUCT_NL_SEARCH_RESET } from '../constants/productConstants'
 
-// ═══════════════════ B3: Trang kết quả tìm kiếm bằng ngôn ngữ tự nhiên ═══════════════════
-// Nhận câu tìm kiếm qua query string ?q=..., gửi cho AI phân tích, hiển thị lại
-// các tiêu chí AI đã hiểu (dạng chip) + danh sách sản phẩm khớp.
-
 const useQueryParam = (location, key) => {
   const params = new URLSearchParams(location.search)
   return params.get(key) || ''
@@ -108,7 +104,7 @@ const SmartSearchScreen = ({ location, history }) => {
             <>
               <Row>
                 {products.map((product) => (
-                  <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                  <Col key={product._id} xs={6} sm={12} md={6} lg={4} xl={3}>
                     <Product product={product} />
                   </Col>
                 ))}
