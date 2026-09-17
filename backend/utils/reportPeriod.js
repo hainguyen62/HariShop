@@ -1,9 +1,4 @@
-// ══════════════════════════════════════════════════════════════════
-// MỚI: tách hàm tính khoảng thời gian (start/end/label + kỳ trước) ra
-// riêng để dùng chung giữa getRevenueAnalytics (orderController) và
-// exportRevenuePdf (exportController) — tránh lặp lại logic period/
-// month/quarter/year/custom ở 2 nơi.
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ MỚI: tách hàm tính khoảng thời gian (start/end/label + kỳ trước) ra
 export const resolvePeriodRange = (query = {}) => {
   const { period = 'month', month, year, quarter, startDate, endDate } = query
   const now = new Date()

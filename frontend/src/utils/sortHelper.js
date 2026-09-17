@@ -20,17 +20,13 @@ export const getNextSortConfig = (currentSort, columnKey) => {
   return { key: columnKey, direction: 'desc' }
 }
 
-// Chuyển sortConfig { key, direction } → cặp query param sortBy/order
-// gửi lên backend. Trả về object rỗng khi không sort (None) để các
-// action tự loại bỏ tham số khỏi query string.
+// Chuyển sortConfig { key, direction } → cặp query param sortBy/order gửi lên backend. Trả về object rỗng khi không sort (None) để các
 export const sortConfigToQuery = (sortConfig) => {
   if (!sortConfig || !sortConfig.key || !sortConfig.direction) return {}
   return { sortBy: sortConfig.key, order: sortConfig.direction }
 }
 
-// ── Hook nhỏ gọn: mỗi màn hình bảng chỉ cần 1 dòng
-//    const { sortConfig, handleSort } = useTableSort()
-// thay vì tự viết lại useState + hàm cycle ở từng nơi.
+// ── Hook nhỏ gọn: mỗi màn hình bảng chỉ cần 1 dòng const { sortConfig, handleSort } = useTableSort()
 export const useTableSort = (initial = { key: null, direction: null }) => {
   const [sortConfig, setSortConfig] = React.useState(initial)
 

@@ -47,9 +47,7 @@ const sectionStyle = {
   marginBottom: '20px',
 }
 
-// STATUS_LABEL cục bộ đã được thay bằng getOrderStatusInfo() dùng chung
-// từ '../constants/orderStatusConfig' — hiển thị đủ 12 trạng thái chi tiết
-// thay vì chỉ gộp chung "Đang giao".
+// STATUS_LABEL cục bộ đã được thay bằng getOrderStatusInfo() dùng chung từ '../constants/orderStatusConfig' — hiển thị đủ 12 trạng thái chi tiết
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('')

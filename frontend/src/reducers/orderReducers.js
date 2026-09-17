@@ -72,12 +72,6 @@ import {
   REVENUE_ANALYTICS_FAIL,
 } from '../constants/orderConstants'
 
-
-
-
-
-
-
 export const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:
@@ -243,7 +237,6 @@ export const orderRejectCancelReducer = (state = {}, action) => {
       return state
   }
 }
-
 
 export const orderTrackReducer = (state = {}, action) => {
   switch (action.type) {

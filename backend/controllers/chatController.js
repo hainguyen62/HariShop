@@ -3,10 +3,7 @@ import Product from '../models/productModel.js'
 import Voucher from '../models/voucherModel.js'
 import { callAI } from '../utils/aiProvider.js'
 
-// ═══════════════════ B2: AI Chatbot tư vấn sản phẩm ═══════════════════
-// Kèm theo "catalog" sản phẩm thực tế lấy từ MongoDB tại thời điểm hỏi
-// (giá, tồn kho theo màu, specs...) để AI tư vấn chính xác, không bịa sản phẩm.
-// Xem cấu hình nhà cung cấp AI (Anthropic/OpenAI-compatible) tại backend/utils/aiProvider.js
+// ═══════════════════ B2: AI Chatbot tư vấn sản phẩm ═══════════════════ Kèm theo "catalog" sản phẩm thực tế lấy từ MongoDB tại thời điểm hỏi
 
 const MAX_CATALOG_PRODUCTS = 150   // tránh prompt quá dài nếu shop có rất nhiều sản phẩm
 const MAX_HISTORY_MESSAGES = 16    // chỉ giữ lại N tin nhắn gần nhất để tiết kiệm token

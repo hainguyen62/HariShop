@@ -1,30 +1,4 @@
-// ═══════════════════ AI Provider dùng chung (B2 chatbot + B3 tìm kiếm tự nhiên) ═══════════════════
-// Gọi 1 trong 2 dạng API để lấy phản hồi AI:
-//   - "anthropic"      → Anthropic Messages API (Claude)
-//   - "openai"         → OpenAI Chat Completions API (chuẩn "OpenAI-compatible")
-//     dùng được cho: OpenAI thật, OpenRouter (nhiều model MIỄN PHÍ), Groq,
-//     DeepSeek, Together AI, hoặc Ollama chạy local — chỉ cần đổi biến môi trường,
-//     KHÔNG cần sửa code.
-//
-// ── Cấu hình nhà cung cấp AI qua biến môi trường (.env) ──
-// CHAT_PROVIDER=anthropic (mặc định nếu có ANTHROPIC_API_KEY) hoặc =openai
-//
-// Dùng Anthropic (Claude):
-//   ANTHROPIC_API_KEY=sk-ant-...
-//   ANTHROPIC_MODEL=claude-sonnet-4-5          (tuỳ chọn)
-//
-// Dùng OpenAI / OpenRouter / Groq / DeepSeek / Ollama (chuẩn OpenAI-compatible):
-//   CHAT_PROVIDER=openai
-//   OPENAI_API_KEY=<api key của nhà cung cấp>
-//   OPENAI_BASE_URL=https://api.openai.com/v1  (đổi tuỳ nhà cung cấp, xem bảng bên dưới)
-//   OPENAI_MODEL=gpt-4o-mini                    (đổi tuỳ nhà cung cấp)
-//
-// Bảng OPENAI_BASE_URL tham khảo cho từng nhà cung cấp (đều theo chuẩn OpenAI):
-//   OpenAI      → https://api.openai.com/v1
-//   OpenRouter  → https://openrouter.ai/api/v1   (có nhiều model MIỄN PHÍ, vd: "openrouter/free")
-//   Groq        → https://api.groq.com/openai/v1 (rất nhanh, có free tier)
-//   DeepSeek    → https://api.deepseek.com/v1
-//   Ollama local→ http://localhost:11434/v1      (chạy model miễn phí trên máy, OPENAI_API_KEY để "ollama" tuỳ ý)
+// ═══════════════════ AI Provider dùng chung (B2 chatbot + B3 tìm kiếm tự nhiên) ═══════════════════ Gọi 1 trong 2 dạng API để lấy phản hồi AI:
 
 export const resolveProvider = () => {
   const forced = (process.env.CHAT_PROVIDER || '').trim().toLowerCase()
@@ -53,9 +27,7 @@ const parseRetryAfter = (resp, errText) => {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-// Một số model free (dạng "reasoning", vd DeepSeek R1, QwQ...) đôi khi trả về
-// quá trình suy nghĩ (chain-of-thought) kèm trong nội dung, dưới dạng thẻ
-// <think>...</think> / <reasoning>...</reasoning>. Cắt bỏ các thẻ này trước khi xử lý.
+// Một số model free (dạng "reasoning", vd DeepSeek R1, QwQ...) đôi khi trả về quá trình suy nghĩ (chain-of-thought) kèm trong nội dung, dưới dạng thẻ
 export const stripReasoningTags = (text) => {
   return text
     .replace(/<think>[\s\S]*?<\/think>/gi, '')
@@ -199,14 +171,7 @@ const callOpenAICompatible = async (systemPrompt, history, maxTokens) => {
   return data?.choices?.[0]?.message?.content || ''
 }
 
-// ═══════════════ Hàm cấp cao: gọi AI kèm tự động retry ═══════════════
-// - Tự chọn provider (Anthropic hoặc OpenAI-compatible) theo .env
-// - Tự chờ đúng thời gian rồi thử lại nếu bị rate-limit (429) có gợi ý Retry-After
-// - Tự thử lại nếu model trả về rỗng (hay gặp ở model free bị quá tải)
-// - Tự cắt thẻ <think>/<reasoning> và thử lại nếu phát hiện model lộ chuỗi suy luận
-//
-// options: { maxTokens?: number, checkLeak?: boolean (mặc định true) }
-// Trả về text đã làm sạch. Ném lỗi có .statusCode nếu thất bại hẳn.
+// ═══════════════ Hàm cấp cao: gọi AI kèm tự động retry ═══════════════ - Tự chọn provider (Anthropic hoặc OpenAI-compatible) theo .env
 export const callAI = async (systemPrompt, history, options = {}) => {
   const { maxTokens, checkLeak = true } = options
   const provider = resolveProvider()

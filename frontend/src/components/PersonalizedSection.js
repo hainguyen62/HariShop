@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Product from './Product'
 import { getPersonalizedProducts } from '../actions/productActions'
 
-// ═══════════════════ B4: Gợi ý cá nhân hoá (trang chủ) ═══════════════════
-// Chỉ hiện cho khách ĐÃ ĐĂNG NHẬP và ĐÃ CÓ lịch sử đơn hàng — dựa trên brand/category
-// khách mua nhiều nhất trong quá khứ. Ẩn hoàn toàn nếu chưa đủ dữ liệu (khách mới).
+// ═══════════════════ B4: Gợi ý cá nhân hoá (trang chủ) ═══════════════════ Chỉ hiện cho khách ĐÃ ĐĂNG NHẬP và ĐÃ CÓ lịch sử đơn hàng — dựa trên brand/category
 
 const PersonalizedSection = () => {
   const dispatch = useDispatch()

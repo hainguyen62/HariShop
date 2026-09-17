@@ -1,10 +1,4 @@
-// ══════════════════════════════════════════════════════════════════
-// Test applyVoucherLogic (backend/controllers/voucherController.js) —
-// đây là hàm QUYẾT ĐỊNH voucher có hợp lệ không và giảm bao nhiêu tiền,
-// dùng cả lúc khách áp mã lẫn lúc backend re-validate trước khi tạo đơn
-// (chống gian lận sửa số giảm giá từ frontend). Vì là "nguồn xác thực
-// cuối cùng" của toàn bộ tính năng voucher, đây là chỗ đáng test nhất.
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ Test applyVoucherLogic (backend/controllers/voucherController.js) —
 import { jest } from '@jest/globals'
 import { applyVoucherLogic } from '../controllers/voucherController.js'
 

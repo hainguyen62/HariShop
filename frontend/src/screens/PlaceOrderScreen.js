@@ -37,8 +37,6 @@ const PlaceOrderScreen = ({ history }) => {
         )
       : cart.cartItems || []
 
-
-
   // VN validation for missing shipping fields - Simplified (no district)
   const missingShipping = !cart.shippingAddress.fullName || !cart.shippingAddress.phone || 
       !cart.shippingAddress.province || 
@@ -90,7 +88,6 @@ const PlaceOrderScreen = ({ history }) => {
     )
   }
 
-
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
@@ -115,7 +112,6 @@ const PlaceOrderScreen = ({ history }) => {
               <p><strong style={{ color: '#33FFCC' }}>Số nhà, tên đường:</strong> {cart.shippingAddress.detail}</p>
             </div>
           </div>
-
 
           <ListGroup.Item>
             <h2>Phương Thức Thanh Toán</h2>

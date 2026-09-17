@@ -1,8 +1,6 @@
 import { computeFlashSale } from './flashSale.js'
 
-// ── Validate các field bắt buộc của đơn hàng ────────────────────────────────
-// Trả về { valid: true } nếu hợp lệ, hoặc { valid: false, status, message }
-// với đúng status/message như code gốc để không đổi hành vi API.
+// ── Validate các field bắt buộc của đơn hàng ──────────────────────────────── Trả về { valid: true } nếu hợp lệ, hoặc { valid: false, status, message }
 export function validateOrderInput({ orderItems, shippingAddress, paymentMethod }) {
   if (!orderItems || !Array.isArray(orderItems) || orderItems.length === 0) {
     return { valid: false, status: 400, message: 'No order items' }
@@ -22,10 +20,7 @@ export function validateOrderInput({ orderItems, shippingAddress, paymentMethod 
   return { valid: true }
 }
 
-// ── So sánh giá thật (DB) với giá khách gửi lên ─────────────────────────────
-// productMap: object { [productId]: productDoc } đã lấy sẵn từ DB (.lean()).
-// Trả về mảng rỗng nếu mọi giá đều khớp; nếu không, trả về danh sách các
-// sản phẩm bị lệch giá kèm giá cũ/mới để hiển thị cho khách.
+// ── So sánh giá thật (DB) với giá khách gửi lên ───────────────────────────── productMap: object { [productId]: productDoc } đã lấy sẵn từ DB (.lean()).
 export function findPriceMismatches(orderItems, productMap) {
   const mismatches = []
 
@@ -44,9 +39,7 @@ export function findPriceMismatches(orderItems, productMap) {
   return mismatches
 }
 
-// ── Tính tổng khối lượng đơn hàng ────────────────────────────────────────────
-// Ưu tiên giá trị frontend gửi lên nếu > 0 (đã tính đúng theo UI), fallback
-// tự tính lại từ orderItems nếu frontend không gửi hoặc gửi giá trị <= 0.
+// ── Tính tổng khối lượng đơn hàng ──────────────────────────────────────────── Ưu tiên giá trị frontend gửi lên nếu > 0 (đã tính đúng theo UI), fallback
 export function computeTotalWeight(orderItems, frontendTotalWeight) {
   const computed = Array.isArray(orderItems)
     ? orderItems.reduce((sum, item) => sum + (item.weight || 0) * (item.qty || 0), 0)
@@ -55,9 +48,7 @@ export function computeTotalWeight(orderItems, frontendTotalWeight) {
   return frontendTotalWeight > 0 ? Number(frontendTotalWeight) : computed
 }
 
-// ── Kiểm tra số tiền giảm giá frontend gửi có khớp với số backend tự tính ──
-// Cho phép lệch tối đa 1đ (làm tròn số thập phân). Không tin số frontend
-// gửi trực tiếp — chống gian lận sửa voucherDiscount qua DevTools/Postman.
+// ── Kiểm tra số tiền giảm giá frontend gửi có khớp với số backend tự tính ── Cho phép lệch tối đa 1đ (làm tròn số thập phân). Không tin số frontend
 export function voucherDiscountMatches(submittedDiscount, expectedDiscount) {
   return Math.abs(Number(submittedDiscount || 0) - expectedDiscount) <= 1
 }

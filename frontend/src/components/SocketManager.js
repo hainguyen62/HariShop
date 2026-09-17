@@ -4,12 +4,7 @@ import { connectSocket, disconnectSocket } from '../socket'
 import { playNotificationSound } from '../utils/notificationSound'
 import { NOTIFICATION_SOCKET_NEW, MY_NOTIFICATION_SOCKET_NEW } from '../constants/notificationConstants'
 
-// ═══════════════════ B9: Quản lý kết nối Socket.io + nhận thông báo real-time ═══════════════════
-// Component "vô hình" (không render UI) — chỉ lo việc:
-//   1. Kết nối/xác thực Socket.io theo trạng thái đăng nhập (userInfo)
-//   2. Lắng nghe sự kiện 'notification:new' từ server → cập nhật redux NGAY LẬP TỨC
-//      (không cần polling/F5) + phát âm thanh thông báo
-// Gắn 1 lần duy nhất ở App.js, tương tự ChatWidget/CompareBar.
+// ═══════════════════ B9: Quản lý kết nối Socket.io + nhận thông báo real-time ═══════════════════ Component "vô hình" (không render UI) — chỉ lo việc:
 
 const SocketManager = () => {
   const dispatch = useDispatch()

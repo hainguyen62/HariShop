@@ -1,11 +1,6 @@
 const GHN_TIMEOUT_MS = 8000
 
 // ĐÃ SỬA: KHÔNG được tính USE_SANDBOX/GHN_BASE_URL là `const` ở top-level.
-// Lý do: ES Modules nạp toàn bộ `import` (kể cả file này) TRƯỚC khi
-// dotenv.config() chạy trong server.js — nên nếu tính ngay lúc import,
-// process.env.GHN_USE_SANDBOX luôn là undefined, và giá trị `false` bị
-// "đóng băng" vĩnh viễn dù .env có ghi true. Phải bọc trong hàm, gọi lại
-// mỗi lần cần dùng (giống cách đã sửa configureCloudinary/configureGoogleStrategy).
 function isSandbox() {
   return (process.env.GHN_USE_SANDBOX || '').trim() === 'true'
 }

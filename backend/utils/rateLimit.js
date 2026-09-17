@@ -1,10 +1,4 @@
-// ══════════════════════════════════════════════════════════════════
-// Rate limiter đơn giản, lưu trong bộ nhớ (production nhiều instance nên
-// chuyển sang Redis). MỞ RỘNG: trước đây hàm này CỨNG cho mỗi "quên mật
-// khẩu" (khóa cố định `forgot_${ip}`, giới hạn cố định 3 lần/giờ). Giờ
-// tổng quát hóa để dùng chung cho MỌI mục đích cần giới hạn (đăng nhập,
-// đăng ký, quên mật khẩu...) — mỗi nơi gọi tự đặt khóa và giới hạn riêng.
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ Rate limiter đơn giản, lưu trong bộ nhớ (production nhiều instance nên
 
 const rateLimitMap = new Map()
 
@@ -32,9 +26,7 @@ export const checkRateLimit = (key, max = 3, windowMs = 60 * 60 * 1000) => {
   return true
 }
 
-// MỚI: cho phép XÓA giới hạn của 1 khóa ngay khi hành động đó THÀNH CÔNG
-// (VD: đăng nhập đúng mật khẩu) — tránh trường hợp người dùng hợp lệ đăng
-// nhập nhiều lần trong ngày rồi bỗng dưng bị chặn dù không có ý đồ xấu.
+// MỚI: cho phép XÓA giới hạn của 1 khóa ngay khi hành động đó THÀNH CÔNG (VD: đăng nhập đúng mật khẩu) — tránh trường hợp người dùng hợp lệ đăng
 export const resetRateLimit = (key) => {
   rateLimitMap.delete(key)
 }

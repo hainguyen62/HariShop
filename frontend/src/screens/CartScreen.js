@@ -86,7 +86,6 @@ const CartScreen = ({ match, location, history }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
-
   const removeFromCartHandler = (id, color) => {
     dispatch(removeFromCart(id, color))
     const key = `${id}_${color || ''}`

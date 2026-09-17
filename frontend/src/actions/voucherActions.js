@@ -9,11 +9,7 @@ import {
   VOUCHER_VALIDATE_RESET,
 } from '../constants/voucherConstants'
 
-// ══════════════════════════════════════════════════════════════════
-// MỚI: action Redux dành cho TRẢI NGHIỆM KHÁCH HÀNG (popup chọn voucher
-// ở CheckoutScreen) — khác voucherAdminActions.js vốn chỉ dành cho admin
-// quản lý (CRUD voucher).
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ MỚI: action Redux dành cho TRẢI NGHIỆM KHÁCH HÀNG (popup chọn voucher
 
 // Lấy danh sách voucher công khai, kèm sẵn eligible/discountAmount tính
 // theo giỏ hàng hiện tại (orderAmount, shippingFee, categories).

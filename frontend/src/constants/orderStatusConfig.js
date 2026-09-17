@@ -56,4 +56,3 @@ export const getOrderStatusInfo = (order) => {
   const key = getCurrentOrderStatus(order)
   return ORDER_STATUS_LABELS[key] || ORDER_STATUS_LABELS.pending
 }
-

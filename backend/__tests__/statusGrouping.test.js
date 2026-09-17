@@ -1,8 +1,4 @@
-// ══════════════════════════════════════════════════════════════════
-// Test groupStatusBreakdown (backend/utils/reportData.js) — gom 12 trạng
-// thái đơn hàng chi tiết thành 3 nhóm lớn (Thành công/Đang xử lý/Hủy-Thất
-// bại) cho Pie Chart, để không còn nhiều trạng thái trùng màu như trước.
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ Test groupStatusBreakdown (backend/utils/reportData.js) — gom 12 trạng
 import { groupStatusBreakdown } from '../utils/reportData.js'
 
 describe('groupStatusBreakdown', () => {

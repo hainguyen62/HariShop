@@ -1,13 +1,4 @@
-// Script chạy 1 lần để điền nameNormalized/brandNormalized cho các sản phẩm
-// ĐÃ TỒN TẠI TRƯỚC KHI có tính năng tìm kiếm thông minh — vì pre('save') chỉ
-// tự tính khi document được save lại, sản phẩm cũ trong DB sẽ không tự có
-// 2 trường này nếu không chạy qua script này một lần.
-//
-// Cách chạy (từ thư mục backend/):
-//   node scripts/backfillNormalizedFields.js
-//
-// An toàn để chạy nhiều lần (chỉ ghi đè lại đúng giá trị chuẩn hóa, không
-// đổi dữ liệu nào khác của sản phẩm).
+// Script chạy 1 lần để điền nameNormalized/brandNormalized cho các sản phẩm ĐÃ TỒN TẠI TRƯỚC KHI có tính năng tìm kiếm thông minh — vì pre('save') chỉ
 
 import dotenv from 'dotenv'
 import connectDB from '../config/db.js'

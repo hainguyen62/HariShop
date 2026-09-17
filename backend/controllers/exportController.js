@@ -55,7 +55,6 @@ const applyRowBorderAndBanding = (row, rowIndexInTable) => {
   }
 }
 
-
 export const buildExcelWorkbook = async (reportData, meta) => {
   const { kpis, revenueSeries, statusBreakdown, paymentBreakdown, topProducts, topCustomers, ordersInPeriod, growthPct } = reportData
   const { label, exportedBy, generatedAt, statusFilter } = meta
@@ -259,9 +258,7 @@ export const buildExcelWorkbook = async (reportData, meta) => {
   return workbook
 }
 
-// ══════════════════════════════════════════════════════════════════
-// PDF — xây dựng báo cáo nhiều trang từ reportData (không phụ thuộc DB)
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ PDF — xây dựng báo cáo nhiều trang từ reportData (không phụ thuộc DB)
 export const buildPdfReport = async (reportData, meta, res) => {
   const { kpis, revenueSeries, statusBreakdown, topProducts, topCustomers, ordersInPeriod, growthPct, prevLabel } = reportData
   const { label, exportedBy, generatedAt } = meta
@@ -500,9 +497,7 @@ export const buildPdfReport = async (reportData, meta, res) => {
   doc.end()
 }
 
-// ══════════════════════════════════════════════════════════════════
-// ROUTE HANDLERS (kết nối DB qua getReportData)
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ ROUTE HANDLERS (kết nối DB qua getReportData)
 
 // @desc    Xuất danh sách đơn hàng + báo cáo doanh thu ra Excel (.xlsx, nhiều Sheet)
 // @route   GET /api/orders/admin/export/excel?startDate=&endDate=&status=

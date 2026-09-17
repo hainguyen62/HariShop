@@ -4,9 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom'
 import { removeFromCompare, clearCompare } from '../actions/compareActions'
 import { COMPARE_MAX_ITEMS } from '../constants/compareConstants'
 
-// ═══════════════════ B7: Thanh so sánh nổi ═══════════════════
-// Hiện ở dưới màn hình bất cứ khi nào có >=1 sản phẩm được chọn để so sánh.
-// Ẩn ở khu vực Admin và ngay trên trang so sánh (không cần thiết ở đó).
+// ═══════════════════ B7: Thanh so sánh nổi ═══════════════════ Hiện ở dưới màn hình bất cứ khi nào có >=1 sản phẩm được chọn để so sánh.
 
 const CompareBar = () => {
   const dispatch = useDispatch()

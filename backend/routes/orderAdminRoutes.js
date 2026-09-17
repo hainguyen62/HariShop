@@ -8,14 +8,11 @@ import {
 } from '../controllers/orderController.js'
 import { exportOrdersExcel, exportRevenuePdf } from '../controllers/exportController.js'
 
-
 const router = express.Router()
-
 
 router
   .route('/revenue-summary')
   .get(protect, admin, getAdminRevenueSummary)
-
 
 router
   .route('/brand-breakdown')
@@ -34,7 +31,6 @@ router
 router
   .route('/export/pdf')
   .get(protect, admin, exportRevenuePdf)
-
 
 router
   .route('/:id')

@@ -10,4 +10,3 @@ router
   .put(protect, admin, updateWarehouseSettings)
 
 export default router
-

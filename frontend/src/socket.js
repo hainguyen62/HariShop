@@ -1,9 +1,6 @@
 import { io } from 'socket.io-client'
 
-// ═══════════════════ B9: Thông báo real-time bằng Socket.io (Frontend) ═══════════════════
-// Kết nối trực tiếp tới backend (không qua proxy CRA) — dùng đúng host hiện tại
-// (hỗ trợ cả localhost lẫn truy cập qua IP LAN khi test trên điện thoại cùng mạng),
-// cổng lấy từ REACT_APP_SOCKET_PORT nếu có, mặc định 5000 (khớp PORT của backend).
+// ═══════════════════ B9: Thông báo real-time bằng Socket.io (Frontend) ═══════════════════ Kết nối trực tiếp tới backend (không qua proxy CRA) — dùng đúng host hiện tại
 const SOCKET_URL = process.env.NODE_ENV === 'production'
   ? window.location.origin
   : `http://${window.location.hostname}:${process.env.REACT_APP_SOCKET_PORT || 5000}`

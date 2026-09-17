@@ -14,7 +14,6 @@ import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 import SortableHeader from '../components/SortableHeader'
 import { useTableSort, sortConfigToQuery } from '../utils/sortHelper'
 
-
 const OrderListScreen = ({ history }) => {
 
   const dispatch = useDispatch()
@@ -67,7 +66,6 @@ const OrderListScreen = ({ history }) => {
     setShowConfirm(true)
   }
 
-
   const formatDate = (value) => {
     if (!value) return null
     const s = typeof value === 'string' ? value : new Date(value).toISOString()
@@ -118,10 +116,7 @@ const OrderListScreen = ({ history }) => {
       )
     }
 
-    // MỚI: badge phụ — đơn có thể VỪA "đã thanh toán" VỪA "cần hoàn tiền
-    // thừa" cùng lúc (2 trạng thái không loại trừ nhau), nên hiện thêm bên
-    // dưới thay vì thay thế mainBadge, giúp Admin thấy ngay trong danh sách
-    // mà không cần mở từng đơn hoặc phụ thuộc vào thông báo chuông.
+    // MỚI: badge phụ — đơn có thể VỪA "đã thanh toán" VỪA "cần hoàn tiền thừa" cùng lúc (2 trạng thái không loại trừ nhau), nên hiện thêm bên
     const overpaidBadge = order?.overpaidRefundStatus === 'pending' && (
       <div style={{ marginTop: 4 }}>
         <span

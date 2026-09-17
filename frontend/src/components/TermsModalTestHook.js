@@ -10,4 +10,3 @@ const TermsModalTestHook = ({ onOpened }) => {
 }
 
 export default TermsModalTestHook
-

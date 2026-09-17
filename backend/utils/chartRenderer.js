@@ -5,19 +5,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// ══════════════════════════════════════════════════════════════════
-// Render biểu đồ ra ảnh PNG (qua SVG → sharp) — dùng chung cho Excel
-// (worksheet.addImage) và PDF (doc.image()). Lý do dùng ảnh thay vì
-// chart "sống": ExcelJS không hỗ trợ tạo chart object thật.
-//
-// Font: nhúng "Be Vietnam Pro" (base64 qua @font-face) — font thiết kế
-// riêng cho tiếng Việt, đảm bảo hiển thị đúng dấu bất kể máy chủ cài
-// font gì (không phụ thuộc "sans-serif" hệ thống).
-//
-// Độ nét: SVG được rasterize ở mật độ 2x (retina) rồi khi nhúng vào
-// Excel/PDF vẫn khai báo đúng kích thước hiển thị "logic" như cũ — ảnh
-// chỉ nét hơn, không to hơn trên trang.
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ Render biểu đồ ra ảnh PNG (qua SVG → sharp) — dùng chung cho Excel
 
 const FONT_REGULAR_PATH = path.join(__dirname, '../assets/fonts/BeVietnamPro-Regular.ttf')
 const FONT_SEMIBOLD_PATH = path.join(__dirname, '../assets/fonts/BeVietnamPro-SemiBold.ttf')

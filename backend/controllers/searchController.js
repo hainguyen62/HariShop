@@ -2,11 +2,7 @@ import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
 import { callAI } from '../utils/aiProvider.js'
 
-// ═══════════════════ B3: Tìm kiếm bằng ngôn ngữ tự nhiên ═══════════════════
-// Khách gõ 1 câu tự nhiên (có thể sai chính tả/viết tắt/không dấu), AI phân tích
-// thành các tiêu chí có cấu trúc (brand, category, giá, màu, sắp xếp...), sau đó
-// hệ thống tự chạy MongoDB query với các tiêu chí đó — KHÔNG thay thế thanh tìm
-// kiếm từ khoá hiện có, mà chạy song song như một lựa chọn bổ sung.
+// ═══════════════════ B3: Tìm kiếm bằng ngôn ngữ tự nhiên ═══════════════════ Khách gõ 1 câu tự nhiên (có thể sai chính tả/viết tắt/không dấu), AI phân tích
 
 const PAGE_SIZE = 12
 const MAX_QUERY_LENGTH = 300

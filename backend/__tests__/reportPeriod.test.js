@@ -1,10 +1,4 @@
-// ══════════════════════════════════════════════════════════════════
-// Test resolvePeriodRange (backend/utils/reportPeriod.js) — hàm tính
-// khoảng ngày cho báo cáo doanh thu (tháng/quý/năm/tuỳ chọn) + kỳ liền
-// trước để so sánh tăng trưởng. Trọng tâm test là các trường hợp BIÊN
-// dễ lỗi off-by-one: tháng 1 → kỳ trước phải là tháng 12 năm TRƯỚC (lùi
-// năm), quý 1 → kỳ trước phải là quý 4 năm trước.
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ Test resolvePeriodRange (backend/utils/reportPeriod.js) — hàm tính
 import { resolvePeriodRange } from '../utils/reportPeriod.js'
 
 describe('resolvePeriodRange — period=month', () => {

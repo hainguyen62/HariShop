@@ -6,12 +6,7 @@ const SUGGEST_LIMIT = 8
 const BRAND_LIMIT = 4
 const CATEGORY_LIMIT = 3
 
-// ═══════════════════ Gợi ý tìm kiếm theo thời gian thực (Autocomplete) ═══════════════════
-// GET /api/products/suggest?q=...
-// Trả về gợi ý được nhóm theo loại (brand / category / product), không phân
-// biệt hoa-thường và không phân biệt dấu (so khớp trên field *Normalized đã
-// được tính sẵn — xem productModel.js). Chỉ trả về các trường cần thiết cho
-// dropdown để giữ response nhẹ (đúng yêu cầu tối ưu hiệu năng).
+// ═══════════════════ Gợi ý tìm kiếm theo thời gian thực (Autocomplete) ═══════════════════ GET /api/products/suggest?q=...
 const getSearchSuggestions = asyncHandler(async (req, res) => {
   const rawQuery = String(req.query.q || '').trim()
 

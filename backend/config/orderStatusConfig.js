@@ -1,6 +1,4 @@
-// ─── A3: Cấu hình dùng chung cho 12 trạng thái đơn hàng theo timeline ───────
-// Dùng chung giữa OrderScreen.js (chi tiết đơn) và OrderListScreen.js (bảng Admin)
-// để đảm bảo nhãn/màu/icon luôn đồng nhất ở mọi nơi hiển thị trạng thái.
+// ─── A3: Cấu hình dùng chung cho 12 trạng thái đơn hàng theo timeline ─────── Dùng chung giữa OrderScreen.js (chi tiết đơn) và OrderListScreen.js (bảng Admin)
 
 // 8 bước chính trong luồng thường (dùng cho Timeline dọc)
 export const STATUS_STEPS = [

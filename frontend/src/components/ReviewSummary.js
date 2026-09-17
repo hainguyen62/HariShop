@@ -2,9 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getReviewSummary } from '../actions/productActions'
 
-// ═══════════════════ B5: Tóm tắt & phân tích đánh giá bằng AI ═══════════════════
-// Khi sản phẩm có đủ đánh giá (>=3), AI tự động tổng hợp ưu/nhược điểm kèm số lượt
-// đề cập, giúp khách nắm nhanh mà không cần đọc hết từng đánh giá.
+// ═══════════════════ B5: Tóm tắt & phân tích đánh giá bằng AI ═══════════════════ Khi sản phẩm có đủ đánh giá (>=3), AI tự động tổng hợp ưu/nhược điểm kèm số lượt
 
 const chipStyle = (color) => ({
   display: 'inline-flex',

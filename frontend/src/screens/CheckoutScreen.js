@@ -25,7 +25,6 @@ import { validateVoucherCode } from '../actions/voucherActions'
 import { listProductDetails } from '../actions/productActions'
 import { getShippingQuotes } from '../actions/shippingActions'
 
-
 const generateTransferContent = () =>
 
   'TT' + String(Math.floor(100000 + Math.random() * 900000))
@@ -38,7 +37,6 @@ const carrierLabel = (carrier) => {
     default: return carrier
   }
 }
-
 
 const formatAddress = (addr) => {
   return [
@@ -129,7 +127,6 @@ const CheckoutScreen = ({ history, location }) => {
     } else {
       setSelectedCartItemsLoaded(true)
     }
-
 
     if (isBuyNow && buyNowProductId) {
       dispatch(listProductDetails(buyNowProductId))
@@ -228,7 +225,6 @@ const CheckoutScreen = ({ history, location }) => {
     return () => clearTimeout(t)
   }, [dispatch, selectedAddress, cartItems, selectedCartItems, selectedCartItemsLoaded, isBuyNow, buyNowItem])
 
-
   useEffect(() => {
     if (success && order) {
       localStorage.removeItem('selectedCartItems')
@@ -279,9 +275,7 @@ const CheckoutScreen = ({ history, location }) => {
     dispatch(saveVoucherDiscount(Number(voucher.discountAmount) || 0))
   }
 
-  // MỚI (VIII): tự động kiểm tra lại điều kiện voucher mỗi khi giỏ hàng
-  // thay đổi (tạm tính hoặc phí ship đổi) — nếu voucher đang áp dụng
-  // không còn đủ điều kiện, tự động bỏ áp dụng + thông báo cho khách.
+  // MỚI (VIII): tự động kiểm tra lại điều kiện voucher mỗi khi giỏ hàng thay đổi (tạm tính hoặc phí ship đổi) — nếu voucher đang áp dụng
   const voucherRecheckKey = `${selectedVoucher?.code || ''}:${itemsPrice}:${deliveryFee}`
   const prevRecheckKey = useRef(voucherRecheckKey)
   useEffect(() => {
@@ -311,7 +305,6 @@ const CheckoutScreen = ({ history, location }) => {
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voucherRecheckKey])
-
 
   const placeOrderHandler = () => {
     if (!agreeTerms) { alert('Vui lòng đồng ý với điều khoản!'); return }
@@ -364,7 +357,6 @@ const CheckoutScreen = ({ history, location }) => {
       transferContent,
     }))
   }
-
 
   const sectionStyle = {
     background: '#1a1a2e',
@@ -587,7 +579,6 @@ const CheckoutScreen = ({ history, location }) => {
             selectedCode={selectedVoucher?.code}
             onConfirm={handleVoucherConfirm}
           />
-
 
           {/* 4. LỜI NHẮN */}
           <div style={sectionStyle}>

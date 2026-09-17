@@ -51,9 +51,7 @@ const buildVietQRUrl = (amount, content) =>
   `?amount=${amount}&addInfo=${encodeURIComponent(content)}&accountName=HARISHOP`
 // ─────────────────────────────────────────────────────────────────────────────
 
-// MỚI: đếm ngược tới thời điểm đơn tự động bị hủy (24h kể từ lúc đặt) nếu
-// vẫn chưa thanh toán — dùng chung cho cả badge gọn (thanh trạng thái) và
-// box chi tiết (khu vực QR) bên dưới.
+// MỚI: đếm ngược tới thời điểm đơn tự động bị hủy (24h kể từ lúc đặt) nếu vẫn chưa thanh toán — dùng chung cho cả badge gọn (thanh trạng thái) và
 const AUTO_CANCEL_HOURS = 24
 
 const useAutoCancelCountdown = (createdAt) => {
@@ -210,9 +208,7 @@ const GHN_STATUS_LABEL = {
 const getGHNStatus = (status) =>
   GHN_STATUS_LABEL[status] || { label: status || 'Không rõ', color: '#b8bcc8', icon: 'fas fa-circle' }
 
-// ─── A3: 12 trạng thái đơn hàng chi tiết theo timeline ───────────────────────
-// (STATUS_STEPS, BRANCH_STATUSES, ADMIN_STATUS_OPTIONS được import dùng chung
-// từ '../constants/orderStatusConfig' — xem import ở đầu file)
+// ─── A3: 12 trạng thái đơn hàng chi tiết theo timeline ─────────────────────── (STATUS_STEPS, BRANCH_STATUSES, ADMIN_STATUS_OPTIONS được import dùng chung
 
 const formatDateTime = (d) => {
   if (!d) return ''

@@ -1,7 +1,4 @@
-// Bản sao phía frontend của utils/vietnameseNormalize.js ở backend — dùng để
-// tô đậm (highlight) đúng đoạn chữ khớp trên chuỗi GỐC (có dấu) dựa theo vị
-// trí tìm được trên chuỗi đã chuẩn hóa (không dấu). Phép thay thế giữ
-// nguyên độ dài chuỗi (1 ký tự → 1 ký tự) nên vị trí luôn khớp 1-1.
+// Bản sao phía frontend của utils/vietnameseNormalize.js ở backend — dùng để tô đậm (highlight) đúng đoạn chữ khớp trên chuỗi GỐC (có dấu) dựa theo vị
 
 const DIACRITIC_MAP = {
   à: 'a', á: 'a', ạ: 'a', ả: 'a', ã: 'a',

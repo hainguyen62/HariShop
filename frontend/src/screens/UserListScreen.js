@@ -10,7 +10,6 @@ import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 import SortableHeader from '../components/SortableHeader'
 import { useTableSort, sortConfigToQuery } from '../utils/sortHelper'
 
-
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch()
 
@@ -41,7 +40,6 @@ const UserListScreen = ({ history }) => {
     setDeleteId(id)
     setShowConfirm(true)
   }
-
 
   return (
     <>

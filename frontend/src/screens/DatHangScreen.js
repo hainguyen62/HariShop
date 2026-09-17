@@ -154,7 +154,6 @@ const DatHangScreen = ({ history, location }) => {
     }))
   }
 
-
   const isButtonDisabled = !termsAgreed || !cartItems.length || !deliveryMethod || !paymentMethod || !defaultAddress
 
   return (
@@ -435,4 +434,3 @@ const DatHangScreen = ({ history, location }) => {
 }
 
 export default DatHangScreen
-

@@ -8,7 +8,6 @@ import Loader from '../components/Loader'
 import { createVoucher, updateVoucher, listVouchers } from '../actions/voucherAdminActions'
 import { VOUCHER_CREATE_RESET, VOUCHER_UPDATE_RESET } from '../constants/voucherConstants'
 
-
 const toInputDateTime = (d) => {
   if (!d) return ''
   const dt = new Date(d)
@@ -22,7 +21,6 @@ const VoucherEditScreen = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { id } = useParams()
-
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -70,7 +68,6 @@ const VoucherEditScreen = () => {
     }
   }, [dispatch, history, isEdit, userInfo?.isAdmin, vouchers])
 
-
   useEffect(() => {
     if (!isEdit) return
     const v = (vouchers || []).find((x) => x?._id === id || String(x?._id) === String(id))
@@ -100,8 +97,6 @@ const VoucherEditScreen = () => {
     }
   }, [dispatch, history, successCreate, successUpdate])
 
-
-
   const onChange = (e) => {
     const { name, value, type, checked } = e.target
     setForm((prev) => ({
@@ -109,7 +104,6 @@ const VoucherEditScreen = () => {
       [name]: type === 'checkbox' ? checked : value,
     }))
   }
-
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -179,8 +173,6 @@ const VoucherEditScreen = () => {
           }
         `}
       </style>
-
-
 
       {loadingCreate || loadingUpdate ? <SafeLoader /> : null}
 

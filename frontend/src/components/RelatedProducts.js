@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Product from './Product'
 import { getRelatedProducts } from '../actions/productActions'
 
-// ═══════════════════ B4: Gợi ý sản phẩm thông minh (trang chi tiết sản phẩm) ═══════════════════
-// Hiện 2 khối: "Sản phẩm tương tự" (cùng brand/category, giá gần nhau) và
-// "Khách hàng thường mua cùng" (phân tích lịch sử đơn hàng thật trong DB).
+// ═══════════════════ B4: Gợi ý sản phẩm thông minh (trang chi tiết sản phẩm) ═══════════════════ Hiện 2 khối: "Sản phẩm tương tự" (cùng brand/category, giá gần nhau) và
 
 const ProductRow = ({ title, icon, products }) => {
   if (!products || products.length === 0) return null

@@ -38,4 +38,3 @@ export const shippingTrackReducer = (state = { events: [] }, action) => {
       return state
   }
 }
-

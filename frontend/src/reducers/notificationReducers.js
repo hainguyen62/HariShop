@@ -55,9 +55,7 @@ export const notificationReducer = (state = initialState, action) => {
         unreadCount: state.unreadCount + 1,
         notifications: [action.payload, ...state.notifications].slice(0, 100),
       }
-    // MỚI: xoá thông báo — loại khỏi danh sách, giảm unreadCount nếu nó
-    // đang chưa đọc (dùng lại wasUnread trả về từ backend cho chắc chắn,
-    // thay vì tự đoán lại từ state phía client).
+    // MỚI: xoá thông báo — loại khỏi danh sách, giảm unreadCount nếu nó đang chưa đọc (dùng lại wasUnread trả về từ backend cho chắc chắn,
     case NOTIFICATION_DELETE_SUCCESS:
       return {
         ...state,

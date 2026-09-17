@@ -21,4 +21,3 @@ router.get('/wards', getWards)
 router.get('/track/:carrier/:trackingId', trackShipment)
 
 export default router
-

@@ -111,7 +111,6 @@ async function createGHNOrder(order, warehouseAddress) {
 
   try {
     const res = await ghnFetchJson('/v2/shipping-order/create', { token, shopId, body: payload })
-    console.log('✅ GHN order created:', res?.data?.order_code)
     return res?.data || null
   } catch (e) {
     console.error('❌ GHN create order failed:', e.message)
@@ -177,9 +176,7 @@ async function createGHTKOrder(order, warehouseAddress) {
   }
 
   const headers = { 'Content-Type': 'application/json', Token: token }
-  // ⚠️ Một số tài khoản GHTK (đối tác chính thức) bắt buộc thêm header này khi
-  // TẠO ĐƠN thật (khác API tính phí không cần). Nếu GHTK báo lỗi thiếu thông
-  // tin đối tác, cần xin mã X-Client-Source từ GHTK rồi điền GHTK_PARTNER_CODE.
+  // ⚠️ Một số tài khoản GHTK (đối tác chính thức) bắt buộc thêm header này khi TẠO ĐƠN thật (khác API tính phí không cần). Nếu GHTK báo lỗi thiếu thông
   const partnerCode = (process.env.GHTK_PARTNER_CODE || '').trim()
   if (partnerCode) headers['X-Client-Source'] = partnerCode
 
@@ -193,7 +190,6 @@ async function createGHTKOrder(order, warehouseAddress) {
     if (!res.ok || !data?.success) {
       throw new Error(data?.message || `GHTK error (HTTP ${res.status})`)
     }
-    console.log('✅ GHTK order created:', data?.order?.label)
     return { ...data?.order, partnerOrderId } || null
   } catch (e) {
     console.error('❌ GHTK create order failed:', e.message)
@@ -201,14 +197,7 @@ async function createGHTKOrder(order, warehouseAddress) {
   }
 }
 
-// ── MỚI: trừ tồn kho AN TOÀN dưới tải đồng thời — dùng findOneAndUpdate với
-// điều kiện "đủ hàng" ngay trong câu lệnh (atomic ở tầng MongoDB), thay vì
-// đọc → sửa trong bộ nhớ → save() như trước (2 request có thể cùng đọc thấy
-// "còn hàng" rồi cùng trừ, dẫn tới bán vượt tồn kho khi nhiều người đặt cùng
-// lúc một sản phẩm sắp hết). Chạy bên trong `session` của 1 transaction —
-// nếu BẤT KỲ sản phẩm nào không đủ hàng, hàm throw để caller abort toàn bộ
-// transaction (tất cả hoặc không gì cả, kể cả khi đơn có nhiều sản phẩm và
-// 1 trong số đó hết hàng giữa chừng).
+// ── MỚI: trừ tồn kho AN TOÀN dưới tải đồng thời — dùng findOneAndUpdate với điều kiện "đủ hàng" ngay trong câu lệnh (atomic ở tầng MongoDB), thay vì
 async function deductStockAtomic(orderItems, productMap, session) {
   for (const item of orderItems) {
     const product = productMap[item.product?.toString()]
@@ -243,7 +232,6 @@ async function deductStockAtomic(orderItems, productMap, session) {
       throw err
     }
 
-    console.log(`✅ Trừ stock (atomic): ${productName}${item.color ? ` [${item.color}]` : ''} -${item.qty}`)
   }
 }
 
@@ -442,11 +430,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
   if (isNaN(itemsPrice) || itemsPrice < 0) { res.status(400); throw new Error('Invalid items price') }
   if (isNaN(totalPrice) || totalPrice <= 0) { res.status(400); throw new Error('Invalid total price') }
 
-  // ── MỚI (B8): kiểm tra lại GIÁ THẬT của từng sản phẩm ngay trước khi tạo đơn ──
-  // Phòng trường hợp Flash Sale đã hết hạn (hoặc giá đổi) trong lúc khách đang thanh
-  // toán mà chưa quay lại giỏ hàng để đồng bộ giá, hoặc dữ liệu gửi lên bị chỉnh sửa.
-  // Nếu có bất kỳ sản phẩm nào lệch giá → từ chối tạo đơn, yêu cầu khách xem lại giỏ hàng
-  // (an toàn hơn nhiều so với việc âm thầm tự tính lại tổng tiền).
+  // ── MỚI (B8): kiểm tra lại GIÁ THẬT của từng sản phẩm ngay trước khi tạo đơn ── Phòng trường hợp Flash Sale đã hết hạn (hoặc giá đổi) trong lúc khách đang thanh
   const productIds = [...new Set(orderItems.map((item) => item.product))]
   const currentProducts = await Product.find({ _id: { $in: productIds } }).lean()
   const productMap = {}
@@ -462,12 +446,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
   const totalWeight = computeTotalWeight(orderItems, frontendTotalWeight)
 
-  // ── MỚI: validate voucher TRƯỚC KHI tạo đơn (fail-fast). Trước đây
-  // việc kiểm tra voucher chạy SAU khi đơn đã được lưu — nếu voucher hoá
-  // ra không hợp lệ (hết lượt/hết hạn/vượt giới hạn user) thì đơn vẫn
-  // được tạo với giảm giá đã tính sẵn, chỉ là usedCount không tăng. Giờ
-  // nếu voucher không hợp lệ, từ chối tạo đơn ngay — đúng yêu cầu "Nếu
-  // không hợp lệ → Không tạo đơn, trả lỗi tương ứng".
+  // ── MỚI: validate voucher TRƯỚC KHI tạo đơn (fail-fast). Trước đây việc kiểm tra voucher chạy SAU khi đơn đã được lưu — nếu voucher hoá
   let voucherDoc = null
   const normalizedVoucherCode = String(voucherCode || '').trim().toUpperCase()
   if (normalizedVoucherCode) {
@@ -498,12 +477,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     }
   }
 
-  // ── MỚI: gộp tạo đơn + trừ kho + tăng lượt voucher vào 1 transaction
-  // MongoDB duy nhất — "tất cả hoặc không gì cả". Nếu bất kỳ sản phẩm nào
-  // không đủ hàng (kể cả khi 1 trong nhiều sản phẩm của đơn hết hàng giữa
-  // chừng), hoặc voucher vừa hết lượt đúng lúc này, TOÀN BỘ transaction
-  // được rollback — không để lại đơn hàng "ma" hay tồn kho bị trừ nhầm.
-  // Yêu cầu MongoDB chạy dạng replica set (MongoDB Atlas mặc định đã vậy).
+  // ── MỚI: gộp tạo đơn + trừ kho + tăng lượt voucher vào 1 transaction MongoDB duy nhất — "tất cả hoặc không gì cả". Nếu bất kỳ sản phẩm nào
   const session = await mongoose.startSession()
   session.startTransaction()
 
@@ -559,9 +533,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     // Trừ tồn kho ATOMIC — throw ngay nếu bất kỳ sản phẩm nào không đủ hàng
     await deductStockAtomic(orderItems, productMap, session)
 
-    // Tăng lượt dùng voucher TRONG CÙNG transaction — nếu vừa hết lượt
-    // đúng lúc này (2 khách cùng dùng 1 voucher sắp hết lượt), rollback
-    // toàn bộ thay vì tạo đơn với voucher không còn hợp lệ.
+    // Tăng lượt dùng voucher TRONG CÙNG transaction — nếu vừa hết lượt đúng lúc này (2 khách cùng dùng 1 voucher sắp hết lượt), rollback
     if (voucherDoc) {
       const condition = { code: voucherDoc.code, isActive: true }
       if (Number(voucherDoc.usageLimit || 0) > 0) {
@@ -592,11 +564,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     session.endSession()
   }
 
-  // Từ đây trở đi, đơn đã được tạo + trừ kho + trừ lượt voucher thành công
-  // (transaction đã commit). Các bước còn lại (tạo vận đơn GHN/GHTK, gửi
-  // thông báo) vẫn giữ nguyên kiểu best-effort/non-fatal như trước — vì đây
-  // là các lệnh gọi API bên ngoài, không thể tham gia transaction MongoDB.
-  // đơn GHN bất kể khách chọn hãng nào (kể cả GHTK/VTP), là lỗi logic thừa.
+  // Từ đây trở đi, đơn đã được tạo + trừ kho + trừ lượt voucher thành công (transaction đã commit). Các bước còn lại (tạo vận đơn GHN/GHTK, gửi
   if (shippingProvider === 'ghn') {
     try {
       const settings = await Settings.findOne({ key: 'global' }).lean().catch(() => null)
@@ -608,7 +576,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
         createdOrder.ghnSortCode    = ghnData.sort_code || ''
         createdOrder.ghnTrackingUrl = `https://tracking.ghn.dev/?order_code=${ghnData.order_code}`
         await createdOrder.save()
-        console.log('✅ Lưu ghnOrderCode vào order:', ghnData.order_code)
       }
     } catch (e) {
       console.error('❌ Lỗi tạo vận đơn GHN (non-fatal):', e.message)
@@ -626,7 +593,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
         createdOrder.ghtkLabelCode = ghtkData.label
         createdOrder.ghtkPartnerId = ghtkData.partnerOrderId || ''
         await createdOrder.save()
-        console.log('✅ Lưu ghtkLabelCode vào order:', ghtkData.label)
       }
     } catch (e) {
       console.error('❌ Lỗi tạo vận đơn GHTK (non-fatal):', e.message)
@@ -693,9 +659,7 @@ const checkWarranty = asyncHandler(async (req, res) => {
   const phoneMatches = order && normalize(order.shippingAddress?.phone) === normalize(phone)
 
   if (!order || !phoneMatches) {
-    // MỚI: cố tình dùng chung 1 thông báo lỗi cho cả 2 trường hợp "không
-    // tìm thấy đơn" và "sai số điện thoại" — không tiết lộ trường hợp nào
-    // đúng/sai để tránh kẻ xấu dò mã đơn hàng ngẫu nhiên rồi thử phone.
+    // MỚI: cố tình dùng chung 1 thông báo lỗi cho cả 2 trường hợp "không tìm thấy đơn" và "sai số điện thoại" — không tiết lộ trường hợp nào
     res.status(404)
     throw new Error('Không tìm thấy đơn hàng khớp với số điện thoại đã nhập')
   }
@@ -827,11 +791,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
     order.cancelledAt = order.cancelledAt || new Date()
   }
 
-  // ── MỚI: hoàn tồn kho khi đơn kết thúc hẳn ở trạng thái 'cancelled'
-  // hoặc 'returned' (khách trả hàng sau khi đã nhận). Không hoàn ở
-  // 'delivery_failed' vì đơn còn có thể giao lại — chỉ hoàn khi đã
-  // chắc chắn không đến tay khách. Có cờ stockRestored chống hoàn 2 lần
-  // (ví dụ đơn từng được hoàn qua approveCancelOrder trước đó).
+  // ── MỚI: hoàn tồn kho khi đơn kết thúc hẳn ở trạng thái 'cancelled' hoặc 'returned' (khách trả hàng sau khi đã nhận). Không hoàn ở
   if (status === 'cancelled' || status === 'returned') {
     await restoreStockForOrder(order)
     await revertVoucherForOrder(order)
@@ -913,9 +873,7 @@ const getOrders = asyncHandler(async (req, res) => {
     },
   }
 
-  // Rank "Trạng thái thanh toán" theo đúng ý nghĩa hiển thị ở
-  // OrderListScreen (renderPaymentStatus): chưa thanh toán < yêu cầu
-  // hoàn tiền < từ chối hoàn tiền < đã thanh toán < đã hoàn tiền.
+  // Rank "Trạng thái thanh toán" theo đúng ý nghĩa hiển thị ở OrderListScreen (renderPaymentStatus): chưa thanh toán < yêu cầu
   const paymentStatusRankSwitch = {
     $switch: {
       branches: [
@@ -998,11 +956,6 @@ const GHN_TO_ORDER_STATUS = {
 }
 
 // ⚠️ MỚI: mapping mã trạng thái GHTK (1-12, theo tài liệu công khai của GHTK)
-// sang 12 trạng thái nội bộ. GIỐNG GHI CHÚ trong services/shipping/providers/
-// ghtk.js: hàm track() gọi API này CHƯA từng được đối chiếu với 1 đơn GHTK
-// THẬT — nếu bạn dùng GHTK thật, nên tạo 1 đơn test, gọi thử endpoint
-// /api/orders/:id/track, so sánh currentStatusCode trả về với bảng mã dưới
-// đây trước khi tin tưởng hoàn toàn vào auto-sync này.
 const GHTK_TO_ORDER_STATUS = {
   '1':  'pending',           // Chưa tiếp nhận
   '2':  'confirmed',         // Đã tiếp nhận
@@ -1062,12 +1015,7 @@ async function syncOrderStatusFromGHTK(order) {
   }
 }
 
-// MỚI: Tách phần "gọi GHN lấy trạng thái mới nhất + tự cập nhật đơn hàng nội
-// bộ" ra hàm riêng — dùng chung cho cả 2 luồng:
-//  1) trackOrder (thủ công — khách/admin bấm nút "Theo dõi vận chuyển")
-//  2) autoSyncPendingGHNOrders (tự động — chạy định kỳ nền, xem cuối file)
-// Hàm này KHÔNG đụng tới req/res, chỉ nhận vào 1 document Order và trả về
-// dữ liệu tracking để nơi gọi tự quyết định làm gì tiếp (render JSON, log...).
+// MỚI: Tách phần "gọi GHN lấy trạng thái mới nhất + tự cập nhật đơn hàng nội bộ" ra hàm riêng — dùng chung cho cả 2 luồng:
 async function syncOrderStatusFromGHN(order) {
   const orderCode = order.ghnOrderCode
   if (!orderCode) {
@@ -1096,17 +1044,12 @@ async function syncOrderStatusFromGHN(order) {
       order.isCancelled = true
       order.cancelledAt = order.cancelledAt || new Date()
     }
-    // SỬA: cùng loại lỗi vừa phát hiện ở nhánh 'cancelled' — trước đây khi
-    // GHN tự báo "đã giao" qua auto-sync (không phải admin bấm tay), cờ
-    // isDelivered không hề được set true dù status đã là 'delivered'.
+    // SỬA: cùng loại lỗi vừa phát hiện ở nhánh 'cancelled' — trước đây khi GHN tự báo "đã giao" qua auto-sync (không phải admin bấm tay), cờ
     if (mappedStatus === 'delivered') {
       order.isDelivered = true
       order.deliveredAt = order.deliveredAt || new Date()
     }
-    // ── MỚI: hoàn tồn kho khi GHN báo đơn đã hủy/hoàn về — đây là
-    // đường dẫn thứ 3 (ngoài approveCancelOrder và updateOrderStatus)
-    // trước đây bị bỏ sót, khiến đơn bị hủy TRÊN GHN rồi đồng bộ về
-    // hệ thống nội bộ không hề hoàn kho.
+    // ── MỚI: hoàn tồn kho khi GHN báo đơn đã hủy/hoàn về — đây là đường dẫn thứ 3 (ngoài approveCancelOrder và updateOrderStatus)
     if (mappedStatus === 'cancelled' || mappedStatus === 'returned') {
       await restoreStockForOrder(order)
       await revertVoucherForOrder(order)
@@ -1161,21 +1104,10 @@ const trackOrder = asyncHandler(async (req, res) => {
   }
 })
 
-// MỚI: khóa đơn giản chống chạy chồng lệnh — nếu lần chạy trước (do số đơn
-// quá nhiều, mỗi đơn lại gọi API GHN thật) chưa xong mà đã tới giờ chạy lần
-// tiếp theo (mỗi 10 phút, xem server.js), sẽ BỎ QUA lần trigger mới thay vì
-// chạy chồng lên — tránh gọi trùng GHN cho cùng 1 đơn và tránh 2 lần chạy
-// cùng ghi đè trạng thái lộn xộn.
+// MỚI: khóa đơn giản chống chạy chồng lệnh — nếu lần chạy trước (do số đơn quá nhiều, mỗi đơn lại gọi API GHN thật) chưa xong mà đã tới giờ chạy lần
 let isSyncingGHN = false
 
-// MỚI: Tự động đồng bộ trạng thái cho TẤT CẢ đơn đang giao qua GHN, chạy định
-// kỳ nền (xem lịch chạy trong server.js). Chỉ xử lý đơn:
-//  - có ghnOrderCode (đã tạo vận đơn GHN thật)
-//  - chưa huỷ, chưa giao xong (không cần theo dõi nữa)
-// Xử lý theo LÔ song song (SYNC_BATCH_SIZE đơn/lô, có delay nhẹ giữa các lô)
-// thay vì tuần tự từng đơn — giảm đáng kể tổng thời gian 1 chu kỳ khi số đơn
-// tăng lên, mà vẫn không dồn dập toàn bộ request lên GHN cùng lúc. Lỗi ở 1
-// đơn không làm dừng các đơn còn lại.
+// MỚI: Tự động đồng bộ trạng thái cho TẤT CẢ đơn đang giao qua GHN, chạy định kỳ nền (xem lịch chạy trong server.js). Chỉ xử lý đơn:
 const SYNC_BATCH_SIZE = 5
 const SYNC_BATCH_DELAY_MS = 500 // nghỉ giữa mỗi lô (không phải giữa mỗi đơn)
 
@@ -1188,16 +1120,9 @@ async function autoSyncPendingGHNOrders() {
   isSyncingGHN = true
 
   try {
-    // SỬA LỖI: điều kiện cũ chỉ kiểm tra 2 cờ boolean isCancelled/isDelivered —
-    // nếu vì lý do gì đó status đã là 'cancelled'/'delivered'/'returned' nhưng
-    // 2 cờ này chưa/không được cập nhật theo (dữ liệu cũ trước khi có field
-    // status, hoặc bị lệch do sửa tay), đơn đó sẽ bị đồng bộ MÃI MÃI vì điều
-    // kiện chưa từng nhìn vào status. Giờ kiểm tra CẢ status lẫn 2 cờ cũ —
-    // chỉ cần 1 trong 2 nguồn báo "đã kết thúc" là dừng, không chờ cả 2 khớp.
+    // SỬA LỖI: điều kiện cũ chỉ kiểm tra 2 cờ boolean isCancelled/isDelivered — nếu vì lý do gì đó status đã là 'cancelled'/'delivered'/'returned' nhưng
     const pendingOrders = await Order.find({
-      // MỚI: thêm $exists: true — $ne: '' một mình sẽ khớp NHẦM cả các đơn
-      // hàng cũ (tạo trước khi field ghnOrderCode tồn tại trong schema),
-      // vì với MongoDB, field không tồn tại cũng được coi là "khác rỗng".
+      // MỚI: thêm $exists: true — $ne: '' một mình sẽ khớp NHẦM cả các đơn hàng cũ (tạo trước khi field ghnOrderCode tồn tại trong schema),
       ghnOrderCode: { $exists: true, $ne: '' },
       isCancelled: { $ne: true },
       isDelivered: { $ne: true },
@@ -1249,9 +1174,7 @@ async function autoSyncPendingGHNOrders() {
   }
 }
 
-// MỚI: bản GHTK của autoSyncPendingGHNOrders — cùng cấu trúc khóa chống
-// chồng lệnh + xử lý theo lô song song, chỉ khác nguồn dữ liệu (ghtkLabelCode
-// thay vì ghnOrderCode, gọi syncOrderStatusFromGHTK thay vì …FromGHN).
+// MỚI: bản GHTK của autoSyncPendingGHNOrders — cùng cấu trúc khóa chống chồng lệnh + xử lý theo lô song song, chỉ khác nguồn dữ liệu (ghtkLabelCode
 let isSyncingGHTK = false
 
 async function autoSyncPendingGHTKOrders() {
@@ -1319,13 +1242,7 @@ const cancelOrderRequest = asyncHandler(async (req, res) => {
   if (order.user.toString() !== req.user._id.toString()) { res.status(401); throw new Error('Không có quyền') }
   if (order.isDelivered) { res.status(400); throw new Error('Đơn hàng đã giao, không thể hủy') }
   if (order.isCancelled) { res.status(400); throw new Error('Đơn hàng đã bị hủy') }
-  // ── MỚI: trước đây chặn cứng mọi đơn ĐÃ THANH TOÁN (order.isPaid), khiến
-  // khách chuyển khoản QR trước không có cách nào tự yêu cầu hủy trong hệ
-  // thống (chỉ COD mới hủy được). Giờ cho phép hủy cả đơn đã thanh toán,
-  // miễn là ĐƠN VỊ VẬN CHUYỂN CHƯA LẤY HÀNG — sau khi Admin duyệt hủy, đơn
-  // chuyển sang trạng thái 'cancelled' và khách có thể dùng ngay chức năng
-  // yêu cầu hoàn tiền hiện có (requestRefund) vì điều kiện của nó đã khớp
-  // (isPaid + status cancelled).
+  // ── MỚI: trước đây chặn cứng mọi đơn ĐÃ THANH TOÁN (order.isPaid), khiến khách chuyển khoản QR trước không có cách nào tự yêu cầu hủy trong hệ
   const currentStatus = getCurrentOrderStatus(order)
   const NOT_YET_PICKED_UP = ['pending', 'confirmed', 'packing', 'waiting_pickup']
   if (!NOT_YET_PICKED_UP.includes(currentStatus)) {
@@ -1356,14 +1273,9 @@ const cancelOrderRequest = asyncHandler(async (req, res) => {
   res.json(updatedOrder)
 })
 
-// ── MỚI: hàm dùng chung hoàn tồn kho cho 1 đơn hàng — dùng ở cả
-// approveCancelOrder (khách yêu cầu hủy được duyệt) VÀ updateOrderStatus
-// (admin/GHN đẩy trạng thái sang 'cancelled' hoặc 'returned'). Có cờ
-// order.stockRestored để đảm bảo CHỈ hoàn kho ĐÚNG 1 LẦN dù đơn có đi
-// qua nhiều đường dẫn khác nhau tới cùng kết cục "không giao được".
+// ── MỚI: hàm dùng chung hoàn tồn kho cho 1 đơn hàng — dùng ở cả approveCancelOrder (khách yêu cầu hủy được duyệt) VÀ updateOrderStatus
 const restoreStockForOrder = async (order) => {
   if (order.stockRestored) {
-    console.log(`ℹ️ Đơn #${order._id} đã hoàn kho trước đó, bỏ qua.`)
     return
   }
 
@@ -1378,7 +1290,6 @@ const restoreStockForOrder = async (order) => {
         if (colorIndex !== -1) {
           product.colors[colorIndex].countInStock += item.qty
           await product.save()
-          console.log(`✅ Hoàn stock: ${product.name} [${item.color}] +${item.qty}`)
         }
       } else {
         product.countInStock += item.qty
@@ -1391,9 +1302,7 @@ const restoreStockForOrder = async (order) => {
   }
 }
 
-// ── MỚI: hàm dùng chung hoàn usedCount + gỡ usedBy của voucher cho 1 đơn
-// — dùng ở approveCancelOrder, updateOrderStatus, syncOrderStatusFromGHN,
-// deleteOrder. Có cờ order.voucherReverted để chỉ hoàn ĐÚNG 1 LẦN.
+// ── MỚI: hàm dùng chung hoàn usedCount + gỡ usedBy của voucher cho 1 đơn — dùng ở approveCancelOrder, updateOrderStatus, syncOrderStatusFromGHN,
 const revertVoucherForOrder = async (order) => {
   if (!order.voucherCode || order.voucherReverted) return
   try {
@@ -1405,18 +1314,12 @@ const revertVoucherForOrder = async (order) => {
       }
     )
     order.voucherReverted = true
-    console.log(`✅ Hoàn usedCount voucher: ${order.voucherCode}`)
   } catch (e) {
     console.error('❌ Lỗi hoàn usedCount voucher (non-fatal):', e.message)
   }
 }
 
-// ── MỚI: tự động hủy đơn thanh toán online (SePay QR) nếu quá 24 giờ vẫn
-// chưa thanh toán. Không áp dụng cho đơn COD (khách trả tiền lúc nhận hàng,
-// không có khái niệm "hết hạn thanh toán trước"). Dùng lại đúng 2 helper
-// hoàn kho/hoàn voucher đã có (restoreStockForOrder, revertVoucherForOrder)
-// để không viết trùng logic — đơn tự hủy được xử lý giống hệt đơn admin
-// duyệt hủy, chỉ khác người thực hiện (hệ thống, không phải admin).
+// ── MỚI: tự động hủy đơn thanh toán online (SePay QR) nếu quá 24 giờ vẫn chưa thanh toán. Không áp dụng cho đơn COD (khách trả tiền lúc nhận hàng,
 let isCancellingUnpaid = false
 
 const AUTO_CANCEL_UNPAID_HOURS = 24
@@ -1487,7 +1390,6 @@ const approveCancelOrder = asyncHandler(async (req, res) => {
       await ghnFetchJson('/v2/switch-status/cancel', {
         token, shopId, body: { order_codes: [order.ghnOrderCode] },
       })
-      console.log('✅ Đã hủy vận đơn GHN:', order.ghnOrderCode)
     } catch (e) {
       console.warn('⚠️ Không thể hủy vận đơn GHN (non-fatal):', e.message)
     }
@@ -1557,9 +1459,7 @@ const requestRefund = asyncHandler(async (req, res) => {
   if (!order.isPaid) {
     res.status(400); throw new Error('Đơn hàng chưa thanh toán, không thể yêu cầu hoàn tiền')
   }
-  // MỚI: cho phép yêu cầu hoàn tiền cả khi đơn ở trạng thái "cancelled" —
-  // trước đây chỉ áp dụng cho giao hàng thất bại/hàng hoàn về kho, nhưng
-  // đơn đã thanh toán mà bị hủy (VD hủy trước khi giao) cũng cần hoàn tiền.
+  // MỚI: cho phép yêu cầu hoàn tiền cả khi đơn ở trạng thái "cancelled" — trước đây chỉ áp dụng cho giao hàng thất bại/hàng hoàn về kho, nhưng
   if (!['delivery_failed', 'returned', 'cancelled'].includes(order.status)) {
     res.status(400)
     throw new Error('Chỉ có thể yêu cầu hoàn tiền khi đơn bị hủy, giao hàng thất bại, hoặc hàng đã hoàn về kho')
@@ -1653,11 +1553,7 @@ const completeRefund = asyncHandler(async (req, res) => {
   res.json(updatedOrder)
 })
 
-// MỚI: Admin xác nhận ĐÃ chuyển khoản thủ công hoàn lại phần tiền khách
-// chuyển thừa qua SePay QR. Không có API chuyển tiền tự động (SePay chỉ đọc
-// được biến động số dư, không có quyền chuyển tiền đi) — admin tự thao tác
-// chuyển khoản qua app ngân hàng riêng, sau đó bấm xác nhận ở đây để hệ
-// thống ghi nhận lại, tránh phải nhớ/ dò trong ghi chú đơn hàng thủ công.
+// MỚI: Admin xác nhận ĐÃ chuyển khoản thủ công hoàn lại phần tiền khách chuyển thừa qua SePay QR. Không có API chuyển tiền tự động (SePay chỉ đọc
 const completeOverpaidRefund = asyncHandler(async (req, res) => {
   const { note } = req.body
 
@@ -1691,14 +1587,7 @@ const completeOverpaidRefund = asyncHandler(async (req, res) => {
   res.json(updatedOrder)
 })
 
-// MỚI: xác thực webhook SePay bằng HMAC-SHA256, đúng theo tài liệu chính
-// thức của SePay (developer.sepay.vn/en/sepay-webhooks/xac-thuc):
-//   - Header 'X-SePay-Signature': dạng 'sha256={hex_hash}'
-//   - Header 'X-SePay-Timestamp': Unix giây lúc SePay ký
-//   - Chuỗi được ký: `${timestamp}.${raw_body}` (dùng byte thô, KHÔNG phải
-//     req.body đã parse rồi JSON.stringify lại — 2 cái có thể lệch nhau do
-//     thứ tự key/khoảng trắng khác bản gốc, khiến chữ ký luôn sai)
-// Đồng thời chống replay: từ chối nếu timestamp lệch giờ server quá 5 phút.
+// MỚI: xác thực webhook SePay bằng HMAC-SHA256, đúng theo tài liệu chính thức của SePay (developer.sepay.vn/en/sepay-webhooks/xac-thuc):
 function verifySepaySignature(req) {
   const secret = (process.env.SEPAY_SECRET || '').trim()
   if (!secret) {
@@ -1742,7 +1631,6 @@ const sepayWebhook = async (req, res) => {
     }
 
     const data = req.body
-    console.log('[SePay Webhook] Nhận dữ liệu:', JSON.stringify(data, null, 2))
 
     // MỚI: chỉ xử lý giao dịch TIỀN VÀO — bỏ qua tiền ra (chuyển khoản đi),
     // dù dashboard SePay có lỡ để "Tất cả" thay vì chỉ "Tiền vào".
@@ -1773,11 +1661,7 @@ const sepayWebhook = async (req, res) => {
       return res.status(200).json({ success: true, message: 'Giao dịch này đã được xử lý trước đó (trùng lặp do gửi lại)' })
     }
 
-    // MỚI: kiểm tra số tiền chuyển khoản thật (transferAmount), CỘNG DỒN với
-    // các lần chuyển trước đó cho cùng đơn — hỗ trợ trường hợp khách chuyển
-    // thiếu ở lần đầu rồi chuyển bù phần còn lại ở lần sau. So sánh tổng cộng
-    // dồn với tổng đơn, KHÔNG so từng lần chuyển riêng lẻ (nếu so riêng lẻ,
-    // lần chuyển bù—vốn nhỏ hơn tổng đơn—sẽ lại bị báo "thiếu tiền" sai).
+    // MỚI: kiểm tra số tiền chuyển khoản thật (transferAmount), CỘNG DỒN với các lần chuyển trước đó cho cùng đơn — hỗ trợ trường hợp khách chuyển
     const transferAmount = Number(data.transferAmount || 0)
     order.paymentReceivedAmount = (order.paymentReceivedAmount || 0) + transferAmount
     if (sepayTxId) order.sepayTransactionIds.push(sepayTxId)
@@ -1801,10 +1685,7 @@ const sepayWebhook = async (req, res) => {
         user: null, // thông báo cho admin, không phải khách
       })
 
-      // Vẫn trả 200 + success:true — đây không phải lỗi kỹ thuật, chỉ là
-      // chưa đủ điều kiện đánh dấu thanh toán. Trả success:false sẽ khiến
-      // SePay hiểu nhầm là webhook thất bại rồi tự động gửi lại không cần
-      // thiết (xem ghi chú ở verifySepaySignature).
+      // Vẫn trả 200 + success:true — đây không phải lỗi kỹ thuật, chỉ là chưa đủ điều kiện đánh dấu thanh toán. Trả success:false sẽ khiến
       return res.status(200).json({ success: true, message: note })
     }
 
@@ -1817,9 +1698,7 @@ const sepayWebhook = async (req, res) => {
       email_address: '',
     }
 
-    // MỚI: nếu tổng cộng dồn vượt quá giá trị đơn (chuyển thừa — kể cả
-    // thừa do 1 lần hay do cộng dồn nhiều lần), vẫn đánh dấu đã thanh toán
-    // nhưng đánh dấu cần hoàn tiền để admin xử lý (xem completeOverpaidRefund).
+    // MỚI: nếu tổng cộng dồn vượt quá giá trị đơn (chuyển thừa — kể cả thừa do 1 lần hay do cộng dồn nhiều lần), vẫn đánh dấu đã thanh toán
     if (order.paymentReceivedAmount > order.totalPrice) {
       const overpaid = order.paymentReceivedAmount - order.totalPrice
       order.overpaidAmount = overpaid
@@ -1842,7 +1721,6 @@ const sepayWebhook = async (req, res) => {
     }
 
     await order.save()
-    console.log('[SePay Webhook] ✅ Đã cập nhật isPaid cho order:', order._id)
     return res.status(200).json({ success: true, message: 'Cập nhật thanh toán thành công' })
   } catch (error) {
     console.error('[SePay Webhook] Lỗi:', error)

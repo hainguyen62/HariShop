@@ -1,7 +1,4 @@
-// ═══════════════════ B8: Flash Sale / giảm giá có thời hạn ═══════════════════
-// "Đang diễn ra" được TÍNH TOÁN TẠI THỜI ĐIỂM ĐỌC (dựa vào giờ hiện tại so với
-// startsAt/endsAt) — không cần cron job nào cả. Nhờ vậy, giá tự động "reset" về
-// giá gốc ngay khi hết hạn, không cần thao tác gì thêm từ Admin.
+// ═══════════════════ B8: Flash Sale / giảm giá có thời hạn ═══════════════════ "Đang diễn ra" được TÍNH TOÁN TẠI THỜI ĐIỂM ĐỌC (dựa vào giờ hiện tại so với
 
 // Kiểm tra & tính giá sau giảm cho 1 sản phẩm — dùng được cho cả mongoose
 // document lẫn plain object (kết quả .lean()).

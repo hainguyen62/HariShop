@@ -15,7 +15,6 @@ import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 import SortableHeader from '../components/SortableHeader'
 import { useTableSort, sortConfigToQuery } from '../utils/sortHelper'
 
-
 const ProductListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1
 
@@ -67,7 +66,6 @@ const ProductListScreen = ({ history, match }) => {
     setDeleteId(id)
     setShowConfirm(true)
   }
-
 
   const createProductHandler = () => {
     history.push('/admin/product/new')
@@ -121,7 +119,6 @@ const ProductListScreen = ({ history, match }) => {
                 <SortableHeader label='Đánh giá' sortKey='rating' sortConfig={sortConfig} onSort={handleSort} />
                 <SortableHeader label='Ngày tạo' sortKey='createdAt' sortConfig={sortConfig} onSort={handleSort} />
                 <th></th>
-
 
               </tr>
             </thead>

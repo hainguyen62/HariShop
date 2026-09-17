@@ -11,10 +11,8 @@ const ShippingScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart)
   const { shippingAddress, cartItems } = cart
 
-
   const [street, setStreet] = useState('')
   const [houseNumber, setHouseNumber] = useState('')
-
 
   useEffect(() => {
     if (shippingAddress.detail) {
@@ -29,17 +27,13 @@ const ShippingScreen = ({ history }) => {
     }
   }, [shippingAddress.detail]);
 
-
   const [provinces, setProvinces] = useState([])
   const [combinedWards, setCombinedWards] = useState([])
 
   const [loadingWards, setLoadingWards] = useState(false)
 
-
   const [provinceObj, setProvinceObj] = useState(null)
   const [selectedCombinedWard, setSelectedCombinedWard] = useState(null)
-
-
 
   const [quotes, setQuotes] = useState([])
   const [loadingQuotes, setLoadingQuotes] = useState(false)
@@ -85,9 +79,7 @@ const ShippingScreen = ({ history }) => {
       if (dData.success && dData.data.length > 0) {
         const dists = dData.data;
 
-
         const allWards = [];
-
 
         await Promise.all(dists.map(async (d) => {
            try {
@@ -120,7 +112,6 @@ const ShippingScreen = ({ history }) => {
     if (!val) return;
     const cw = JSON.parse(val);
     setSelectedCombinedWard(cw);
-
 
     fetchQuotes(cw.wardObj, cw.districtObj, provinceObj);
   }
@@ -183,7 +174,6 @@ const ShippingScreen = ({ history }) => {
     
     setError('');
     
-
     const finalDetail = `${houseNumber.trim()}, ${street.trim()}`;
 
     const fullShippingAddress = {

@@ -49,7 +49,6 @@ export async function getMergedProvinces() {
   }).sort((a,b) => a.provinceName.localeCompare(b.provinceName));
 }
 
-
 export async function getMergedDistricts(provinceMap) {
   // provinceMap should be { ghnProvinceId, vtpProvinceId }
   const payload = typeof provinceMap === 'string' ? JSON.parse(provinceMap) : provinceMap;
@@ -90,7 +89,6 @@ export async function getMergedDistricts(provinceMap) {
     }
   }).sort((a,b) => a.districtName.localeCompare(b.districtName));
 }
-
 
 export async function getMergedWards(districtMap) {
   const payload = typeof districtMap === 'string' ? JSON.parse(districtMap) : districtMap;

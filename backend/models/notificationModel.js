@@ -1,8 +1,6 @@
 import mongoose from 'mongoose'
 
-// Thông báo cho Admin — đơn giản hoá cho quy mô 1 shop (không tách theo từng
-// tài khoản admin cụ thể). Nếu sau này có nhiều admin, có thể thêm field
-// `recipient` để lọc theo từng người.
+// Thông báo cho Admin — đơn giản hoá cho quy mô 1 shop (không tách theo từng tài khoản admin cụ thể). Nếu sau này có nhiều admin, có thể thêm field
 const notificationSchema = mongoose.Schema(
   {
     type: {

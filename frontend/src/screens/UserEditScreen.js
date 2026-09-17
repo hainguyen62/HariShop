@@ -8,8 +8,6 @@ import FormContainer from '../components/FormContainer'
 import { getUserDetails, updateUser } from '../actions/userActions'
 import { USER_UPDATE_RESET } from '../constants/userConstants'
 
-
-
 const validateEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return regex.test(email)
@@ -79,7 +77,6 @@ const UserEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-
             <Form.Group controlId='email'>
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -95,8 +92,6 @@ const UserEditScreen = ({ match, history }) => {
                 Email không đúng định dạng
               </Form.Control.Feedback>
             </Form.Group>
-
-
 
             <Form.Group controlId='isadmin'>
               <Form.Check

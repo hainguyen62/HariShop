@@ -27,5 +27,3 @@ const PageLayout = ({ children, title, backButton = null, className = '' }) => {
 }
 
 export default PageLayout
-
-

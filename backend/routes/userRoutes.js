@@ -94,7 +94,6 @@ router
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser)
 
-
 router.put('/:id/unlock-cod', protect, admin, unlockCod)
 
 export default router

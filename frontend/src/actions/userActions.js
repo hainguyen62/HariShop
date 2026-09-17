@@ -83,9 +83,6 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 // LOGIN VỚI GOOGLE (B11)
-// FE nhận `token` (JWT) từ query string sau khi BE redirect từ Google callback,
-// dùng token đó gọi /api/users/profile để lấy đủ thông tin user rồi lưu như
-// login thường (localStorage + USER_LOGIN_SUCCESS).
 export const loginWithGoogleToken = (token) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST })
@@ -367,8 +364,6 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 }
 
 // ADMIN - LIST USERS (Admin-only endpoint)
-// MỚI: nhận thêm { sortBy, order } (click-to-sort kiểu FC Online).
-// Không truyền gì vẫn hoạt động như cũ (giữ tương thích ngược).
 export const listUsers = ({ sortBy = '', order = '' } = {}) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_LIST_REQUEST })

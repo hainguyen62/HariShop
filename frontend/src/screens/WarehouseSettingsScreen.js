@@ -151,4 +151,3 @@ const Field = ({ label, value, onChange }) => (
 )
 
 export default WarehouseSettingsScreen
-

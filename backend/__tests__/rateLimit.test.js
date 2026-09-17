@@ -1,7 +1,4 @@
-// ══════════════════════════════════════════════════════════════════
-// Test checkRateLimit/resetRateLimit (backend/utils/rateLimit.js) — dùng
-// chống brute-force đăng nhập, chống spam đăng ký, giới hạn quên mật khẩu.
-// ══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════ Test checkRateLimit/resetRateLimit (backend/utils/rateLimit.js) — dùng
 import { checkRateLimit, resetRateLimit } from '../utils/rateLimit.js'
 
 describe('checkRateLimit', () => {

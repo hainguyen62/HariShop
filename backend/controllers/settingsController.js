@@ -31,4 +31,3 @@ const updateWarehouseSettings = asyncHandler(async (req, res) => {
 })
 
 export { getWarehouseSettings, updateWarehouseSettings }
-

@@ -34,4 +34,3 @@ export const trackShipping = (carrier, trackingId) => async (dispatch) => {
     dispatch({ type: SHIPPING_TRACK_FAIL, payload: safeErrorMessage(error) })
   }
 }
-

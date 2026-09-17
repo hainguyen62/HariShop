@@ -3,16 +3,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import crypto from 'crypto'
 import User from '../models/userModel.js'
 
-// ===== B11: Đăng nhập Google OAuth =====
-// Chiến lược stateless (session: false) vì app đã dùng JWT sẵn cho toàn bộ
-// auth (giống authUser/registerUser trong userController). Passport chỉ
-// đóng vai trò xác thực với Google rồi trả user về, KHÔNG dùng session.
-// ⚠️ QUAN TRỌNG: KHÔNG gọi passport.use(new GoogleStrategy(...)) ngay ở top-level
-// của file này. Trong ES Modules, mọi `import` (kể cả import file này từ
-// userRoutes.js/server.js) đều được nạp và chạy TRƯỚC code còn lại của
-// server.js — tức là TRƯỚC cả dotenv.config() — nên process.env sẽ rỗng nếu
-// khởi tạo Strategy ngay lúc import. Vì vậy phải bọc trong 1 hàm và gọi hàm
-// đó ra TỪ server.js, SAU khi dotenv.config() đã chạy xong.
+// ===== B11: Đăng nhập Google OAuth ===== Chiến lược stateless (session: false) vì app đã dùng JWT sẵn cho toàn bộ
 export function configureGoogleStrategy() {
   passport.use(
     new GoogleStrategy(

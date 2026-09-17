@@ -46,7 +46,6 @@ const getProvinces = asyncHandler(async (req, res) => {
   const token = ghnToken()
   // Token optional for fallback later
 
-
   const data = await ghnGetJson(
     'https://online-gateway.ghn.vn/shiip/public-api/master-data/province',
     token
@@ -69,7 +68,6 @@ const getProvinces = asyncHandler(async (req, res) => {
 const getDistricts = asyncHandler(async (req, res) => {
   const token = ghnToken()
   // Token optional for fallback later
-
 
   const raw = req.query?.provinceId
   if (!raw) {
@@ -118,7 +116,6 @@ const getDistricts = asyncHandler(async (req, res) => {
 const getWards = asyncHandler(async (req, res) => {
   const token = ghnToken()
   // Token optional for fallback later
-
 
   const raw = req.query?.districtId
   if (!raw) {
@@ -169,4 +166,3 @@ const trackShipment = asyncHandler(async (req, res) => {
 })
 
 export { getShippingQuotes, trackShipment, getProvinces, getDistricts, getWards }
-

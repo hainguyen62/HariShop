@@ -27,9 +27,7 @@ router.route('/myorders').get(protect, getMyOrders)
 // ✅ SePay webhook — PUBLIC (không dùng protect, SePay gọi từ server của họ)
 router.route('/sepay-webhook').post(sepayWebhook)
 
-// MỚI: Tra cứu bảo hành — PUBLIC (không cần đăng nhập, khách vãng lai tự
-// xác minh bằng mã đơn hàng + số điện thoại). Đặt TRƯỚC route '/:id' để
-// tránh bị hiểu nhầm 'warranty-check' là 1 giá trị :id.
+// MỚI: Tra cứu bảo hành — PUBLIC (không cần đăng nhập, khách vãng lai tự xác minh bằng mã đơn hàng + số điện thoại). Đặt TRƯỚC route '/:id' để
 router.route('/warranty-check').post(checkWarranty)
 
 router.route('/:id').get(protect, getOrderById)

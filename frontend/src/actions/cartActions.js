@@ -16,9 +16,7 @@ import {
 export const addToCart = (id, qty, color = 'Mặc định') => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`)
 
-  // ── MỚI: lấy countInStock theo màu được chọn ──────────────────
-  // Nếu sản phẩm có mảng colors và màu đang chọn có trong đó
-  // thì lấy stock của màu đó, không lấy tổng countInStock
+  // ── MỚI: lấy countInStock theo màu được chọn ────────────────── Nếu sản phẩm có mảng colors và màu đang chọn có trong đó
   let stockForColor = data.countInStock // fallback: tổng
   if (data.colors && data.colors.length > 0) {
     const colorObj = data.colors.find(
@@ -102,12 +100,7 @@ export const saveDeliveryProvider = (data) => (dispatch) => {
   localStorage.setItem('deliveryProvider', JSON.stringify(data))
 }
 
-// ═══════════════════ B8: Đồng bộ lại giá giỏ hàng theo giá hiện tại ═══════════════════
-// Khi Flash Sale hết hạn (hoặc giá sản phẩm đổi vì bất kỳ lý do gì), item trong giỏ
-// hàng vẫn đang giữ giá CŨ tại thời điểm thêm vào. Hàm này gọi lại API sản phẩm để lấy
-// giá THẬT hiện tại và tự động cập nhật giỏ hàng — đảm bảo khách luôn thấy đúng giá sẽ
-// phải trả trước khi thanh toán, không bị "sốc giá" ở bước cuối.
-// Trả về mảng các sản phẩm có giá bị thay đổi (để UI hiển thị thông báo nếu cần).
+// ═══════════════════ B8: Đồng bộ lại giá giỏ hàng theo giá hiện tại ═══════════════════ Khi Flash Sale hết hạn (hoặc giá sản phẩm đổi vì bất kỳ lý do gì), item trong giỏ
 export const syncCartPrices = () => async (dispatch, getState) => {
   const { cart: { cartItems } } = getState()
   if (!cartItems || cartItems.length === 0) return []

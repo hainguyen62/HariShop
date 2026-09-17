@@ -12,7 +12,6 @@ function getSepaySecret() {
 
 function verifySepaySignature({ rawBody, headers, query, secret }) {
 
-
   const signature =
     headers['x-sepay-signature'] ||
     headers['x-signature'] ||
@@ -32,7 +31,6 @@ function verifySepaySignature({ rawBody, headers, query, secret }) {
   return expected === String(signature)
 }
 
-
 router.post(
   '/sepay-webhook',
   asyncHandler(async (req, res) => {
@@ -40,7 +38,6 @@ router.post(
     if (!secret) {
       return res.status(500).json({ ok: false, message: 'SEPAY_SECRET missing' })
     }
-
 
     const rawBody = typeof req.body === 'string' ? req.body : JSON.stringify(req.body || {})
 
@@ -92,7 +89,6 @@ router.post(
       return res.json({ ok: true, message: 'Payment not successful - order left unpaid' })
     }
 
-
     if (!updated.isPaid) {
       updated.isPaid = true
       updated.paidAt = Date.now()
@@ -112,4 +108,3 @@ router.post(
 )
 
 export default router
-

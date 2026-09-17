@@ -94,9 +94,7 @@ const userSchema = mongoose.Schema(
     resetPasswordToken: { type: String },
     resetPasswordExpire: { type: Date },
 
-    // ===== Lịch sử tìm kiếm (đồng bộ đa thiết bị cho tài khoản đã đăng nhập) =====
-    // Giới hạn 10 mục gần nhất, mới nhất ở đầu mảng — xem controller để biết
-    // logic dedup (tìm lại từ khóa cũ sẽ đưa nó lên đầu thay vì tạo bản trùng).
+    // ===== Lịch sử tìm kiếm (đồng bộ đa thiết bị cho tài khoản đã đăng nhập) ===== Giới hạn 10 mục gần nhất, mới nhất ở đầu mảng — xem controller để biết
     searchHistory: [
       {
         keyword: { type: String, required: true },

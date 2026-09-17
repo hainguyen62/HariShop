@@ -112,4 +112,3 @@ export const deleteVoucher = (id) => async (dispatch, getState) => {
     dispatch({ type: VOUCHER_DELETE_FAIL, payload: message })
   }
 }
-

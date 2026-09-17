@@ -1,9 +1,4 @@
-// Chuẩn hóa chuỗi tiếng Việt để so sánh/tìm kiếm không phân biệt hoa-thường
-// và không phân biệt dấu. Quan trọng: phép thay thế dấu được làm theo kiểu
-// "1 ký tự → 1 ký tự" (không rút gọn độ dài chuỗi), để vị trí ký tự trong
-// chuỗi đã chuẩn hóa luôn khớp với vị trí trong chuỗi gốc — nhờ vậy frontend
-// có thể tô đậm (highlight) đúng đoạn khớp trên chuỗi gốc (có dấu) dựa theo
-// vị trí tìm được trên chuỗi đã chuẩn hóa.
+// Chuẩn hóa chuỗi tiếng Việt để so sánh/tìm kiếm không phân biệt hoa-thường và không phân biệt dấu. Quan trọng: phép thay thế dấu được làm theo kiểu
 
 const DIACRITIC_MAP = {
   à: 'a', á: 'a', ạ: 'a', ả: 'a', ã: 'a',

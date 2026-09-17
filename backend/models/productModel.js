@@ -84,10 +84,7 @@ const productSchema = mongoose.Schema(
 
     weight: { type: Number, default: 0 },
 
-    // ── Tìm kiếm thông minh (autocomplete): bản đã bỏ dấu + viết thường của
-    // name/brand, tự động tính lại mỗi khi lưu (xem pre('save') bên dưới).
-    // Tách riêng field này (thay vì chuẩn hóa lúc truy vấn) để có thể đánh
-    // index và regex nhanh mà không cần quét toàn bộ collection.
+    // ── Tìm kiếm thông minh (autocomplete): bản đã bỏ dấu + viết thường của name/brand, tự động tính lại mỗi khi lưu (xem pre('save') bên dưới).
     nameNormalized:  { type: String, default: '' },
     brandNormalized: { type: String, default: '' },
 

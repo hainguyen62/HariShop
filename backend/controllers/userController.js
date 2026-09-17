@@ -440,11 +440,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 })
 
 /* ===================== B12: ĐỔI MẬT KHẨU YÊU CẦU OTP ===================== */
-// Bước 1: user đang đăng nhập, nhập mật khẩu mới → gọi API này để gửi OTP
-// về email đã đăng ký. KHÔNG lưu mật khẩu mới vào DB ở bước này (chỉ dùng để
-// validate độ dài cho UX tốt hơn) — mật khẩu mới được giữ tạm ở phía frontend
-// (state) và gửi lại kèm OTP ở bước xác nhận, tránh lưu password chưa xác
-// thực xuống database.
+// Bước 1: user đang đăng nhập, nhập mật khẩu mới → gọi API này để gửi OTP về email đã đăng ký. KHÔNG lưu mật khẩu mới vào DB ở bước này (chỉ dùng để
 const requestChangePasswordOtp = asyncHandler(async (req, res) => {
   const { newPassword } = req.body
 
@@ -636,9 +632,7 @@ const addSearchHistory = asyncHandler(async (req, res) => {
 
   const user = await User.findById(req.user._id)
 
-  // Dedup: nếu từ khóa (không phân biệt hoa/thường) đã có trong lịch sử,
-  // xóa bản cũ trước khi đưa lên đầu — tránh trùng lặp, luôn hiển thị lần
-  // tìm gần nhất.
+  // Dedup: nếu từ khóa (không phân biệt hoa/thường) đã có trong lịch sử, xóa bản cũ trước khi đưa lên đầu — tránh trùng lặp, luôn hiển thị lần
   const keywordLower = keyword.toLowerCase()
   user.searchHistory = (user.searchHistory || []).filter(
     (item) => item.keyword.toLowerCase() !== keywordLower
@@ -687,9 +681,7 @@ const getUsers = asyncHandler(async (req, res) => {
       ? { [columnSortField]: requestedOrder }
       : { createdAt: -1 } // mặc định: user mới nhất lên đầu
 
-  // ── SỬA LỖI BẢO MẬT: trước đây thiếu .select('-password'), khiến mật
-  // khẩu đã hash của TOÀN BỘ user bị trả về cho response admin — dù đã
-  // hash vẫn không nên để lộ ra ngoài.
+  // ── SỬA LỖI BẢO MẬT: trước đây thiếu .select('-password'), khiến mật khẩu đã hash của TOÀN BỘ user bị trả về cho response admin — dù đã
   const users = await User.find({}).select('-password').sort(sortStage)
   res.json(users)
 })

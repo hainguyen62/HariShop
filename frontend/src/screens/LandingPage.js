@@ -2,10 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap'
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// LANDING PAGE - HariShop
-// Dark theme, mobile-first, brand colors: #22e3b6 (mint), #1b1b32 (navy), #ffffff
-// ═══════════════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════════════ LANDING PAGE - HariShop
 
 // ─── DATA ─────────────────────────────────────────────────────────────────────
 

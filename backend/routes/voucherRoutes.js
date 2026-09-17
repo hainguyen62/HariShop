@@ -11,7 +11,6 @@ import {
   deleteVoucher,
 } from '../controllers/voucherController.js'
 
-
 const router = express.Router()
 
 router.route('/apply').post(applyVoucher)

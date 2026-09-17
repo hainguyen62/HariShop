@@ -1,7 +1,4 @@
-// ═══════════════════ B9: Âm thanh thông báo ═══════════════════
-// Tự tạo tiếng "ting" bằng Web Audio API — KHÔNG cần file âm thanh (.mp3) riêng,
-// tránh phải quản lý thêm asset. Phát 2 nốt nhạc liên tiếp nghe giống thông báo
-// Messenger/Discord.
+// ═══════════════════ B9: Âm thanh thông báo ═══════════════════ Tự tạo tiếng "ting" bằng Web Audio API — KHÔNG cần file âm thanh (.mp3) riêng,
 
 let audioCtx = null
 

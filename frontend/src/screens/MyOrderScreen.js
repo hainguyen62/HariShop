@@ -106,7 +106,6 @@ const MyOrderScreen = ({ history }) => {
           {orders.map((order) => {
             const statusCfg = getOrderStatus(order)
 
-
             return (
               <div key={order._id} style={{
                 background: '#1a1a2e', borderRadius: '16px',

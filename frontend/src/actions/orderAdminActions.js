@@ -15,8 +15,6 @@ import {
   REVENUE_ANALYTICS_FAIL,
 } from '../constants/orderConstants'
 
-
-
 const getErrorMessage = (error) => {
   try {
     return error.response && error.response.data && error.response.data.message
@@ -95,9 +93,7 @@ export const getRevenueAnalytics = (params = {}) => async (dispatch, getState) =
   }
 }
 
-// ── MỚI: helper dùng chung — tải file (blob) trả về từ backend và kích
-// hoạt download ngay trên trình duyệt (cần vì request có header
-// Authorization nên không thể dùng window.location.href trực tiếp).
+// ── MỚI: helper dùng chung — tải file (blob) trả về từ backend và kích hoạt download ngay trên trình duyệt (cần vì request có header
 const downloadBlob = (blob, filename) => {
   const url = window.URL.createObjectURL(blob)
   const link = document.createElement('a')

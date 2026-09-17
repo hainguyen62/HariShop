@@ -7,9 +7,7 @@ import Message from '../components/Message'
 import Meta from '../components/Meta'
 import { removeFromCompare, clearCompare } from '../actions/compareActions'
 
-// ═══════════════════ B7: Trang so sánh sản phẩm ═══════════════════
-// Bảng thông số kỹ thuật, giá, màu sắc, đánh giá song song — highlight khác biệt
-// (giá trị tốt hơn) bằng màu xanh + dấu ✅ cho các thông số so sánh được khách quan.
+// ═══════════════════ B7: Trang so sánh sản phẩm ═══════════════════ Bảng thông số kỹ thuật, giá, màu sắc, đánh giá song song — highlight khác biệt
 
 const formatVnd = (value) => Number(value || 0).toLocaleString('vi-VN')
 
@@ -35,10 +33,7 @@ const sumCameraMP = (str) => {
   return matches.reduce((sum, m) => sum + parseFloat(m), 0)
 }
 
-// Tìm TẤT CẢ các cột có giá trị tốt nhất (mode 'max' hoặc 'min') — nếu 2+ cột
-// bằng nhau và cùng là giá trị tốt nhất, TẤT CẢ đều được tô màu, không chỉ 1 cột.
-// Trả về mảng rỗng nếu không có gì để so sánh hoặc mọi giá trị đều bằng nhau
-// (không có gì nổi bật để highlight).
+// Tìm TẤT CẢ các cột có giá trị tốt nhất (mode 'max' hoặc 'min') — nếu 2+ cột bằng nhau và cùng là giá trị tốt nhất, TẤT CẢ đều được tô màu, không chỉ 1 cột.
 const getBestIndices = (values, mode) => {
   const valid = values
     .map((v, i) => ({ v, i }))

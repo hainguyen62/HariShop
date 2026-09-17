@@ -5,10 +5,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { addToCart } from '../actions/cartActions'
 
-// ═══════════════════ B2: AI Chatbot tư vấn sản phẩm ═══════════════════
-// Widget chat nổi (floating button) góc phải màn hình.
-// Lịch sử hội thoại chỉ lưu trong state của component (session) —
-// tự động mất khi đóng/tải lại tab, KHÔNG lưu localStorage/DB.
+// ═══════════════════ B2: AI Chatbot tư vấn sản phẩm ═══════════════════ Widget chat nổi (floating button) góc phải màn hình.
 
 const QUICK_PROMPTS = [
   'Điện thoại tầm 10 triệu, pin trâu',

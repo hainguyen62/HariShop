@@ -14,11 +14,7 @@ export const createNotification = async ({ type, title, message = '', link = '',
 const getNotifications = asyncHandler(async (req, res) => {
   const limit = Math.min(Number(req.query.limit) || 20, 100)
 
-  // MỚI: ưu tiên thông báo CHƯA ĐỌC lên đầu (isRead: 1 → false trước true),
-  // rồi mới tới mới nhất trước — tránh trường hợp thông báo chưa đọc bị đẩy
-  // khuất khỏi giới hạn `limit` bởi các thông báo mới hơn (đã đọc hoặc
-  // chưa), gây ra tình trạng chuông báo còn chưa đọc nhưng danh sách hiện
-  // trống rỗng, không có gì để bấm đánh dấu/xoá.
+  // MỚI: ưu tiên thông báo CHƯA ĐỌC lên đầu (isRead: 1 → false trước true), rồi mới tới mới nhất trước — tránh trường hợp thông báo chưa đọc bị đẩy
   const notifications = await Notification.find({ user: null })
     .sort({ isRead: 1, createdAt: -1 })
     .limit(limit)

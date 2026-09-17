@@ -42,12 +42,7 @@ const upload = multer({
   },
 })
 
-// ── MỚI: route này trước đây KHÔNG có middleware xác thực nào — bất kỳ ai,
-// kể cả chưa đăng nhập, đều gọi thẳng API này để upload ảnh lên Cloudinary
-// (tốn dung lượng/băng thông, rủi ro bị lợi dụng chứa nội dung tuỳ ý). Chỉ
-// 2 màn hình admin (thêm/sửa sản phẩm) dùng route này nên gắn cả protect +
-// admin, đồng thời giới hạn tần suất để tránh spam ngay cả khi tài khoản
-// admin bị lộ.
+// ── MỚI: route này trước đây KHÔNG có middleware xác thực nào — bất kỳ ai, kể cả chưa đăng nhập, đều gọi thẳng API này để upload ảnh lên Cloudinary
 router.post('/', protect, admin, (req, res, next) => {
   if (!checkRateLimit(`upload_${req.user._id}`, 30, 10 * 60 * 1000)) {
     res.status(429)

@@ -46,7 +46,6 @@ const applyVoucherLogic = ({ voucher, orderAmount, userId = null, shippingFee = 
     }
   }
 
-
   const usageLimit = Number(voucher.usageLimit || 0)
   const usedCount  = Number(voucher.usedCount  || 0)
   if (usageLimit > 0 && usedCount >= usageLimit) {
@@ -99,7 +98,6 @@ const applyVoucherLogic = ({ voucher, orderAmount, userId = null, shippingFee = 
     discountAmount = cap > 0 ? Math.min(cap, Number(shippingFee || 0)) : Number(shippingFee || 0)
   }
 
-
   discountAmount =
     voucher.type === 'freeship'
       ? Math.max(0, Math.min(discountAmount, Number(shippingFee || 0)))
@@ -136,11 +134,7 @@ const applyVoucher = asyncHandler(async (req, res) => {
   })
 })
 
-// ── MỚI: GET /api/vouchers/available — danh sách voucher cho KHÁCH xem ở
-// popup checkout (khác getVouchers vốn chỉ dành cho admin quản lý).
-// Query optional: orderAmount, shippingFee, categories (comma-separated)
-// để tính sẵn discountAmount/eligible cho từng voucher, tránh phải gọi
-// validate riêng cho từng cái ở frontend.
+// ── MỚI: GET /api/vouchers/available — danh sách voucher cho KHÁCH xem ở popup checkout (khác getVouchers vốn chỉ dành cho admin quản lý).
 const getAvailableVouchers = asyncHandler(async (req, res) => {
   const now = new Date()
   const orderAmount = Number(req.query.orderAmount || 0)
@@ -186,9 +180,7 @@ const getAvailableVouchers = asyncHandler(async (req, res) => {
   res.json(result)
 })
 
-// ── MỚI: POST /api/vouchers/validate — dùng cho cả "nhập mã tay" lẫn
-// tự động re-check khi giỏ hàng thay đổi. Khác /apply (cũ, public, không
-// biết user) ở chỗ: có req.user để kiểm tra perUserLimit.
+// ── MỚI: POST /api/vouchers/validate — dùng cho cả "nhập mã tay" lẫn tự động re-check khi giỏ hàng thay đổi. Khác /apply (cũ, public, không
 const validateVoucher = asyncHandler(async (req, res) => {
   const code = normalizeCode(req.body?.code)
   const orderAmount = Number(req.body?.orderAmount)
@@ -229,10 +221,7 @@ const validateVoucher = asyncHandler(async (req, res) => {
   })
 })
 
-// ── MỚI: POST /api/vouchers/calculate — tính lại toàn bộ breakdown thanh
-// toán khi có/không có voucher, dùng để hiển thị "Tạm tính / Voucher /
-// Phí vận chuyển / Tổng thanh toán" luôn khớp với backend (tránh sai số
-// làm tròn hoặc frontend tự tính sai).
+// ── MỚI: POST /api/vouchers/calculate — tính lại toàn bộ breakdown thanh toán khi có/không có voucher, dùng để hiển thị "Tạm tính / Voucher /
 const calculateVoucher = asyncHandler(async (req, res) => {
   const code = req.body?.code ? normalizeCode(req.body.code) : ''
   const itemsPrice = Number(req.body?.itemsPrice || 0)
@@ -285,7 +274,6 @@ const getVouchers = asyncHandler(async (req, res) => {
   res.json(vouchers)
 })
 
-
 const createVoucher = asyncHandler(async (req, res) => {
   const body = req.body || {}
 
@@ -327,7 +315,6 @@ const createVoucher = asyncHandler(async (req, res) => {
 
   res.status(201).json(voucher)
 })
-
 
 const updateVoucher = asyncHandler(async (req, res) => {
   const { id }  = req.params

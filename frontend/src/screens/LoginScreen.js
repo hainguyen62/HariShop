@@ -8,7 +8,6 @@ import FormContainer from '../components/FormContainer'
 import PasswordInput from '../components/PasswordInput'
 import { login } from '../actions/userActions'
 
-
 const validateEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return regex.test(email)

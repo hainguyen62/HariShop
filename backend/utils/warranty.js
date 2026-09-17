@@ -1,6 +1,4 @@
 // Logic thuần tính trạng thái bảo hành cho 1 sản phẩm trong đơn hàng.
-// Tách riêng (không đụng DB) để viết unit test được, giống các util khác
-// trong dự án (checkoutValidation.js, reportPeriod.js...).
 
 const DAY_MS = 24 * 60 * 60 * 1000
 
@@ -13,8 +11,6 @@ function addMonths(date, months) {
 }
 
 // Tính trạng thái bảo hành cho 1 orderItem, dựa trên trạng thái đơn hàng.
-// Trả về: { status, warrantyStart, warrantyEnd, remainingDays }
-//   status: 'cancelled' | 'not_started' | 'active' | 'expired'
 export function computeWarrantyStatus(item, order, now = new Date()) {
   if (order.isCancelled) {
     return { status: 'cancelled', warrantyStart: null, warrantyEnd: null, remainingDays: null }

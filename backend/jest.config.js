@@ -1,6 +1,4 @@
-// Cấu hình Jest cho ES modules (project dùng "type": "module") — không cần
-// babel, dùng thẳng hỗ trợ ESM gốc của Node qua cờ --experimental-vm-modules
-// (đã khai trong script "test" ở package.json).
+// Cấu hình Jest cho ES modules (project dùng "type": "module") — không cần babel, dùng thẳng hỗ trợ ESM gốc của Node qua cờ --experimental-vm-modules
 export default {
   testEnvironment: 'node',
   transform: {},

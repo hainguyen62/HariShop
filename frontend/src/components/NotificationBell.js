@@ -58,9 +58,7 @@ const NotificationBell = ({ scope = 'admin' }) => {
   useEffect(() => {
     const fetchCount = () => dispatch(isAdmin ? fetchUnreadCount() : fetchMyUnreadCount())
     fetchCount()
-    // MỚI (B9): giờ đã có Socket.io đẩy thông báo real-time (xem SocketManager.js),
-    // interval này chỉ còn là LƯỚI AN TOÀN dự phòng (vd socket bị rớt mạng tạm thời) —
-    // giãn ra 60s thay vì 30s vì không còn là nguồn cập nhật chính.
+    // MỚI (B9): giờ đã có Socket.io đẩy thông báo real-time (xem SocketManager.js), interval này chỉ còn là LƯỚI AN TOÀN dự phòng (vd socket bị rớt mạng tạm thời) —
     const interval = setInterval(fetchCount, 60000)
     return () => clearInterval(interval)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,9 +90,7 @@ const NotificationBell = ({ scope = 'admin' }) => {
     dispatch(isAdmin ? markAllNotificationsRead() : markAllMyNotificationsRead())
   }
 
-  // MỚI: xoá 1 thông báo — chặn sự kiện nổi bọt (stopPropagation) để không
-  // vô tình kích hoạt luôn handleClickItem (đánh dấu đã đọc + điều hướng)
-  // của div cha khi bấm nút xoá.
+  // MỚI: xoá 1 thông báo — chặn sự kiện nổi bọt (stopPropagation) để không vô tình kích hoạt luôn handleClickItem (đánh dấu đã đọc + điều hướng)
   const handleDeleteItem = (e, id) => {
     e.stopPropagation()
     dispatch(isAdmin ? deleteNotification(id) : deleteMyNotification(id))

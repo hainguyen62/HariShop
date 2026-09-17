@@ -7,9 +7,7 @@ function envTrim(key) {
   return (process.env[key] || '').trim()
 }
 
-// MỚI: Khác với GHN (cần mã số Tỉnh/Huyện/Xã do GHN cấp), GHTK nhận thẳng
-// TÊN Tỉnh/Huyện dạng chữ (VD: "Hà Nội", "Quận Cầu Giấy") — nên KHÔNG cần
-// bước "resolve" ra mã số riêng như ghn.js phải làm. Đơn giản hơn nhiều.
+// MỚI: Khác với GHN (cần mã số Tỉnh/Huyện/Xã do GHN cấp), GHTK nhận thẳng TÊN Tỉnh/Huyện dạng chữ (VD: "Hà Nội", "Quận Cầu Giấy") — nên KHÔNG cần
 async function getQuotes({ fromAddress, toAddress, totalWeightGrams }) {
   const token = envTrim('GHTK_TOKEN')
 
@@ -81,10 +79,7 @@ async function getQuotes({ fromAddress, toAddress, totalWeightGrams }) {
   }
 }
 
-// ⚠️ LƯU Ý: hàm tra cứu vận đơn (track) của GHTK CHƯA được xác nhận đầy đủ
-// theo tài liệu chính thức (chỉ mới sửa domain + bỏ token hardcode cứng).
-// Nếu dùng thật, cần test với 1 mã vận đơn GHTK thật và đối chiếu lại cấu
-// trúc response trước khi tin tưởng dữ liệu trả về.
+// ⚠️ LƯU Ý: hàm tra cứu vận đơn (track) của GHTK CHƯA được xác nhận đầy đủ theo tài liệu chính thức (chỉ mới sửa domain + bỏ token hardcode cứng).
 async function track(trackingId) {
   const token = envTrim('GHTK_TOKEN')
   if (!token) throw new Error('Missing GHTK_TOKEN')
