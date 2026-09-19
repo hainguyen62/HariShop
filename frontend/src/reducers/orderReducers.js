@@ -63,14 +63,28 @@ import {
   ORDER_REFUND_COMPLETE_SUCCESS,
   ORDER_REFUND_COMPLETE_FAIL,
   ORDER_REFUND_COMPLETE_RESET,
+  ORDER_REFUND_ADJUST_REQUEST,
+  ORDER_REFUND_ADJUST_SUCCESS,
+  ORDER_REFUND_ADJUST_FAIL,
+  ORDER_REFUND_ADJUST_RESET,
   ORDER_OVERPAID_REFUND_COMPLETE_REQUEST,
   ORDER_OVERPAID_REFUND_COMPLETE_SUCCESS,
   ORDER_OVERPAID_REFUND_COMPLETE_FAIL,
   ORDER_OVERPAID_REFUND_COMPLETE_RESET,
+  ORDER_OVERPAID_BANK_INFO_REQUEST,
+  ORDER_OVERPAID_BANK_INFO_SUCCESS,
+  ORDER_OVERPAID_BANK_INFO_FAIL,
+  ORDER_OVERPAID_BANK_INFO_RESET,
   REVENUE_ANALYTICS_REQUEST,
   REVENUE_ANALYTICS_SUCCESS,
   REVENUE_ANALYTICS_FAIL,
 } from '../constants/orderConstants'
+
+
+
+
+
+
 
 export const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
@@ -118,7 +132,7 @@ export const orderPayReducer = (state = {}, action) => {
   }
 }
 
-// MỚI: Admin đánh dấu đã thu/chưa thu tiền cho đơn COD
+// Admin đánh dấu đã thu/chưa thu tiền cho đơn COD
 export const orderCodPaymentReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_COD_PAYMENT_REQUEST:
@@ -149,7 +163,7 @@ export const orderDeliverReducer = (state = {}, action) => {
   }
 }
 
-// ✅ A3: Admin cập nhật trạng thái đơn hàng chi tiết (timeline)
+// Admin cập nhật trạng thái đơn hàng chi tiết (timeline)
 export const orderUpdateStatusReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_UPDATE_STATUS_REQUEST:
@@ -238,6 +252,7 @@ export const orderRejectCancelReducer = (state = {}, action) => {
   }
 }
 
+
 export const orderTrackReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_TRACK_REQUEST:
@@ -253,7 +268,7 @@ export const orderTrackReducer = (state = {}, action) => {
   }
 }
 
-// ✅ Admin revenue summary reducer
+// Admin revenue summary reducer
 export const orderAdminRevenueReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_ADMIN_REVENUE_REQUEST:
@@ -267,7 +282,7 @@ export const orderAdminRevenueReducer = (state = {}, action) => {
   }
 }
 
-// ✅ Admin brand breakdown reducer
+// Admin brand breakdown reducer
 export const orderAdminBrandReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_ADMIN_BRAND_REQUEST:
@@ -281,7 +296,7 @@ export const orderAdminBrandReducer = (state = {}, action) => {
   }
 }
 
-// ✅ A5: Hoàn tiền khi giao hàng thất bại
+// Hoàn tiền khi giao hàng thất bại
 export const orderRefundRequestReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_REFUND_REQUEST_REQUEST:
@@ -312,7 +327,22 @@ export const orderRefundCompleteReducer = (state = {}, action) => {
   }
 }
 
-// MỚI: reducer cho luồng hoàn tiền thừa (SePay QR)
+export const orderRefundAdjustReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_REFUND_ADJUST_REQUEST:
+      return { loading: true }
+    case ORDER_REFUND_ADJUST_SUCCESS:
+      return { loading: false, success: true }
+    case ORDER_REFUND_ADJUST_FAIL:
+      return { loading: false, error: action.payload }
+    case ORDER_REFUND_ADJUST_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+// reducer cho luồng hoàn tiền thừa (SePay QR)
 export const orderOverpaidRefundCompleteReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_OVERPAID_REFUND_COMPLETE_REQUEST:
@@ -328,7 +358,22 @@ export const orderOverpaidRefundCompleteReducer = (state = {}, action) => {
   }
 }
 
-// ✅ A4: Thống kê doanh thu nâng cao
+export const orderOverpaidBankInfoReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_OVERPAID_BANK_INFO_REQUEST:
+      return { loading: true }
+    case ORDER_OVERPAID_BANK_INFO_SUCCESS:
+      return { loading: false, success: true }
+    case ORDER_OVERPAID_BANK_INFO_FAIL:
+      return { loading: false, error: action.payload }
+    case ORDER_OVERPAID_BANK_INFO_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+// Thống kê doanh thu nâng cao
 export const revenueAnalyticsReducer = (state = {}, action) => {
   switch (action.type) {
     case REVENUE_ANALYTICS_REQUEST:
@@ -342,7 +387,7 @@ export const revenueAnalyticsReducer = (state = {}, action) => {
   }
 }
 
-// ✅ Admin delete order reducer
+//  Admin delete order reducer
 export const orderAdminDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_ADMIN_DELETE_REQUEST:

@@ -42,10 +42,18 @@ import {
   ORDER_REFUND_COMPLETE_REQUEST,
   ORDER_REFUND_COMPLETE_SUCCESS,
   ORDER_REFUND_COMPLETE_FAIL,
+  ORDER_REFUND_ADJUST_REQUEST,
+  ORDER_REFUND_ADJUST_SUCCESS,
+  ORDER_REFUND_ADJUST_FAIL,
   ORDER_OVERPAID_REFUND_COMPLETE_REQUEST,
   ORDER_OVERPAID_REFUND_COMPLETE_SUCCESS,
   ORDER_OVERPAID_REFUND_COMPLETE_FAIL,
+  ORDER_OVERPAID_BANK_INFO_REQUEST,
+  ORDER_OVERPAID_BANK_INFO_SUCCESS,
+  ORDER_OVERPAID_BANK_INFO_FAIL,
 } from '../constants/orderConstants'
+
+
 
 import { logout } from './userActions'
 
@@ -249,8 +257,8 @@ export const requestRefund = (orderId, bankInfo) => async (dispatch, getState) =
   }
 }
 
-// ✅ A5: Admin đánh dấu đã hoàn tiền
-export const completeRefund = (orderId, refundAmount, note) => async (dispatch, getState) => {
+// ✅ A5: Admin đánh dấu đã hoàn tiền — luôn hoàn đúng tổng giá trị đơn
+export const completeRefund = (orderId, note) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_REFUND_COMPLETE_REQUEST })
 
@@ -264,7 +272,7 @@ export const completeRefund = (orderId, refundAmount, note) => async (dispatch, 
 
     const { data } = await axios.put(
       `/api/orders/${orderId}/refund-complete`,
-      { refundAmount, note },
+      { note },
       config
     )
 
@@ -277,7 +285,37 @@ export const completeRefund = (orderId, refundAmount, note) => async (dispatch, 
   }
 }
 
-// MỚI: admin xác nhận đã chuyển khoản thủ công hoàn lại tiền thừa (khách chuyển nhiều hơn giá trị đơn qua SePay QR) — không có API chuyển tiền tự
+// MỚI: điều chỉnh số tiền hoàn cho đơn đã xác nhận trước đó, có lưu lịch sử
+export const adjustRefundAmount = (orderId, newAmount, note) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ORDER_REFUND_ADJUST_REQUEST })
+
+    const { userLogin: { userInfo } } = getState()
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(
+      `/api/orders/${orderId}/refund-adjust`,
+      { newAmount, note },
+      config
+    )
+
+    dispatch({ type: ORDER_REFUND_ADJUST_SUCCESS, payload: data })
+    dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data })
+  } catch (error) {
+    const message = getErrorMessage(error)
+    if (message === 'Not authorized, token failed') dispatch(logout())
+    dispatch({ type: ORDER_REFUND_ADJUST_FAIL, payload: message })
+  }
+}
+
+// MỚI: admin xác nhận đã chuyển khoản thủ công hoàn lại tiền thừa (khách
+// chuyển nhiều hơn giá trị đơn qua SePay QR) — không có API chuyển tiền tự
+// động, chỉ ghi nhận lại việc admin đã tự xử lý xong bên ngoài hệ thống.
 export const completeOverpaidRefund = (orderId, note) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_OVERPAID_REFUND_COMPLETE_REQUEST })
@@ -302,6 +340,34 @@ export const completeOverpaidRefund = (orderId, note) => async (dispatch, getSta
     const message = getErrorMessage(error)
     if (message === 'Not authorized, token failed') dispatch(logout())
     dispatch({ type: ORDER_OVERPAID_REFUND_COMPLETE_FAIL, payload: message })
+  }
+}
+
+// MỚI: khách gửi thông tin ngân hàng để nhận lại tiền chuyển thừa
+export const submitOverpaidRefundBankInfo = (orderId, bankInfo) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ORDER_OVERPAID_BANK_INFO_REQUEST })
+
+    const { userLogin: { userInfo } } = getState()
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(
+      `/api/orders/${orderId}/overpaid-refund-bank-info`,
+      bankInfo,
+      config
+    )
+
+    dispatch({ type: ORDER_OVERPAID_BANK_INFO_SUCCESS, payload: data })
+    dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data })
+  } catch (error) {
+    const message = getErrorMessage(error)
+    if (message === 'Not authorized, token failed') dispatch(logout())
+    dispatch({ type: ORDER_OVERPAID_BANK_INFO_FAIL, payload: message })
   }
 }
 
@@ -412,6 +478,7 @@ export const rejectCancelOrder = (orderId) => async (dispatch, getState) => {
     dispatch({ type: ORDER_REJECT_CANCEL_FAIL, payload: message })
   }
 }
+
 
 export const trackOrder = (orderId) => async (dispatch, getState) => {
 

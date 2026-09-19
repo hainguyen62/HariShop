@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { thunk } from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
+
 import {
   productListReducer,
   productDetailsReducer,
@@ -62,7 +63,9 @@ import {
   orderUpdateStatusReducer,
   orderRefundRequestReducer,
   orderRefundCompleteReducer,
+  orderRefundAdjustReducer,
   orderOverpaidRefundCompleteReducer,
+  orderOverpaidBankInfoReducer,
 } from './reducers/orderReducers'
 import { notificationReducer, myNotificationReducer } from './reducers/notificationReducers'
 
@@ -76,9 +79,12 @@ import {
   voucherValidateReducer,
 } from './reducers/voucherReducers'
 
+
+
 // ADDRESS
 import { addressReducer } from './reducers/addressReducers'
 import { shippingQuotesReducer, shippingTrackReducer } from './reducers/shippingReducers'
+
 
 // ================= REDUCER =================
 const reducer = combineReducers({
@@ -108,7 +114,9 @@ const reducer = combineReducers({
   orderUpdateStatus: orderUpdateStatusReducer,
   orderRefundRequest: orderRefundRequestReducer,
   orderRefundComplete: orderRefundCompleteReducer,
+  orderRefundAdjust: orderRefundAdjustReducer,
   orderOverpaidRefundComplete: orderOverpaidRefundCompleteReducer,
+  orderOverpaidBankInfo: orderOverpaidBankInfoReducer,
   notification: notificationReducer,
   myNotification: myNotificationReducer,
   orderListMy: orderListMyReducer,
@@ -134,6 +142,7 @@ const reducer = combineReducers({
 
   // ADDRESS BOOK
   address: addressReducer,
+
 
   productDeleteReview: productDeleteReviewReducer,
   productNLSearch: productNLSearchReducer,

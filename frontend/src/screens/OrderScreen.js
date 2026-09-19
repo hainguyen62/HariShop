@@ -14,7 +14,9 @@ import {
   updateOrderStatus,
   requestRefund,
   completeRefund,
+  adjustRefundAmount,
   completeOverpaidRefund,
+  submitOverpaidRefundBankInfo,
   updateCodPaymentStatus,
 } from '../actions/orderActions'
 import { deleteOrderByAdmin } from '../actions/orderAdminActions'
@@ -31,6 +33,9 @@ import {
   ORDER_UPDATE_STATUS_RESET,
   ORDER_REFUND_REQUEST_RESET,
   ORDER_REFUND_COMPLETE_RESET,
+  ORDER_REFUND_ADJUST_RESET,
+  ORDER_OVERPAID_REFUND_COMPLETE_RESET,
+  ORDER_OVERPAID_BANK_INFO_RESET,
   ORDER_COD_PAYMENT_RESET,
 } from '../constants/orderConstants'
 import { USER_UNLOCK_COD_RESET } from '../constants/userConstants'
@@ -51,7 +56,9 @@ const buildVietQRUrl = (amount, content) =>
   `?amount=${amount}&addInfo=${encodeURIComponent(content)}&accountName=HARISHOP`
 // ─────────────────────────────────────────────────────────────────────────────
 
-// MỚI: đếm ngược tới thời điểm đơn tự động bị hủy (24h kể từ lúc đặt) nếu vẫn chưa thanh toán — dùng chung cho cả badge gọn (thanh trạng thái) và
+// MỚI: đếm ngược tới thời điểm đơn tự động bị hủy (24h kể từ lúc đặt) nếu
+// vẫn chưa thanh toán — dùng chung cho cả badge gọn (thanh trạng thái) và
+// box chi tiết (khu vực QR) bên dưới.
 const AUTO_CANCEL_HOURS = 24
 
 const useAutoCancelCountdown = (createdAt) => {
@@ -208,7 +215,9 @@ const GHN_STATUS_LABEL = {
 const getGHNStatus = (status) =>
   GHN_STATUS_LABEL[status] || { label: status || 'Không rõ', color: '#b8bcc8', icon: 'fas fa-circle' }
 
-// ─── A3: 12 trạng thái đơn hàng chi tiết theo timeline ─────────────────────── (STATUS_STEPS, BRANCH_STATUSES, ADMIN_STATUS_OPTIONS được import dùng chung
+// ─── A3: 12 trạng thái đơn hàng chi tiết theo timeline ───────────────────────
+// (STATUS_STEPS, BRANCH_STATUSES, ADMIN_STATUS_OPTIONS được import dùng chung
+// từ '../constants/orderStatusConfig' — xem import ở đầu file)
 
 const formatDateTime = (d) => {
   if (!d) return ''
@@ -663,9 +672,15 @@ const OrderScreen = ({ match, history }) => {
   const orderRefundComplete = useSelector((state) => state.orderRefundComplete)
   const { loading: loadingRefundComplete, error: errorRefundComplete, success: successRefundComplete } = orderRefundComplete
 
+  const orderRefundAdjust = useSelector((state) => state.orderRefundAdjust)
+  const { loading: loadingRefundAdjust, error: errorRefundAdjust, success: successRefundAdjust } = orderRefundAdjust
+
   // MỚI: hoàn tiền thừa (SePay QR)
   const orderOverpaidRefundComplete = useSelector((state) => state.orderOverpaidRefundComplete)
   const { loading: loadingOverpaidRefund, error: errorOverpaidRefund, success: successOverpaidRefund } = orderOverpaidRefundComplete
+
+  const orderOverpaidBankInfo = useSelector((state) => state.orderOverpaidBankInfo)
+  const { loading: loadingOverpaidBankInfo, error: errorOverpaidBankInfo, success: successOverpaidBankInfo } = orderOverpaidBankInfo
 
   const orderAdminDelete = useSelector((state) => state.orderAdminDelete)
   const { loading: loadingDelete, success: successDelete } = orderAdminDelete
@@ -693,11 +708,21 @@ const OrderScreen = ({ match, history }) => {
   const [refundReason, setRefundReason] = useState('')
 
   // ── MỚI (A5): form Admin xác nhận đã hoàn tiền ────────────────
-  const [refundCompleteAmount, setRefundCompleteAmount] = useState('')
   const [refundCompleteNote, setRefundCompleteNote] = useState('')
+
+  // MỚI: form Admin điều chỉnh lại số tiền hoàn đã xác nhận trước đó
+  const [showAdjustRefundForm, setShowAdjustRefundForm] = useState(false)
+  const [adjustRefundNewAmount, setAdjustRefundNewAmount] = useState('')
+  const [adjustRefundNote, setAdjustRefundNote] = useState('')
 
   // MỚI: form Admin xác nhận đã hoàn tiền THỪA (SePay QR)
   const [overpaidRefundNote, setOverpaidRefundNote] = useState('')
+
+  // MỚI: form khách gửi thông tin ngân hàng để nhận lại tiền chuyển thừa
+  const [showOverpaidBankForm, setShowOverpaidBankForm] = useState(false)
+  const [overpaidBankName, setOverpaidBankName] = useState('')
+  const [overpaidAccountNumber, setOverpaidAccountNumber] = useState('')
+  const [overpaidAccountHolder, setOverpaidAccountHolder] = useState('')
 
   useEffect(() => {
     if (!userInfo) {
@@ -705,7 +730,7 @@ const OrderScreen = ({ match, history }) => {
       return
     }
 
-    if (successApproveCancel || successRejectCancel || successDeliver || successCancelReq || successDelete || successRefundReq || successRefundComplete) {
+    if (successApproveCancel || successRejectCancel || successDeliver || successCancelReq || successDelete || successRefundReq || successRefundComplete || successRefundAdjust || successOverpaidRefund || successOverpaidBankInfo) {
       dispatch({ type: ORDER_PAY_RESET })
       dispatch({ type: ORDER_DELIVER_RESET })
       dispatch({ type: ORDER_CANCEL_REQUEST_RESET })
@@ -713,6 +738,9 @@ const OrderScreen = ({ match, history }) => {
       dispatch({ type: ORDER_REJECT_CANCEL_RESET })
       dispatch({ type: ORDER_REFUND_REQUEST_RESET })
       dispatch({ type: ORDER_REFUND_COMPLETE_RESET })
+      dispatch({ type: ORDER_REFUND_ADJUST_RESET })
+      dispatch({ type: ORDER_OVERPAID_REFUND_COMPLETE_RESET })
+      dispatch({ type: ORDER_OVERPAID_BANK_INFO_RESET })
 
       if (successDelete) {
         dispatch({ type: 'ORDER_ADMIN_DELETE_RESET' })
@@ -731,7 +759,7 @@ const OrderScreen = ({ match, history }) => {
   }, [
     dispatch, orderId, history, userInfo, orderIdInState,
     successDeliver, successCancelReq, successApproveCancel, successRejectCancel, successDelete,
-    successRefundReq, successRefundComplete,
+    successRefundReq, successRefundComplete, successRefundAdjust, successOverpaidRefund, successOverpaidBankInfo,
   ])
 
   // ── MỚI (B1): sau khi Admin mở khóa COD thành công, làm mới lại đơn hàng ──
@@ -804,11 +832,26 @@ const OrderScreen = ({ match, history }) => {
     }
   }
 
-  // ── MỚI (A5): Admin xác nhận đã hoàn tiền ─────────────────────
+  // ── MỚI (A5): Admin xác nhận đã hoàn tiền — luôn đúng tổng giá trị đơn ──
   const completeRefundHandler = () => {
-    const amount = Number(refundCompleteAmount) || order.totalPrice
-    if (window.confirm(`Xác nhận ĐÃ chuyển khoản hoàn tiền ${amount.toLocaleString('vi-VN')}đ cho khách?`)) {
-      dispatch(completeRefund(orderId, amount, refundCompleteNote.trim()))
+    if (window.confirm(`Xác nhận ĐÃ chuyển khoản hoàn tiền ${Number(order.totalPrice).toLocaleString('vi-VN')}đ cho khách?`)) {
+      dispatch(completeRefund(orderId, refundCompleteNote.trim()))
+    }
+  }
+
+  // MỚI: Admin điều chỉnh lại số tiền hoàn cho đơn đã xác nhận trước đó
+  const adjustRefundHandler = (e) => {
+    e.preventDefault()
+    const amount = Number(adjustRefundNewAmount)
+    if (!Number.isFinite(amount) || amount <= 0) {
+      window.alert('Vui lòng nhập số tiền hợp lệ')
+      return
+    }
+    if (window.confirm(`Xác nhận điều chỉnh số tiền hoàn từ ${Number(order.refundAmount).toLocaleString('vi-VN')}đ sang ${amount.toLocaleString('vi-VN')}đ?`)) {
+      dispatch(adjustRefundAmount(orderId, amount, adjustRefundNote.trim()))
+      setShowAdjustRefundForm(false)
+      setAdjustRefundNewAmount('')
+      setAdjustRefundNote('')
     }
   }
 
@@ -817,6 +860,20 @@ const OrderScreen = ({ match, history }) => {
     if (window.confirm(`Xác nhận ĐÃ chuyển khoản hoàn ${order.overpaidAmount?.toLocaleString('vi-VN')}đ tiền thừa cho khách?`)) {
       dispatch(completeOverpaidRefund(orderId, overpaidRefundNote.trim()))
     }
+  }
+
+  // MỚI: khách gửi thông tin ngân hàng để nhận lại tiền chuyển thừa
+  const submitOverpaidBankInfoHandler = () => {
+    if (!overpaidBankName.trim() || !overpaidAccountNumber.trim() || !overpaidAccountHolder.trim()) {
+      window.alert('Vui lòng nhập đầy đủ thông tin tài khoản ngân hàng')
+      return
+    }
+    dispatch(submitOverpaidRefundBankInfo(orderId, {
+      bankName: overpaidBankName.trim(),
+      accountNumber: overpaidAccountNumber.trim(),
+      accountHolder: overpaidAccountHolder.trim(),
+    }))
+    setShowOverpaidBankForm(false)
   }
 
   if (loading) return <Loader />
@@ -1147,6 +1204,60 @@ const OrderScreen = ({ match, history }) => {
                   Số tiền: <strong style={{ color: '#4cdb80' }}>{Number(order.refundAmount).toLocaleString('vi-VN')}đ</strong>
                   <br />Thời gian: {order.refundAt ? new Date(order.refundAt).toLocaleString('vi-VN') : ''}
                   {order.refundNote && <><br />Ghi chú: {order.refundNote}</>}
+
+                  {order.refundAdjustments?.length > 0 && (
+                    <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                      <div style={{ ...labelStyle, marginBottom: '6px' }}>Lịch sử điều chỉnh</div>
+                      {order.refundAdjustments.map((adj, i) => (
+                        <div key={i} style={{ fontSize: '13px', color: '#8a8fa3', marginBottom: '4px' }}>
+                          {Number(adj.previousAmount).toLocaleString('vi-VN')}đ → <strong style={{ color: '#ffd166' }}>{Number(adj.newAmount).toLocaleString('vi-VN')}đ</strong>
+                          {' '}({adj.adjustedAt ? new Date(adj.adjustedAt).toLocaleString('vi-VN') : ''})
+                          {adj.note && ` — ${adj.note}`}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {userInfo?.isAdmin && (
+                    <div style={{ marginTop: '12px' }}>
+                      {!showAdjustRefundForm ? (
+                        <button
+                          onClick={() => { setShowAdjustRefundForm(true); setAdjustRefundNewAmount(String(order.refundAmount)) }}
+                          style={{ background: 'transparent', border: '1px solid rgba(255,209,102,0.4)', color: '#ffd166', borderRadius: '8px', padding: '8px 16px', fontSize: '13px', cursor: 'pointer' }}
+                        >
+                          <i className='fas fa-pen me-2'></i>Điều chỉnh số tiền hoàn
+                        </button>
+                      ) : (
+                        <div>
+                          {errorRefundAdjust && <Message variant='danger'>{errorRefundAdjust}</Message>}
+                          <input
+                            type='number' placeholder='Số tiền hoàn mới'
+                            value={adjustRefundNewAmount} onChange={(e) => setAdjustRefundNewAmount(e.target.value)}
+                            style={{ width: '100%', background: '#0f0f23', border: '1px solid rgba(255,209,102,0.4)', borderRadius: '8px', padding: '10px 14px', color: '#ffffff', fontSize: '14px', outline: 'none', marginBottom: '10px' }}
+                          />
+                          <input
+                            type='text' placeholder='Lý do điều chỉnh (không bắt buộc)'
+                            value={adjustRefundNote} onChange={(e) => setAdjustRefundNote(e.target.value)}
+                            style={{ width: '100%', background: '#0f0f23', border: '1px solid rgba(255,209,102,0.4)', borderRadius: '8px', padding: '10px 14px', color: '#ffffff', fontSize: '14px', outline: 'none', marginBottom: '10px' }}
+                          />
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <button
+                              onClick={adjustRefundHandler} disabled={loadingRefundAdjust}
+                              style={{ background: '#ffd166', border: 'none', borderRadius: '8px', padding: '8px 20px', color: '#0f0f23', fontWeight: '700', fontSize: '13px', cursor: loadingRefundAdjust ? 'not-allowed' : 'pointer', opacity: loadingRefundAdjust ? 0.7 : 1 }}
+                            >
+                              {loadingRefundAdjust ? 'Đang lưu...' : 'Lưu điều chỉnh'}
+                            </button>
+                            <button
+                              onClick={() => setShowAdjustRefundForm(false)}
+                              style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: '#b8bcc8', borderRadius: '8px', padding: '8px 20px', fontSize: '13px', cursor: 'pointer' }}
+                            >
+                              Huỷ
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1171,11 +1282,9 @@ const OrderScreen = ({ match, history }) => {
 
                   {errorRefundComplete && <Message variant='danger'>{errorRefundComplete}</Message>}
 
-                  <input
-                    type='number' placeholder={`Số tiền hoàn (mặc định ${order.totalPrice?.toLocaleString('vi-VN')}đ)`}
-                    value={refundCompleteAmount} onChange={(e) => setRefundCompleteAmount(e.target.value)}
-                    style={{ width: '100%', background: '#0f0f23', border: '1px solid rgba(255,209,102,0.4)', borderRadius: '8px', padding: '10px 14px', color: '#ffffff', fontSize: '14px', outline: 'none', marginBottom: '10px' }}
-                  />
+                  <div style={{ color: '#b8bcc8', fontSize: '14px', marginBottom: '10px' }}>
+                    Số tiền sẽ hoàn: <strong style={{ color: '#ffd166' }}>{Number(order.totalPrice).toLocaleString('vi-VN')}đ</strong> (đúng tổng giá trị đơn)
+                  </div>
                   <input
                     type='text' placeholder='Ghi chú (không bắt buộc)'
                     value={refundCompleteNote} onChange={(e) => setRefundCompleteNote(e.target.value)}
@@ -1207,9 +1316,16 @@ const OrderScreen = ({ match, history }) => {
                 <div style={{ color: '#ffd166', fontSize: '20px', fontWeight: '800', marginTop: '6px' }}>
                   {order.overpaidAmount?.toLocaleString('vi-VN')}đ
                 </div>
-                <div style={{ color: '#b8bcc8', fontSize: '13px', marginTop: '6px' }}>
-                  Hệ thống chưa hỗ trợ chuyển khoản tự động — vui lòng tự chuyển khoản hoàn lại cho khách qua app ngân hàng, sau đó xác nhận ở đây.
-                </div>
+                {order.overpaidRefundBankInfo?.accountNumber ? (
+                  <div style={{ color: '#b8bcc8', fontSize: '13px', marginTop: '10px' }}>
+                    Chuyển vào: <strong style={{ color: '#eef0f7' }}>{order.overpaidRefundBankInfo.accountNumber}</strong>
+                    {' '}({order.overpaidRefundBankInfo.accountHolder} — {order.overpaidRefundBankInfo.bankName})
+                  </div>
+                ) : (
+                  <div style={{ color: '#ff6b6b', fontSize: '13px', marginTop: '10px' }}>
+                    <i className='fas fa-exclamation-circle me-1'></i>Khách chưa cung cấp thông tin ngân hàng để nhận hoàn tiền
+                  </div>
+                )}
               </div>
 
               {errorOverpaidRefund && <Message variant='danger'>{errorOverpaidRefund}</Message>}
@@ -1225,6 +1341,52 @@ const OrderScreen = ({ match, history }) => {
               >
                 <i className='fas fa-check-double me-2'></i>{loadingOverpaidRefund ? 'Đang lưu...' : 'Xác nhận đã hoàn tiền thừa'}
               </button>
+            </div>
+          )}
+
+          {/* MỚI: Khách — báo có tiền chuyển thừa cần hoàn, gửi thông tin ngân hàng */}
+          {isOwner && order.overpaidRefundStatus === 'pending' && (
+            <div style={sectionStyle}>
+              <h5 style={{ color: '#ffd166', fontWeight: '700', marginBottom: '16px' }}>
+                <i className='fas fa-coins me-2'></i>Bạn đã chuyển thừa tiền
+              </h5>
+              <div style={{ background: 'rgba(255,209,102,0.08)', borderRadius: '10px', padding: '14px 16px', marginBottom: '14px', border: '1px solid rgba(255,209,102,0.2)' }}>
+                <div style={labelStyle}>Số tiền chuyển thừa so với giá trị đơn hàng</div>
+                <div style={{ color: '#ffd166', fontSize: '20px', fontWeight: '800', marginTop: '6px' }}>
+                  {order.overpaidAmount?.toLocaleString('vi-VN')}đ
+                </div>
+              </div>
+
+              {order.overpaidRefundBankInfo?.accountNumber ? (
+                <div style={{ color: '#4cdb80', fontSize: '13px' }}>
+                  <i className='fas fa-check-circle me-1'></i>Đã gửi thông tin ngân hàng, đang chờ shop hoàn tiền.
+                </div>
+              ) : !showOverpaidBankForm ? (
+                <button onClick={() => setShowOverpaidBankForm(true)} style={{ background: 'transparent', border: '1px solid #ffd166', color: '#ffd166', borderRadius: '10px', padding: '10px 24px', fontSize: '14px', fontWeight: '600', cursor: 'pointer' }}>
+                  <i className='fas fa-hand-holding-usd me-2'></i> Gửi thông tin nhận hoàn tiền
+                </button>
+              ) : (
+                <div>
+                  {errorOverpaidBankInfo && <Message variant='danger'>{errorOverpaidBankInfo}</Message>}
+                  <input type='text' placeholder='Tên ngân hàng (VD: Vietcombank)' value={overpaidBankName}
+                    onChange={(e) => setOverpaidBankName(e.target.value)}
+                    style={{ width: '100%', background: '#0f0f23', border: '1px solid rgba(255,209,102,0.4)', borderRadius: '8px', padding: '10px 14px', color: '#ffffff', fontSize: '14px', outline: 'none', marginBottom: '10px' }} />
+                  <input type='text' placeholder='Số tài khoản' value={overpaidAccountNumber}
+                    onChange={(e) => setOverpaidAccountNumber(e.target.value)}
+                    style={{ width: '100%', background: '#0f0f23', border: '1px solid rgba(255,209,102,0.4)', borderRadius: '8px', padding: '10px 14px', color: '#ffffff', fontSize: '14px', outline: 'none', marginBottom: '10px' }} />
+                  <input type='text' placeholder='Chủ tài khoản' value={overpaidAccountHolder}
+                    onChange={(e) => setOverpaidAccountHolder(e.target.value)}
+                    style={{ width: '100%', background: '#0f0f23', border: '1px solid rgba(255,209,102,0.4)', borderRadius: '8px', padding: '10px 14px', color: '#ffffff', fontSize: '14px', outline: 'none', marginBottom: '12px' }} />
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <button onClick={submitOverpaidBankInfoHandler} disabled={loadingOverpaidBankInfo} style={{ background: '#ffd166', border: 'none', borderRadius: '8px', padding: '10px 20px', color: '#0f0f23', fontWeight: '700', fontSize: '14px', cursor: loadingOverpaidBankInfo ? 'not-allowed' : 'pointer', opacity: loadingOverpaidBankInfo ? 0.7 : 1 }}>
+                      <i className='fas fa-paper-plane me-2'></i>{loadingOverpaidBankInfo ? 'Đang gửi...' : 'Gửi thông tin'}
+                    </button>
+                    <button onClick={() => setShowOverpaidBankForm(false)} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: '#b8bcc8', borderRadius: '8px', padding: '10px 20px', fontSize: '14px', cursor: 'pointer' }}>
+                      Hủy bỏ
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
