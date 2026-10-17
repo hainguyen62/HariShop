@@ -7,6 +7,7 @@ import ChatWidget from './components/ChatWidget'
 import CompareBar from './components/CompareBar'
 import BackToTopButton from './components/BackToTopButton'
 import SocketManager from './components/SocketManager'
+import AuthGate from './components/AuthGate'
 
 import HomeScreen from './screens/HomeScreen'
 import SmartSearchScreen from './screens/SmartSearchScreen'
@@ -41,6 +42,12 @@ import MyOrderScreen from './screens/MyOrderScreen'
 
 // VOUCHER ADMIN
 import VoucherListScreen from './screens/VoucherListScreen'
+import StockImportScreen from './screens/StockImportScreen'
+import StockCountHubScreen from './screens/StockCountHubScreen'
+import CountSessionScreen from './screens/CountSessionScreen'
+import StockCheckScreen from './screens/StockCheckScreen'
+import ForecastScreen from './screens/ForecastScreen'
+import AgingStockScreen from './screens/AgingStockScreen'
 import VoucherEditScreen from './screens/VoucherEditScreen'
 import AdminRoute from './components/AdminRoute'
 import PrivateRoute from './components/PrivateRoute'
@@ -62,6 +69,7 @@ const ScrollToTop = () => {
 
 const App = () => {
   return (
+    <AuthGate>
     <Router>
       <Header />
       <main className="page-layout"
@@ -118,6 +126,14 @@ const App = () => {
 
           {/* ===== VOUCHER ADMIN ===== */}
           <AdminRoute path='/admin/voucherlist' component={VoucherListScreen} />
+          <AdminRoute path='/admin/imports' component={StockImportScreen} />
+          <AdminRoute path='/admin/stock-count' component={StockCountHubScreen} />
+          <AdminRoute path='/admin/count-sessions/:id' component={CountSessionScreen} />
+          <AdminRoute path='/admin/count-sessions' exact component={StockCountHubScreen} />
+          <AdminRoute path='/admin/unit-labels' component={StockCountHubScreen} />
+          <AdminRoute path='/admin/forecast' component={ForecastScreen} />
+          <AdminRoute path='/admin/aging-stock' component={AgingStockScreen} />
+          <AdminRoute path='/admin/stock-check/:id' component={StockCheckScreen} />
           <AdminRoute path='/admin/voucher/new' component={VoucherEditScreen} />
           <AdminRoute path='/admin/voucher/:id/edit' component={VoucherEditScreen} />
 
@@ -141,6 +157,7 @@ const App = () => {
       <BackToTopButton />
       <SocketManager />
     </Router>
+    </AuthGate>
   )
 }
 

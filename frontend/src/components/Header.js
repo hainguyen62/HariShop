@@ -6,6 +6,7 @@ import { Navbar, Nav, Container, NavDropdown, Button, Badge } from 'react-bootst
 import SearchBox from './SearchBox'
 import NotificationBell from './NotificationBell'
 import { logout } from '../actions/userActions'
+import LoginPromptModal from './LoginPromptModal'
 
 const Header = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark')
@@ -37,6 +38,7 @@ const Header = () => {
 
   return (
     <header className="header-main">
+      <LoginPromptModal />
       <Navbar expand='lg' collapseOnSelect className="navbar-professional">
         <Container>
           {/* LOGO */}
@@ -149,6 +151,26 @@ const Header = () => {
                   <LinkContainer to='/admin/revenue'>
                     <NavDropdown.Item className="dropdown-item-pro">
                       <i className='fas fa-chart-line me-2'></i>Thống Kê
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/imports'>
+                    <NavDropdown.Item className="dropdown-item-pro">
+                      <i className='fas fa-dolly me-2'></i>Nhập Hàng
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/forecast'>
+                    <NavDropdown.Item className="dropdown-item-pro">
+                      <i className='fas fa-chart-area me-2'></i>Dự Báo Nhập Hàng
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/aging-stock'>
+                    <NavDropdown.Item className="dropdown-item-pro">
+                      <i className='fas fa-hourglass-half me-2'></i>Tồn Kho Lâu
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/stock-count'>
+                    <NavDropdown.Item className="dropdown-item-pro">
+                      <i className='fas fa-clipboard-check me-2'></i>Kiểm Kê Kho
                     </NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to='/admin/voucherlist'>

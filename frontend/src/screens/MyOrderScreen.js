@@ -106,6 +106,7 @@ const MyOrderScreen = ({ history }) => {
           {orders.map((order) => {
             const statusCfg = getOrderStatus(order)
 
+
             return (
               <div key={order._id} style={{
                 background: '#1a1a2e', borderRadius: '16px',
@@ -124,7 +125,7 @@ const MyOrderScreen = ({ history }) => {
                   display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap',
                 }}>
                   <span style={{ color: '#b8bcc8', fontSize: '12px' }}>
-                    Đơn #{order._id.substring(0, 16)}...
+                    Đơn {order.orderCode || `#${order._id.substring(0, 16)}...`}
                   </span>
                   <span style={{ color: '#b8bcc8', fontSize: '12px' }}>
                     <i className='fas fa-calendar-alt me-1'></i>

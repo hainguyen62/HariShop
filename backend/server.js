@@ -20,14 +20,24 @@ import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import orderAdminRoutes from './routes/orderAdminRoutes.js'
-// (Đã gỡ import sepayWebhookRoutes — route đó dùng sai định dạng payload và sai chuẩn chữ ký so với SePay thật. Xác thực HMAC nay được làm đúng ngay
+// (Đã gỡ import sepayWebhookRoutes — route đó dùng sai định dạng payload và
+// sai chuẩn chữ ký so với SePay thật. Xác thực HMAC nay được làm đúng ngay
+// trong route /api/orders/sepay-webhook, xem orderController.js.)
 import voucherRoutes from './routes/voucherRoutes.js'
 
 import uploadRoutes from './routes/uploadRoutes.js'
 
 import shippingRoutes from './routes/shippingRoutes.js'
 import settingsRoutes from './routes/settingsRoutes.js'
+import importRoutes from './routes/importRoutes.js'
+import stockCountRoutes from './routes/stockCountRoutes.js'
+import forecastRoutes from './routes/forecastRoutes.js'
+import inventoryRoutes from './routes/inventoryRoutes.js'
+import unitRoutes from './routes/unitRoutes.js'
+import countSessionRoutes from './routes/countSessionRoutes.js'
+import { runAgingScan } from './controllers/inventoryController.js'
 import notificationRoutes from './routes/notificationRoutes.js'
+import cartRoutes from './routes/cartRoutes.js'
 import chatRoutes from './routes/chatRoutes.js'
 import { initSocket } from './socket.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
@@ -202,6 +212,13 @@ app.use('/api/vouchers', voucherRoutes)
 app.use('/api/upload', uploadRoutes)
 app.use('/api/shipping', shippingRoutes)
 app.use('/api/settings', settingsRoutes)
+app.use('/api/imports', importRoutes)
+app.use('/api/stockcounts', stockCountRoutes)
+app.use('/api/forecast', forecastRoutes)
+app.use('/api/inventory', inventoryRoutes)
+app.use('/api/units', unitRoutes)
+app.use('/api/count-sessions', countSessionRoutes)
+app.use('/api/cart', cartRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/chat', chatRoutes)
 
@@ -276,7 +293,11 @@ async function start() {
     logger.info(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
   })
 
-  //Tự động đồng bộ trạng thái đơn hàng từ GHN theo định kỳ (kết hợp với luồng thủ công — khách/admin vẫn bấm "Theo dõi vận chuyển" được như
+  //Tự động đồng bộ trạng thái đơn hàng từ GHN theo định kỳ (kết hợp
+  // với luồng thủ công — khách/admin vẫn bấm "Theo dõi vận chuyển" được như
+  // cũ, đây chỉ là thêm 1 lớp tự động chạy nền, không thay thế).
+  // Mặc định 10 phút/lần — đủ nhanh để cập nhật kịp thời, vừa tránh gọi GHN
+  // quá dồn dập (xem thêm ghi chú rate limit trong autoSyncPendingGHNOrders).
   const AUTO_SYNC_INTERVAL_MS = 10 * 60 * 1000 // 10 phút
 
   // Chờ 30 giây sau khi server khởi động rồi mới chạy lần đầu (tránh chạy
@@ -285,11 +306,16 @@ async function start() {
     autoSyncPendingGHNOrders().catch((e) =>
       logger.error(`[Auto-sync GHN] Lỗi lần chạy đầu: ${e.message}`)
     )
-    //tương tự GHN, nhưng cho đơn giao qua GHTK (ghtkLabelCode). Xem cảnh báo về mapping trạng thái GHTK chưa verify với đơn thật trong
+    //tương tự GHN, nhưng cho đơn giao qua GHTK (ghtkLabelCode). Xem
+    // cảnh báo về mapping trạng thái GHTK chưa verify với đơn thật trong
+    // ghi chú của GHTK_TO_ORDER_STATUS (orderController.js).
     autoSyncPendingGHTKOrders().catch((e) =>
       logger.error(`[Auto-sync GHTK] Lỗi lần chạy đầu: ${e.message}`)
     )
-    // MỚI: hàm này đã được viết đúng từ trước (hủy đơn online quá 24h chưa thanh toán, trừ/hoàn kho, hoàn voucher) nhưng chưa từng được gọi ở đâu —
+    // MỚI: hàm này đã được viết đúng từ trước (hủy đơn online quá 24h chưa
+    // thanh toán, trừ/hoàn kho, hoàn voucher) nhưng chưa từng được gọi ở đâu —
+    // badge đếm ngược phía frontend vẫn hiện "quá hạn" đúng giờ, nhưng đơn
+    // thực tế không bao giờ được hủy trong database vì thiếu dòng gọi này.
     autoCancelUnpaidOnlineOrders().catch((e) =>
       logger.error(`[Auto-cancel] Lỗi lần chạy đầu: ${e.message}`)
     )
@@ -305,6 +331,13 @@ async function start() {
       )
     }, AUTO_SYNC_INTERVAL_MS)
   }, 30 * 1000)
+
+  // Quét tồn kho lâu: lần đầu sau 1 phút, sau đó mỗi 6 giờ
+  setTimeout(() => {
+    const scan = () => runAgingScan().catch((e) => logger.error(`[Aging] Lỗi: ${e.message}`))
+    scan()
+    setInterval(scan, 6 * 60 * 60 * 1000)
+  }, 60 * 1000)
 }
 
 start()

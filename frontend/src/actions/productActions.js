@@ -60,6 +60,11 @@ export const listProducts =
       sort = 'latest',
       sortBy = '',
       order = '',
+      stockStatus = '',
+      minStock = '',
+      maxStock = '',
+      startDate = '',
+      endDate = '',
     },
     pageNumber = ''
   ) =>
@@ -73,6 +78,11 @@ export const listProducts =
       if (category) query += `&category=${category}`
       if (minPrice !== '') query += `&minPrice=${minPrice}`
       if (maxPrice !== '') query += `&maxPrice=${maxPrice}`
+      if (stockStatus) query += `&stockStatus=${stockStatus}`
+      if (minStock !== '') query += `&minStock=${minStock}`
+      if (maxStock !== '') query += `&maxStock=${maxStock}`
+      if (startDate) query += `&startDate=${startDate}`
+      if (endDate) query += `&endDate=${endDate}`
       if (sortBy && order) {
         query += `&sortBy=${sortBy}&order=${order}`
       } else if (sort) {

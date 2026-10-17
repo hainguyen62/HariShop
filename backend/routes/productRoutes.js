@@ -3,6 +3,7 @@ const router = express.Router()
 
 import {
   getProducts,
+  getFilterOptions,
   getProductById,
   deleteProduct,
   createProduct,
@@ -21,6 +22,7 @@ import { protect, admin } from '../middleware/authMiddleware.js'
 
 router.route('/').get(getProducts).post(protect, admin, createProduct)
 router.get('/top', getTopProducts)
+router.get('/filter-options', getFilterOptions)
 router.get('/suggest', getSearchSuggestions)
 router.post('/nl-search', naturalLanguageSearch)
 router.get('/personalized', protect, getPersonalizedProducts)

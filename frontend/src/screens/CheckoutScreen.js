@@ -25,6 +25,7 @@ import { validateVoucherCode } from '../actions/voucherActions'
 import { listProductDetails } from '../actions/productActions'
 import { getShippingQuotes } from '../actions/shippingActions'
 
+
 const generateTransferContent = () =>
 
   'TT' + String(Math.floor(100000 + Math.random() * 900000))
@@ -37,6 +38,7 @@ const carrierLabel = (carrier) => {
     default: return carrier
   }
 }
+
 
 const formatAddress = (addr) => {
   return [
@@ -127,6 +129,7 @@ const CheckoutScreen = ({ history, location }) => {
     } else {
       setSelectedCartItemsLoaded(true)
     }
+
 
     if (isBuyNow && buyNowProductId) {
       dispatch(listProductDetails(buyNowProductId))
@@ -225,8 +228,12 @@ const CheckoutScreen = ({ history, location }) => {
     return () => clearTimeout(t)
   }, [dispatch, selectedAddress, cartItems, selectedCartItems, selectedCartItemsLoaded, isBuyNow, buyNowItem])
 
+
+  // Chỉ chuyển trang khi đơn vừa được đặt ở màn hình này, tránh đọc đơn cũ còn trong store
+  const submittedRef = useRef(false)
+
   useEffect(() => {
-    if (success && order) {
+    if (submittedRef.current && success && order) {
       localStorage.removeItem('selectedCartItems')
       history.push(`/order/${order._id}`)
     }
@@ -275,7 +282,9 @@ const CheckoutScreen = ({ history, location }) => {
     dispatch(saveVoucherDiscount(Number(voucher.discountAmount) || 0))
   }
 
-  // MỚI (VIII): tự động kiểm tra lại điều kiện voucher mỗi khi giỏ hàng thay đổi (tạm tính hoặc phí ship đổi) — nếu voucher đang áp dụng
+  // MỚI (VIII): tự động kiểm tra lại điều kiện voucher mỗi khi giỏ hàng
+  // thay đổi (tạm tính hoặc phí ship đổi) — nếu voucher đang áp dụng
+  // không còn đủ điều kiện, tự động bỏ áp dụng + thông báo cho khách.
   const voucherRecheckKey = `${selectedVoucher?.code || ''}:${itemsPrice}:${deliveryFee}`
   const prevRecheckKey = useRef(voucherRecheckKey)
   useEffect(() => {
@@ -306,6 +315,7 @@ const CheckoutScreen = ({ history, location }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voucherRecheckKey])
 
+
   const placeOrderHandler = () => {
     if (!agreeTerms) { alert('Vui lòng đồng ý với điều khoản!'); return }
     if (!selectedAddress) { alert('Vui lòng chọn địa chỉ giao hàng!'); return }
@@ -321,6 +331,7 @@ const CheckoutScreen = ({ history, location }) => {
     dispatch(savePaymentMethod(paymentMethod))
     dispatch(saveShopMessage(shopMessage))
 
+    submittedRef.current = true
       dispatch(createOrder({
       orderItems: effectiveCartItems.map((item) => ({
         name:    item.name,
@@ -357,6 +368,7 @@ const CheckoutScreen = ({ history, location }) => {
       transferContent,
     }))
   }
+
 
   const sectionStyle = {
     background: '#1a1a2e',
@@ -579,6 +591,7 @@ const CheckoutScreen = ({ history, location }) => {
             selectedCode={selectedVoucher?.code}
             onConfirm={handleVoucherConfirm}
           />
+
 
           {/* 4. LỜI NHẮN */}
           <div style={sectionStyle}>

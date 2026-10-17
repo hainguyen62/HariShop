@@ -9,31 +9,71 @@ import { listOrders } from '../actions/orderActions'
 import { getAdminRevenueSummary, getAdminBrandBreakdown, deleteOrderByAdmin } from '../actions/orderAdminActions'
 import PieChart from '../components/PieChart'
 import { ORDER_ADMIN_DELETE_RESET } from '../constants/orderConstants'
-import { getOrderStatusInfo } from '../constants/orderStatusConfig'
+import { getOrderStatusInfo, ADMIN_STATUS_OPTIONS } from '../constants/orderStatusConfig'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 import SortableHeader from '../components/SortableHeader'
-import { useTableSort, sortConfigToQuery } from '../utils/sortHelper'
+import Paginate from '../components/Paginate'
+import ListFilterBar from '../components/ListFilterBar'
+import { useListControls } from '../utils/listControls'
+
+const DEFAULT_FILTERS = {
+  keyword: '', status: '', paymentState: '', paymentMethod: '',
+  startDate: '', endDate: '', minTotal: '', maxTotal: '',
+}
+
+const FILTER_FIELDS = [
+  { key: 'keyword', label: 'Tìm kiếm', type: 'text', placeholder: 'Mã đơn, tên khách, email hoặc SĐT' },
+  {
+    key: 'status', label: 'Trạng thái đơn', type: 'select', advanced: true,
+    options: [{ value: '', label: 'Tất cả' }, ...ADMIN_STATUS_OPTIONS],
+  },
+  {
+    key: 'paymentState', label: 'Thanh toán', type: 'select', advanced: true,
+    options: [
+      { value: '', label: 'Tất cả' },
+      { value: 'unpaid', label: 'Chưa thanh toán' },
+      { value: 'paid', label: 'Đã thanh toán' },
+      { value: 'refund_requested', label: 'Yêu cầu hoàn tiền' },
+      { value: 'refund_rejected', label: 'Từ chối hoàn tiền' },
+      { value: 'refunded', label: 'Đã hoàn tiền' },
+      { value: 'overpaid', label: 'Cần hoàn tiền thừa' },
+    ],
+  },
+  {
+    key: 'paymentMethod', label: 'Phương thức', type: 'select', advanced: true,
+    options: [{ value: '', label: 'Tất cả' }, { value: 'cod', label: 'COD' }, { value: 'online', label: 'Chuyển khoản / online' }],
+  },
+  { key: 'startDate', label: 'Đặt từ ngày', type: 'date', advanced: true },
+  { key: 'endDate', label: 'Đặt đến ngày', type: 'date', advanced: true },
+  { key: 'minTotal', label: 'Tổng tiền từ (đ)', type: 'number', advanced: true, placeholder: '0' },
+  { key: 'maxTotal', label: 'Tổng tiền đến (đ)', type: 'number', advanced: true, placeholder: '50000000' },
+]
+
 
 const OrderListScreen = ({ history }) => {
 
   const dispatch = useDispatch()
 
   const orderList = useSelector((state) => state.orderList)
-  const { loading, error, orders } = orderList
+  const { loading, error, orders, page: currentPage, pages } = orderList
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  // MỚI: sort theo cột kiểu FC Online (click header)
-  const { sortConfig, handleSort } = useTableSort()
+  const { filters, applyFilters, sortConfig, handleSort, page, setPage, params, paramsKey } = useListControls(DEFAULT_FILTERS)
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      dispatch(listOrders(sortConfigToQuery(sortConfig)))
+      dispatch(listOrders(params))
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo, sortConfig])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, history, userInfo, paramsKey])
+
+  useEffect(() => {
+    if (!loading && orders && orders.length === 0 && page > 1) setPage(page - 1)
+  }, [loading, orders, page, setPage])
 
   const orderAdminRevenue = useSelector((state) => state.orderAdminRevenue)
   const { data: revenueData } = orderAdminRevenue
@@ -54,8 +94,9 @@ const OrderListScreen = ({ history }) => {
   useEffect(() => {
     if (successDelete) {
       dispatch({ type: ORDER_ADMIN_DELETE_RESET })
-      dispatch(listOrders())
+      dispatch(listOrders(params))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, successDelete])
 
   const [showConfirm, setShowConfirm] = useState(false)
@@ -65,6 +106,7 @@ const OrderListScreen = ({ history }) => {
     setDeleteId(id)
     setShowConfirm(true)
   }
+
 
   const formatDate = (value) => {
     if (!value) return null
@@ -116,7 +158,10 @@ const OrderListScreen = ({ history }) => {
       )
     }
 
-    // MỚI: badge phụ — đơn có thể VỪA "đã thanh toán" VỪA "cần hoàn tiền thừa" cùng lúc (2 trạng thái không loại trừ nhau), nên hiện thêm bên
+    // MỚI: badge phụ — đơn có thể VỪA "đã thanh toán" VỪA "cần hoàn tiền
+    // thừa" cùng lúc (2 trạng thái không loại trừ nhau), nên hiện thêm bên
+    // dưới thay vì thay thế mainBadge, giúp Admin thấy ngay trong danh sách
+    // mà không cần mở từng đơn hoặc phụ thuộc vào thông báo chuông.
     const overpaidBadge = order?.overpaidRefundStatus === 'pending' && (
       <div style={{ marginTop: 4 }}>
         <span
@@ -148,7 +193,7 @@ const OrderListScreen = ({ history }) => {
     <>
       <ConfirmDeleteModal
         show={showConfirm}
-        title={'Xoá đơn hàng này?'}
+        title={'Xoá vĩnh viễn đơn hàng đã hủy này?'}
         confirmText={'Xoá'}
         cancelText={'Huỷ'}
         onCancel={() => {
@@ -183,6 +228,15 @@ const OrderListScreen = ({ history }) => {
         </div>
       )}
 
+      <ListFilterBar
+        fields={FILTER_FIELDS}
+        values={filters}
+        defaults={DEFAULT_FILTERS}
+        onApply={applyFilters}
+        pairs={[['startDate', 'endDate'], ['minTotal', 'maxTotal']]}
+        quickDates
+      />
+
       {loading ? (
         <Loader />
       ) : error ? (
@@ -207,9 +261,12 @@ const OrderListScreen = ({ history }) => {
               </tr>
             </thead>
             <tbody>
+              {(orders || []).length === 0 && (
+                <tr><td colSpan={8} className='text-center text-muted'>Không có đơn hàng phù hợp</td></tr>
+              )}
               {(orders || []).map((order) => (
                 <tr key={order._id}>
-                  <td>{order?._id}</td>
+                  <td title={order?._id}>{order?.orderCode || order?._id}</td>
                   <td>{order?.user?.name || '—'}</td>
                   <td>{formatDate(order?.createdAt) || '—'}</td>
                   <td>{(order?.totalPrice || 0).toLocaleString('vi-VN')}đ</td>
@@ -230,7 +287,7 @@ const OrderListScreen = ({ history }) => {
                       </Button>
                     </LinkContainer>
 
-                    {userInfo?.isAdmin && (
+                    {userInfo?.isAdmin && (order.isCancelled || order.status === 'cancelled' || order.deliveryStatusKey === 'cancelled') && (
                       <Button
                         variant='danger'
                         className='btn-sm'
@@ -245,6 +302,7 @@ const OrderListScreen = ({ history }) => {
               ))}
             </tbody>
           </Table>
+          <Paginate pages={pages || 1} page={currentPage || page} onPageChange={setPage} />
         </>
       )}
     </>

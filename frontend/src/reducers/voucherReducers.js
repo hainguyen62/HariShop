@@ -28,7 +28,9 @@ export const voucherListReducer = (state = { vouchers: [] }, action) => {
     case VOUCHER_LIST_REQUEST:
       return { loading: true, vouchers: [] }
     case VOUCHER_LIST_SUCCESS:
-      return { loading: false, vouchers: action.payload }
+      return Array.isArray(action.payload)
+        ? { loading: false, vouchers: action.payload }
+        : { loading: false, vouchers: action.payload.vouchers, page: action.payload.page, pages: action.payload.pages, total: action.payload.total }
     case VOUCHER_LIST_FAIL:
       return { loading: false, error: action.payload, vouchers: [] }
     default:

@@ -9,6 +9,48 @@ import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 
 import { listVouchers, deleteVoucher } from '../actions/voucherAdminActions'
 import { VOUCHER_DELETE_RESET } from '../constants/voucherConstants'
+import SortableHeader from '../components/SortableHeader'
+import Paginate from '../components/Paginate'
+import ListFilterBar from '../components/ListFilterBar'
+import { useListControls } from '../utils/listControls'
+
+const DEFAULT_FILTERS = { keyword: '', type: '', status: '', startDate: '', endDate: '' }
+
+const FILTER_FIELDS = [
+  { key: 'keyword', label: 'Tìm kiếm', type: 'text', placeholder: 'Mã hoặc tên voucher' },
+  {
+    key: 'type', label: 'Loại', type: 'select', advanced: true,
+    options: [
+      { value: '', label: 'Tất cả' },
+      { value: 'percent', label: 'Giảm theo %' },
+      { value: 'fixed', label: 'Giảm số tiền' },
+      { value: 'freeship', label: 'Freeship' },
+    ],
+  },
+  {
+    key: 'status', label: 'Trạng thái', type: 'select', advanced: true,
+    options: [
+      { value: '', label: 'Tất cả' },
+      { value: 'active', label: 'Đang hoạt động' },
+      { value: 'upcoming', label: 'Sắp diễn ra' },
+      { value: 'expired', label: 'Hết hạn' },
+      { value: 'exhausted', label: 'Hết lượt' },
+      { value: 'paused', label: 'Tạm dừng' },
+    ],
+  },
+  { key: 'startDate', label: 'Hiệu lực từ ngày', type: 'date', advanced: true },
+  { key: 'endDate', label: 'Hiệu lực đến ngày', type: 'date', advanced: true },
+]
+
+const voucherStatus = (v, now = new Date()) => {
+  if (!v?.isActive) return { label: 'Tạm dừng', color: '#ff6b6b' }
+  if (v?.expiresAt && new Date(v.expiresAt) < now) return { label: 'Hết hạn', color: '#8a8fa3' }
+  if (v?.startsAt && new Date(v.startsAt) > now) return { label: 'Sắp diễn ra', color: '#5eb3f6' }
+  if (Number(v?.usageLimit || 0) > 0 && Number(v?.usedCount || 0) >= Number(v.usageLimit)) {
+    return { label: 'Hết lượt', color: '#ffd166' }
+  }
+  return { label: 'Đang hoạt động', color: '#4cdb80' }
+}
 
 const formatDate = (value) => {
   if (!value) return null
@@ -23,25 +65,33 @@ const VoucherListScreen = ({ history }) => {
   const { userInfo } = userLogin
 
   const voucherList = useSelector((state) => state.voucherList)
-  const { loading, error, vouchers } = voucherList
+  const { loading, error, vouchers, page: currentPage, pages } = voucherList
 
   const voucherDelete = useSelector((state) => state.voucherDelete)
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = voucherDelete
 
+  const { filters, applyFilters, sortConfig, handleSort, page, setPage, params, paramsKey } = useListControls(DEFAULT_FILTERS)
+
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      dispatch(listVouchers())
+      dispatch(listVouchers(params))
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, history, userInfo, paramsKey])
 
   useEffect(() => {
     if (successDelete) {
       dispatch({ type: VOUCHER_DELETE_RESET })
-      dispatch(listVouchers())
+      dispatch(listVouchers(params))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, successDelete])
+
+  useEffect(() => {
+    if (!loading && vouchers && vouchers.length === 0 && page > 1) setPage(page - 1)
+  }, [loading, vouchers, page, setPage])
 
   const [showConfirm, setShowConfirm] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
@@ -76,6 +126,15 @@ const VoucherListScreen = ({ history }) => {
 
       <h1>Danh sách voucher</h1>
 
+      <ListFilterBar
+        fields={FILTER_FIELDS}
+        values={filters}
+        defaults={DEFAULT_FILTERS}
+        onApply={applyFilters}
+        pairs={[['startDate', 'endDate']]}
+        quickDates
+      />
+
       {loading ? (
         <Loader />
       ) : error ? (
@@ -89,21 +148,24 @@ const VoucherListScreen = ({ history }) => {
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
-                <th>Mã</th>
-                <th>Tên</th>
-                <th>Loại</th>
-                <th>Giá trị</th>
-                <th>Đơn tối thiểu</th>
-                <th>Max giảm</th>
-                <th>Giới hạn lượt</th>
-                <th>Đã dùng</th>
+                <SortableHeader label='Mã' sortKey='code' sortConfig={sortConfig} onSort={handleSort} />
+                <SortableHeader label='Tên' sortKey='name' sortConfig={sortConfig} onSort={handleSort} />
+                <SortableHeader label='Loại' sortKey='type' sortConfig={sortConfig} onSort={handleSort} />
+                <SortableHeader label='Giá trị' sortKey='value' sortConfig={sortConfig} onSort={handleSort} />
+                <SortableHeader label='Đơn tối thiểu' sortKey='minOrder' sortConfig={sortConfig} onSort={handleSort} />
+                <SortableHeader label='Max giảm' sortKey='maxDiscount' sortConfig={sortConfig} onSort={handleSort} />
+                <SortableHeader label='Giới hạn lượt' sortKey='usageLimit' sortConfig={sortConfig} onSort={handleSort} />
+                <SortableHeader label='Đã dùng' sortKey='usedCount' sortConfig={sortConfig} onSort={handleSort} />
                 <th>Còn lại</th>
-                <th>Hiệu lực</th>
-                <th>Trạng thái</th>
+                <SortableHeader label='Hiệu lực' sortKey='expiresAt' sortConfig={sortConfig} onSort={handleSort} />
+                <SortableHeader label='Trạng thái' sortKey='isActive' sortConfig={sortConfig} onSort={handleSort} />
                 <th></th>
               </tr>
             </thead>
             <tbody>
+              {(vouchers || []).length === 0 && (
+                <tr><td colSpan={12} className='text-center text-muted'>Không có voucher phù hợp</td></tr>
+              )}
               {(vouchers || []).map((v) => {
                 const usageLimit = Number(v?.usageLimit || 0)
                 const usedCount = Number(v?.usedCount || 0)
@@ -122,11 +184,7 @@ const VoucherListScreen = ({ history }) => {
                       {formatDate(v?.startsAt)} → {formatDate(v?.expiresAt)}
                     </td>
                     <td>
-                      {v?.isActive ? (
-                        <span style={{ color: '#4cdb80', fontWeight: 700 }}>Đang hoạt động</span>
-                      ) : (
-                        <span style={{ color: '#ff6b6b', fontWeight: 700 }}>Tạm dừng</span>
-                      )}
+                      <span style={{ color: voucherStatus(v).color, fontWeight: 700 }}>{voucherStatus(v).label}</span>
                     </td>
                     <td>
                       <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
@@ -155,6 +213,7 @@ const VoucherListScreen = ({ history }) => {
               })}
             </tbody>
           </Table>
+          <Paginate pages={pages || 1} page={currentPage || page} onPageChange={setPage} />
         </>
       )}
     </>

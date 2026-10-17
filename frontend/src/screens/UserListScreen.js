@@ -8,13 +8,32 @@ import Loader from '../components/Loader'
 import { listUsers, deleteUser } from '../actions/userActions'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 import SortableHeader from '../components/SortableHeader'
-import { useTableSort, sortConfigToQuery } from '../utils/sortHelper'
+import Paginate from '../components/Paginate'
+import ListFilterBar from '../components/ListFilterBar'
+import { useListControls } from '../utils/listControls'
+
+const DEFAULT_FILTERS = { keyword: '', role: '', provider: '', startDate: '', endDate: '' }
+
+const FILTER_FIELDS = [
+  { key: 'keyword', label: 'Tìm kiếm', type: 'text', placeholder: 'Tên, email hoặc số điện thoại' },
+  {
+    key: 'role', label: 'Vai trò', type: 'select', advanced: true,
+    options: [{ value: '', label: 'Tất cả' }, { value: 'admin', label: 'Admin' }, { value: 'customer', label: 'Khách hàng' }],
+  },
+  {
+    key: 'provider', label: 'Kiểu đăng nhập', type: 'select', advanced: true,
+    options: [{ value: '', label: 'Tất cả' }, { value: 'local', label: 'Email và mật khẩu' }, { value: 'google', label: 'Google' }],
+  },
+  { key: 'startDate', label: 'Đăng ký từ ngày', type: 'date', advanced: true },
+  { key: 'endDate', label: 'Đăng ký đến ngày', type: 'date', advanced: true },
+]
+
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const userList = useSelector((state) => state.userList)
-  const { loading, error, users } = userList
+  const { loading, error, users, page: currentPage, pages } = userList
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -22,16 +41,20 @@ const UserListScreen = ({ history }) => {
   const userDelete = useSelector((state) => state.userDelete)
   const { success: successDelete } = userDelete
 
-  // MỚI: sort theo cột kiểu FC Online (click header)
-  const { sortConfig, handleSort } = useTableSort()
+  const { filters, applyFilters, sortConfig, handleSort, page, setPage, params, paramsKey } = useListControls(DEFAULT_FILTERS)
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      dispatch(listUsers(sortConfigToQuery(sortConfig)))
+      dispatch(listUsers(params))
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, successDelete, userInfo, sortConfig])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, history, successDelete, userInfo, paramsKey])
+
+  useEffect(() => {
+    if (!loading && users && users.length === 0 && page > 1) setPage(page - 1)
+  }, [loading, users, page, setPage])
 
   const [showConfirm, setShowConfirm] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
@@ -40,6 +63,7 @@ const UserListScreen = ({ history }) => {
     setDeleteId(id)
     setShowConfirm(true)
   }
+
 
   return (
     <>
@@ -60,11 +84,21 @@ const UserListScreen = ({ history }) => {
       />
       <h1>Users</h1>
 
+      <ListFilterBar
+        fields={FILTER_FIELDS}
+        values={filters}
+        defaults={DEFAULT_FILTERS}
+        onApply={applyFilters}
+        pairs={[['startDate', 'endDate']]}
+        quickDates
+      />
+
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
+        <>
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
@@ -77,7 +111,10 @@ const UserListScreen = ({ history }) => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {(users || []).length === 0 && (
+              <tr><td colSpan={6} className='text-center text-muted'>Không có người dùng phù hợp</td></tr>
+            )}
+            {(users || []).map((user) => (
               <tr key={user._id}>
                 <td>{user._id}</td>
                 <td>{user.name}</td>
@@ -119,6 +156,8 @@ const UserListScreen = ({ history }) => {
             ))}
           </tbody>
         </Table>
+        <Paginate pages={pages || 1} page={currentPage || page} onPageChange={setPage} />
+        </>
       )}
     </>
   )

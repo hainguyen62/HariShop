@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { loginWithGoogleToken } from '../actions/userActions'
+import { loginWithGoogleSession } from '../actions/userActions'
 
 const GoogleAuthScreen = ({ location, history }) => {
   const dispatch = useDispatch()
@@ -16,19 +16,13 @@ const GoogleAuthScreen = ({ location, history }) => {
     handled.current = true
 
     const params = new URLSearchParams(location.search)
-    const token = params.get('token')
-    const errorParam = params.get('error')
-
-    if (errorParam) {
+    if (params.get('error')) {
       history.push('/login')
       return
     }
 
-    if (token) {
-      dispatch(loginWithGoogleToken(token))
-    } else {
-      history.push('/login')
-    }
+    // Token nằm ở cookie refresh do backend đặt, không còn trên URL
+    dispatch(loginWithGoogleSession())
   }, [dispatch, location.search, history])
 
   useEffect(() => {

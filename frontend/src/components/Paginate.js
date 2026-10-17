@@ -2,11 +2,15 @@ import React from 'react'
 import { Pagination } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
-const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
+const Paginate = ({ pages, page, isAdmin = false, keyword = '', onPageChange }) => {
   const buildPath = (p) => {
     if (isAdmin) return `/admin/productlist/${p}`
     return keyword ? `/search/${keyword}/page/${p}` : `/page/${p}`
   }
+
+  // Có onPageChange thì chuyển trang bằng state (trang không dùng route), không thì dùng link
+  const Nav = ({ to, children }) =>
+    onPageChange ? children(() => onPageChange(to)) : <LinkContainer to={buildPath(to)}>{children()}</LinkContainer>
 
   return (
     pages > 1 && (
@@ -39,35 +43,45 @@ const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
           }
         `}</style>
         <Pagination className='harishop-pagination'>
-          <LinkContainer to={buildPath(1)}>
-            <Pagination.First disabled={page <= 1}>
-              <i className='fas fa-angle-double-left'></i>
-            </Pagination.First>
-          </LinkContainer>
+          <Nav to={1}>
+            {(onClick) => (
+              <Pagination.First disabled={page <= 1} onClick={onClick}>
+                <i className='fas fa-angle-double-left'></i>
+              </Pagination.First>
+            )}
+          </Nav>
 
-          <LinkContainer to={buildPath(Math.max(page - 1, 1))}>
-            <Pagination.Prev disabled={page <= 1}>
-              <i className='fas fa-chevron-left'></i>
-            </Pagination.Prev>
-          </LinkContainer>
+          <Nav to={Math.max(page - 1, 1)}>
+            {(onClick) => (
+              <Pagination.Prev disabled={page <= 1} onClick={onClick}>
+                <i className='fas fa-chevron-left'></i>
+              </Pagination.Prev>
+            )}
+          </Nav>
 
           {[...Array(pages).keys()].map((x) => (
-            <LinkContainer key={x + 1} to={buildPath(x + 1)}>
-              <Pagination.Item active={x + 1 === page}>{x + 1}</Pagination.Item>
-            </LinkContainer>
+            <Nav key={x + 1} to={x + 1}>
+              {(onClick) => (
+                <Pagination.Item active={x + 1 === page} onClick={onClick}>{x + 1}</Pagination.Item>
+              )}
+            </Nav>
           ))}
 
-          <LinkContainer to={buildPath(Math.min(page + 1, pages))}>
-            <Pagination.Next disabled={page >= pages}>
-              <i className='fas fa-chevron-right'></i>
-            </Pagination.Next>
-          </LinkContainer>
+          <Nav to={Math.min(page + 1, pages)}>
+            {(onClick) => (
+              <Pagination.Next disabled={page >= pages} onClick={onClick}>
+                <i className='fas fa-chevron-right'></i>
+              </Pagination.Next>
+            )}
+          </Nav>
 
-          <LinkContainer to={buildPath(pages)}>
-            <Pagination.Last disabled={page >= pages}>
-              <i className='fas fa-angle-double-right'></i>
-            </Pagination.Last>
-          </LinkContainer>
+          <Nav to={pages}>
+            {(onClick) => (
+              <Pagination.Last disabled={page >= pages} onClick={onClick}>
+                <i className='fas fa-angle-double-right'></i>
+              </Pagination.Last>
+            )}
+          </Nav>
         </Pagination>
       </>
     )

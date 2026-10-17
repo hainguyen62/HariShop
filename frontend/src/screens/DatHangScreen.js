@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -73,8 +73,11 @@ const DatHangScreen = ({ history, location }) => {
     return () => clearTimeout(t)
   }, [dispatch, defaultAddress, cartItems])
 
+  // Chỉ chuyển trang khi đơn vừa được đặt ở màn hình này
+  const submittedRef = useRef(false)
+
   useEffect(() => {
-    if (success) {
+    if (submittedRef.current && success && order) {
       history.push(`/order/${order._id}`)
     }
   }, [success, history, order])
@@ -126,6 +129,7 @@ const DatHangScreen = ({ history, location }) => {
     localStorage.setItem('deliveryFee', deliveryFee.toString())
     localStorage.setItem('voucherDiscount', voucherDiscount.toString())
 
+    submittedRef.current = true
     dispatch(createOrder({
       orderItems: cartItems,
       shippingAddress: {
@@ -153,6 +157,7 @@ const DatHangScreen = ({ history, location }) => {
       totalPrice
     }))
   }
+
 
   const isButtonDisabled = !termsAgreed || !cartItems.length || !deliveryMethod || !paymentMethod || !defaultAddress
 
@@ -434,3 +439,4 @@ const DatHangScreen = ({ history, location }) => {
 }
 
 export default DatHangScreen
+

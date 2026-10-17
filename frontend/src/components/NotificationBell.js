@@ -23,6 +23,7 @@ const TYPE_ICON = {
   // MỚI: khách chuyển khoản SePay thiếu/thừa so với giá trị đơn
   payment_underpaid: { icon: 'fas fa-exclamation-triangle', color: '#ff6b6b' },
   payment_overpaid:  { icon: 'fas fa-coins',                color: '#ffd166' },
+  stock_aging:       { icon: 'fas fa-hourglass-half',       color: '#ffd166' },
   // Khách hàng
   order_placed:     { icon: 'fas fa-receipt',          color: '#33FFCC' },
   order_status:     { icon: 'fas fa-box',              color: '#5eb3f6' },
@@ -58,7 +59,9 @@ const NotificationBell = ({ scope = 'admin' }) => {
   useEffect(() => {
     const fetchCount = () => dispatch(isAdmin ? fetchUnreadCount() : fetchMyUnreadCount())
     fetchCount()
-    // MỚI (B9): giờ đã có Socket.io đẩy thông báo real-time (xem SocketManager.js), interval này chỉ còn là LƯỚI AN TOÀN dự phòng (vd socket bị rớt mạng tạm thời) —
+    // MỚI (B9): giờ đã có Socket.io đẩy thông báo real-time (xem SocketManager.js),
+    // interval này chỉ còn là LƯỚI AN TOÀN dự phòng (vd socket bị rớt mạng tạm thời) —
+    // giãn ra 60s thay vì 30s vì không còn là nguồn cập nhật chính.
     const interval = setInterval(fetchCount, 60000)
     return () => clearInterval(interval)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,7 +93,9 @@ const NotificationBell = ({ scope = 'admin' }) => {
     dispatch(isAdmin ? markAllNotificationsRead() : markAllMyNotificationsRead())
   }
 
-  // MỚI: xoá 1 thông báo — chặn sự kiện nổi bọt (stopPropagation) để không vô tình kích hoạt luôn handleClickItem (đánh dấu đã đọc + điều hướng)
+  // MỚI: xoá 1 thông báo — chặn sự kiện nổi bọt (stopPropagation) để không
+  // vô tình kích hoạt luôn handleClickItem (đánh dấu đã đọc + điều hướng)
+  // của div cha khi bấm nút xoá.
   const handleDeleteItem = (e, id) => {
     e.stopPropagation()
     dispatch(isAdmin ? deleteNotification(id) : deleteMyNotification(id))

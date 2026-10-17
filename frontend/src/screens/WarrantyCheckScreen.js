@@ -57,7 +57,7 @@ const WarrantyCheckScreen = () => {
         Tra cứu bảo hành
       </h2>
       <p style={{ color: '#b8bcc8', fontSize: 14, marginBottom: 24 }}>
-        Nhập mã đơn hàng (xem trong trang chi tiết đơn hàng hoặc email xác nhận) và số điện thoại đã dùng khi đặt hàng để kiểm tra thời hạn bảo hành.
+        Nhập mã đơn hàng (dạng HSO-IP15-BLACK-00007-261005, xem trong trang chi tiết đơn hàng hoặc email xác nhận) và số điện thoại đã dùng khi đặt hàng để kiểm tra thời hạn bảo hành.
         {' '}
         <Link to='/chinh-sach-bao-hanh' style={{ color: '#33FFCC' }}>Xem chính sách bảo hành đầy đủ →</Link>
       </p>
@@ -72,7 +72,7 @@ const WarrantyCheckScreen = () => {
           </label>
           <input
             type='text'
-            placeholder='VD: 6a62da5919b141938ee17b29'
+            placeholder='VD: HSO-IP15-BLACK-00007-261005'
             value={orderId}
             onChange={(e) => setOrderId(e.target.value)}
             style={inputStyle}

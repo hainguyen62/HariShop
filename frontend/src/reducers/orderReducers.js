@@ -132,7 +132,7 @@ export const orderPayReducer = (state = {}, action) => {
   }
 }
 
-// Admin đánh dấu đã thu/chưa thu tiền cho đơn COD
+// MỚI: Admin đánh dấu đã thu/chưa thu tiền cho đơn COD
 export const orderCodPaymentReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_COD_PAYMENT_REQUEST:
@@ -163,7 +163,7 @@ export const orderDeliverReducer = (state = {}, action) => {
   }
 }
 
-// Admin cập nhật trạng thái đơn hàng chi tiết (timeline)
+// ✅ A3: Admin cập nhật trạng thái đơn hàng chi tiết (timeline)
 export const orderUpdateStatusReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_UPDATE_STATUS_REQUEST:
@@ -199,7 +199,9 @@ export const orderListReducer = (state = { orders: [] }, action) => {
     case ORDER_LIST_REQUEST:
       return { loading: true }
     case ORDER_LIST_SUCCESS:
-      return { loading: false, orders: action.payload }
+      return Array.isArray(action.payload)
+        ? { loading: false, orders: action.payload }
+        : { loading: false, orders: action.payload.orders, page: action.payload.page, pages: action.payload.pages, total: action.payload.total }
     case ORDER_LIST_FAIL:
       return { loading: false, error: action.payload }
     default:
@@ -268,7 +270,7 @@ export const orderTrackReducer = (state = {}, action) => {
   }
 }
 
-// Admin revenue summary reducer
+// ✅ Admin revenue summary reducer
 export const orderAdminRevenueReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_ADMIN_REVENUE_REQUEST:
@@ -282,7 +284,7 @@ export const orderAdminRevenueReducer = (state = {}, action) => {
   }
 }
 
-// Admin brand breakdown reducer
+// ✅ Admin brand breakdown reducer
 export const orderAdminBrandReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_ADMIN_BRAND_REQUEST:
@@ -296,7 +298,7 @@ export const orderAdminBrandReducer = (state = {}, action) => {
   }
 }
 
-// Hoàn tiền khi giao hàng thất bại
+// ✅ A5: Hoàn tiền khi giao hàng thất bại
 export const orderRefundRequestReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_REFUND_REQUEST_REQUEST:
@@ -342,7 +344,7 @@ export const orderRefundAdjustReducer = (state = {}, action) => {
   }
 }
 
-// reducer cho luồng hoàn tiền thừa (SePay QR)
+// MỚI: reducer cho luồng hoàn tiền thừa (SePay QR)
 export const orderOverpaidRefundCompleteReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_OVERPAID_REFUND_COMPLETE_REQUEST:
@@ -373,7 +375,7 @@ export const orderOverpaidBankInfoReducer = (state = {}, action) => {
   }
 }
 
-// Thống kê doanh thu nâng cao
+// ✅ A4: Thống kê doanh thu nâng cao
 export const revenueAnalyticsReducer = (state = {}, action) => {
   switch (action.type) {
     case REVENUE_ANALYTICS_REQUEST:
@@ -387,7 +389,7 @@ export const revenueAnalyticsReducer = (state = {}, action) => {
   }
 }
 
-//  Admin delete order reducer
+// ✅ Admin delete order reducer
 export const orderAdminDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_ADMIN_DELETE_REQUEST:

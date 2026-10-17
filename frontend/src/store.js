@@ -23,6 +23,7 @@ import { compareReducer } from './reducers/compareReducers'
 
 // CART
 import { cartReducer } from './reducers/cartReducers'
+import { loginPromptReducer } from './reducers/loginPromptReducers'
 
 // USER
 import {
@@ -97,6 +98,7 @@ const reducer = combineReducers({
   productTopRated: productTopRatedReducer,
 
   cart: cartReducer,
+  loginPrompt: loginPromptReducer,
 
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
@@ -184,24 +186,19 @@ const safeParseStorage = (key, defaultValue) => {
   }
 }
 
-const cartItemsFromStorage = safeParseStorage('cartItems', [])
-const userInfoFromStorage = safeParseStorage('userInfo', null)
 const shippingAddressFromStorage = safeParseStorage('shippingAddress', {})
 const compareItemsFromStorage = safeParseStorage('compareItems', [])
 
 // ================= INITIAL STATE =================
 const initialState = {
   cart: {
-    cartItems: cartItemsFromStorage,
+    cartItems: [],
     shippingAddress: shippingAddressFromStorage,
     deliveryMethod: safeParseStorage('deliveryMethod', 'nhanh'),
     voucherCode: '',
     shopMessage: '',
     deliveryFee: 20000,
     voucherDiscount: 0,
-  },
-  userLogin: {
-    userInfo: userInfoFromStorage,
   },
   compare: {
     compareItems: compareItemsFromStorage,

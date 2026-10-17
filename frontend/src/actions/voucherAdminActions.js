@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toQueryString } from '../utils/listControls'
 import { logout } from './userActions'
 import {
   VOUCHER_LIST_REQUEST,
@@ -25,7 +26,7 @@ const getErrorMessage = (error) => {
   }
 }
 
-export const listVouchers = () => async (dispatch, getState) => {
+export const listVouchers = (params = {}) => async (dispatch, getState) => {
   try {
     dispatch({ type: VOUCHER_LIST_REQUEST })
 
@@ -37,7 +38,8 @@ export const listVouchers = () => async (dispatch, getState) => {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     }
 
-    const { data } = await axios.get('/api/vouchers', config)
+    const qs = toQueryString(params)
+    const { data } = await axios.get(qs ? `/api/vouchers?${qs}` : '/api/vouchers', config)
 
     dispatch({ type: VOUCHER_LIST_SUCCESS, payload: data })
   } catch (error) {
@@ -112,3 +114,4 @@ export const deleteVoucher = (id) => async (dispatch, getState) => {
     dispatch({ type: VOUCHER_DELETE_FAIL, payload: message })
   }
 }
+

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
@@ -13,11 +14,18 @@ import {
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 import SortableHeader from '../components/SortableHeader'
-import { useTableSort, sortConfigToQuery } from '../utils/sortHelper'
+import ListFilterBar from '../components/ListFilterBar'
+import { useListControls } from '../utils/listControls'
 
-const ProductListScreen = ({ history, match }) => {
-  const pageNumber = match.params.pageNumber || 1
+const DEFAULT_FILTERS = {
+  keyword: '', brand: '', category: '', minPrice: '', maxPrice: '',
+  stockStatus: '', minStock: '', maxStock: '', startDate: '', endDate: '',
+}
 
+const toOptions = (list) => [{ value: '', label: 'Tất cả' }, ...list.map((x) => ({ value: x, label: x }))]
+
+
+const ProductListScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList)
@@ -39,8 +47,33 @@ const ProductListScreen = ({ history, match }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  // MỚI: sort theo cột kiểu FC Online (click header) — thay cho dropdown
-  const { sortConfig, handleSort } = useTableSort()
+  const { filters, applyFilters, sortConfig, handleSort, page: pageNumber, setPage, params, paramsKey } = useListControls(DEFAULT_FILTERS)
+  const [options, setOptions] = useState({ brands: [], categories: [] })
+
+  useEffect(() => {
+    axios.get('/api/products/filter-options').then(({ data }) => setOptions(data)).catch(() => {})
+  }, [])
+
+  const filterFields = [
+    { key: 'keyword', label: 'Tìm kiếm', type: 'text', placeholder: 'Tên sản phẩm' },
+    { key: 'brand', label: 'Hãng', type: 'select', advanced: true, options: toOptions(options.brands) },
+    { key: 'category', label: 'Danh mục', type: 'select', advanced: true, options: toOptions(options.categories) },
+    { key: 'minPrice', label: 'Giá từ (đ)', type: 'number', advanced: true, placeholder: '0' },
+    { key: 'maxPrice', label: 'Giá đến (đ)', type: 'number', advanced: true, placeholder: '50000000' },
+    {
+      key: 'stockStatus', label: 'Tình trạng kho', type: 'select', advanced: true,
+      options: [
+        { value: '', label: 'Tất cả' },
+        { value: 'out', label: 'Hết hàng' },
+        { value: 'low', label: 'Sắp hết (1 đến 5)' },
+        { value: 'in', label: 'Còn nhiều (trên 5)' },
+      ],
+    },
+    { key: 'minStock', label: 'Tồn kho từ', type: 'number', advanced: true },
+    { key: 'maxStock', label: 'Tồn kho đến', type: 'number', advanced: true },
+    { key: 'startDate', label: 'Tạo từ ngày', type: 'date', advanced: true },
+    { key: 'endDate', label: 'Tạo đến ngày', type: 'date', advanced: true },
+  ]
 
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET })
@@ -49,15 +82,25 @@ const ProductListScreen = ({ history, match }) => {
       history.push('/login')
     }
 
-    dispatch(listProducts(sortConfigToQuery(sortConfig), pageNumber))
-  }, [
-    dispatch,
-    history,
-    userInfo,
-    successDelete,
-    pageNumber,
-    sortConfig,
-  ])
+    const { pageNumber: pn, keyword, brand, category, ...rest } = params
+    dispatch(
+      listProducts(
+        {
+          ...rest,
+          keyword: encodeURIComponent(keyword || ''),
+          brand: encodeURIComponent(brand || ''),
+          category: encodeURIComponent(category || ''),
+          sort: '',
+        },
+        pn
+      )
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, history, userInfo, successDelete, paramsKey])
+
+  useEffect(() => {
+    if (!loading && products && products.length === 0 && pageNumber > 1) setPage(pageNumber - 1)
+  }, [loading, products, pageNumber, setPage])
 
   const [showConfirm, setShowConfirm] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
@@ -66,6 +109,7 @@ const ProductListScreen = ({ history, match }) => {
     setDeleteId(id)
     setShowConfirm(true)
   }
+
 
   const createProductHandler = () => {
     history.push('/admin/product/new')
@@ -97,6 +141,14 @@ const ProductListScreen = ({ history, match }) => {
           </Button>
         </Col>
       </Row>
+      <ListFilterBar
+        fields={filterFields}
+        values={filters}
+        defaults={DEFAULT_FILTERS}
+        onApply={applyFilters}
+        pairs={[['minPrice', 'maxPrice'], ['minStock', 'maxStock'], ['startDate', 'endDate']]}
+        quickDates
+      />
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loadingCreate && <Loader />}
@@ -110,6 +162,7 @@ const ProductListScreen = ({ history, match }) => {
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
+                <th>Mã SP</th>
                 <SortableHeader label='Tên' sortKey='name' sortConfig={sortConfig} onSort={handleSort} />
                 <SortableHeader label='Giá' sortKey='price' sortConfig={sortConfig} onSort={handleSort} />
                 <SortableHeader label='Danh Mục' sortKey='category' sortConfig={sortConfig} onSort={handleSort} />
@@ -120,11 +173,16 @@ const ProductListScreen = ({ history, match }) => {
                 <SortableHeader label='Ngày tạo' sortKey='createdAt' sortConfig={sortConfig} onSort={handleSort} />
                 <th></th>
 
+
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {(products || []).length === 0 && (
+                <tr><td colSpan={10} className='text-center text-muted'>Không có sản phẩm phù hợp</td></tr>
+              )}
+              {(products || []).map((product) => (
                 <tr key={product._id}>
+                  <td>{product.productCode || '—'}</td>
                   <td title={product._id}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       {product.image && (
@@ -200,7 +258,7 @@ const ProductListScreen = ({ history, match }) => {
               ))}
             </tbody>
           </Table>
-          <Paginate pages={pages} page={page} isAdmin={true} />
+          <Paginate pages={pages} page={page} onPageChange={setPage} />
         </>
       )}
     </>

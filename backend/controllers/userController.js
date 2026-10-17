@@ -1,9 +1,10 @@
 import asyncHandler from 'express-async-handler'
 import crypto from 'crypto'
 import mongoose from 'mongoose'
-import generateToken from '../utils/generateToken.js'
+import generateToken, { startSession, revokeAllSessions } from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 import { checkRateLimit, resetRateLimit } from '../utils/rateLimit.js'
+import { escapeRegex, dateRange, sortDirection, pageParams, pagesOf } from '../utils/listQuery.js'
 
 /* ===================== AUTH ===================== */
 
@@ -40,7 +41,7 @@ const authUser = asyncHandler(async (req, res) => {
       addresses: user.addresses,
       codRestricted: user.codRestricted,
       codFailCount: user.codFailCount,
-      token: generateToken(user._id),
+      token: await startSession(req, res, user),
     })
   } else {
     res.status(401)
@@ -155,7 +156,7 @@ const verifyOtp = asyncHandler(async (req, res) => {
     email: user.email,
     isAdmin: user.isAdmin,
     addresses: user.addresses,
-    token: generateToken(user._id),
+    token: await startSession(req, res, user),
   })
 })
 
@@ -401,13 +402,14 @@ const resetPassword = asyncHandler(async (req, res) => {
   user.resetPasswordToken = undefined
   user.resetPasswordExpire = undefined
   await user.save()
+  await revokeAllSessions(user)
 
   res.json({
     _id: user._id,
     name: user.name,
     email: user.email,
     isAdmin: user.isAdmin,
-    token: generateToken(user._id),
+    token: await startSession(req, res, user),
     message: 'Đặt lại mật khẩu thành công.',
   })
 })
@@ -440,7 +442,11 @@ const getUserProfile = asyncHandler(async (req, res) => {
 })
 
 /* ===================== B12: ĐỔI MẬT KHẨU YÊU CẦU OTP ===================== */
-// Bước 1: user đang đăng nhập, nhập mật khẩu mới → gọi API này để gửi OTP về email đã đăng ký. KHÔNG lưu mật khẩu mới vào DB ở bước này (chỉ dùng để
+// Bước 1: user đang đăng nhập, nhập mật khẩu mới → gọi API này để gửi OTP
+// về email đã đăng ký. KHÔNG lưu mật khẩu mới vào DB ở bước này (chỉ dùng để
+// validate độ dài cho UX tốt hơn) — mật khẩu mới được giữ tạm ở phía frontend
+// (state) và gửi lại kèm OTP ở bước xác nhận, tránh lưu password chưa xác
+// thực xuống database.
 const requestChangePasswordOtp = asyncHandler(async (req, res) => {
   const { newPassword } = req.body
 
@@ -519,8 +525,10 @@ const verifyChangePasswordOtp = asyncHandler(async (req, res) => {
   user.otpExpire = undefined
   user.otpLastSentAt = undefined
   await user.save()
+  await revokeAllSessions(user)
 
-  res.json({ message: 'Đổi mật khẩu thành công.' })
+  // Thiết bị đang đổi mật khẩu nhận phiên mới, các thiết bị khác bị đăng xuất
+  res.json({ message: 'Đổi mật khẩu thành công.', token: await startSession(req, res, user) })
 })
 
 const updateUserProfile = asyncHandler(async (req, res) => {
@@ -542,7 +550,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       addresses: updatedUser.addresses,
       codRestricted: updatedUser.codRestricted,
       codFailCount: updatedUser.codFailCount,
-      token: generateToken(updatedUser._id),
+      token: generateToken(updatedUser),
     })
   } else {
     res.status(404)
@@ -632,7 +640,9 @@ const addSearchHistory = asyncHandler(async (req, res) => {
 
   const user = await User.findById(req.user._id)
 
-  // Dedup: nếu từ khóa (không phân biệt hoa/thường) đã có trong lịch sử, xóa bản cũ trước khi đưa lên đầu — tránh trùng lặp, luôn hiển thị lần
+  // Dedup: nếu từ khóa (không phân biệt hoa/thường) đã có trong lịch sử,
+  // xóa bản cũ trước khi đưa lên đầu — tránh trùng lặp, luôn hiển thị lần
+  // tìm gần nhất.
   const keywordLower = keyword.toLowerCase()
   user.searchHistory = (user.searchHistory || []).filter(
     (item) => item.keyword.toLowerCase() !== keywordLower
@@ -674,22 +684,43 @@ const SORTABLE_USER_FIELDS = {
 }
 
 const getUsers = asyncHandler(async (req, res) => {
-  const requestedOrder = req.query.order === 'asc' ? 1 : req.query.order === 'desc' ? -1 : null
-  const columnSortField = SORTABLE_USER_FIELDS[req.query.sortBy]
-  const sortStage =
-    columnSortField && requestedOrder !== null
-      ? { [columnSortField]: requestedOrder }
-      : { createdAt: -1 } // mặc định: user mới nhất lên đầu
+  const dir = sortDirection(req.query.order)
+  const sortField = SORTABLE_USER_FIELDS[req.query.sortBy]
+  const sortStage = typeof sortField === 'string' && dir !== null ? { [sortField]: dir, _id: 1 } : { createdAt: -1, _id: 1 }
 
-  // ── SỬA LỖI BẢO MẬT: trước đây thiếu .select('-password'), khiến mật khẩu đã hash của TOÀN BỘ user bị trả về cho response admin — dù đã
-  const users = await User.find({}).select('-password').sort(sortStage)
-  res.json(users)
+  const filter = {}
+  const keyword = String(req.query.keyword || '').trim()
+  if (keyword) {
+    const rx = new RegExp(escapeRegex(keyword), 'i')
+    filter.$or = [{ name: rx }, { email: rx }, { phone: rx }]
+  }
+  if (req.query.role === 'admin') filter.isAdmin = true
+  if (req.query.role === 'customer') filter.isAdmin = false
+  if (['local', 'google'].includes(req.query.provider)) {
+    filter.authProvider = req.query.provider === 'local' ? { $ne: 'google' } : 'google'
+  }
+  const created = dateRange(req.query.startDate, req.query.endDate)
+  if (created) filter.createdAt = created
+
+  // Không có pageNumber thì giữ kiểu trả về cũ (mảng) cho nơi khác đang gọi
+  if (req.query.pageNumber === undefined) {
+    const all = await User.find(filter).select('-password').sort(sortStage)
+    return res.json(all)
+  }
+
+  const { page, pageSize, skip } = pageParams(req.query.pageNumber)
+  const [total, users] = await Promise.all([
+    User.countDocuments(filter),
+    User.find(filter).select('-password').sort(sortStage).skip(skip).limit(pageSize),
+  ])
+  res.json({ users, page, pages: pagesOf(total, pageSize), total })
 })
 
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
 
   if (user) {
+    await revokeAllSessions({ _id: user._id })
     await user.deleteOne()
     res.json({ message: 'Đã xóa người dùng.' })
   } else {
@@ -715,9 +746,11 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
+    const adminChanged = user.isAdmin !== req.body.isAdmin
     user.isAdmin = req.body.isAdmin
 
     const updatedUser = await user.save()
+    if (adminChanged) await revokeAllSessions(updatedUser)
 
     res.json({
       _id: updatedUser._id,

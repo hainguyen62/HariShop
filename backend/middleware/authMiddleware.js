@@ -29,6 +29,11 @@ const protect = asyncHandler(async (req, res, next) => {
         throw new Error('User not found')
       }
 
+      if ((decoded.tv || 0) !== (req.user.tokenVersion || 0)) {
+        res.status(401)
+        throw new Error('Phiên đăng nhập đã bị thu hồi')
+      }
+
       next()
     } catch (error) {
       console.error('🔴 Auth error:', error.message)

@@ -2,6 +2,8 @@ import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
 import Order from '../models/orderModel.js'
 import { callAI } from '../utils/aiProvider.js'
+import { dateRange, numRange, escapeRegex } from '../utils/listQuery.js'
+import { nextProductCode } from '../utils/orderCode.js'
 import { attachFlashSale, attachFlashSaleToList, normalizeFlashSale } from '../utils/flashSale.js'
 
 const normalizeImagePath = (value, fallback = '') => {
@@ -43,7 +45,10 @@ const getProducts = asyncHandler(async (req, res) => {
   }
 
   const keyword = req.query.keyword
-    ? { name: { $regex: req.query.keyword, $options: 'i' } }
+    ? { $or: [
+        { name: { $regex: req.query.keyword, $options: 'i' } },
+        { productCode: { $regex: escapeRegex(req.query.keyword), $options: 'i' } },
+      ] }
     : {}
 
   const brandFilter = req.query.brand
@@ -72,6 +77,19 @@ const getProducts = asyncHandler(async (req, res) => {
 
   const filter = { ...keyword, ...brandFilter, ...categoryFilter, ...priceFilter }
 
+  // Lọc tồn kho (hết / sắp hết 1-5 / còn nhiều) và ngày tạo, dùng cho trang admin
+  const stockPresets = { out: [0, 0], low: [1, 5], in: [6, undefined] }
+  const preset = stockPresets[req.query.stockStatus]
+  const hasExplicitStock = req.query.minStock || req.query.maxStock
+  const stockRange = hasExplicitStock
+    ? numRange(req.query.minStock, req.query.maxStock)
+    : preset
+      ? numRange(preset[0], preset[1])
+      : null
+  if (stockRange) filter.countInStock = stockRange
+  const createdRange = dateRange(req.query.startDate, req.query.endDate)
+  if (createdRange) filter.createdAt = createdRange
+
   const SORTABLE_PRODUCT_FIELDS = {
     name: 'name',
     price: 'price',
@@ -88,7 +106,7 @@ const getProducts = asyncHandler(async (req, res) => {
 
   const now = new Date()
   const aggregateSort = hasColumnSort
-    ? { [columnSortField]: requestedOrder }
+    ? { [columnSortField]: requestedOrder, _id: 1 }
     : {
         isCurrentlyOnSale: -1, // 1 = đang sale → lên đầu, 0 = không sale → xuống dưới
         ...sortOption,
@@ -461,6 +479,7 @@ const createProduct = asyncHandler(async (req, res) => {
     flashSale: normalizeFlashSale(flashSale),
   })
 
+  product.productCode = await nextProductCode(product.name)
   const createdProduct = await product.save()
   res.status(201).json(createdProduct)
 })
@@ -584,7 +603,20 @@ const deleteProductReview = asyncHandler(async (req, res) => {
   res.json({ message: 'Đã xóa đánh giá' })
 })
 
+// @desc    Danh sách hãng và danh mục đang có, dùng cho ô lọc ở trang admin
+// @route   GET /api/products/filter-options
+// @access  Public
+const getFilterOptions = asyncHandler(async (req, res) => {
+  const [brands, categories] = await Promise.all([
+    Product.distinct('brand'),
+    Product.distinct('category'),
+  ])
+  const clean = (arr) => arr.filter(Boolean).sort((a, b) => String(a).localeCompare(String(b), 'vi'))
+  res.json({ brands: clean(brands), categories: clean(categories) })
+})
+
 export {
+  getFilterOptions,
   getProducts,
   getProductById,
   deleteProduct,

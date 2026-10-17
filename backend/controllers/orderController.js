@@ -7,12 +7,20 @@ import Settings from '../models/settingsModel.js'
 import Voucher from '../models/voucherModel.js'
 import { applyVoucherLogic } from './voucherController.js'
 import { resolvePeriodRange } from '../utils/reportPeriod.js'
+import { getProfitData } from '../utils/reportData.js'
 import { createNotification } from './notificationController.js'
 import { validateOrderInput, findPriceMismatches, computeTotalWeight, voucherDiscountMatches } from '../utils/checkoutValidation.js'
 import { computeWarrantyStatus } from '../utils/warranty.js'
 import ghtkProvider from '../services/shipping/providers/ghtk.js'
 import logger from '../utils/logger.js'
+import { codAmountOf, isCodShipment, isReadyToShip } from '../utils/orderPayment.js'
 import { getCurrentOrderStatus } from '../config/orderStatusConfig.js'
+import { buildOrderCode, assignUnitsForOrder, releaseUnitsForOrder } from '../utils/unitStatus.js'
+import { resolveOrderId } from '../utils/orderLookup.js'
+import StockUnit from '../models/stockUnitModel.js'
+import { parseUnitCode } from '../utils/unitCode.js'
+import { planLines, checkScan, availKey, unitColorOf, EXPORT_STATUSES, EXPORT_GATED_STATUSES } from '../utils/orderExport.js'
+import { escapeRegex, dateRange, numRange, sortDirection, pageParams, pagesOf } from '../utils/listQuery.js'
 
 function isSandbox() {
   return (process.env.GHN_USE_SANDBOX || '').trim() === 'true'
@@ -75,11 +83,11 @@ async function createGHNOrder(order, warehouseAddress) {
   const fromWardCode = String(warehouseAddress?.ghnWardCode || '').trim()
 
   const totalWeight = Math.max(1, Number(order.totalWeight || 0))
-  const rawCodAmount = order.paymentMethod === 'cod' ? Number(order.totalPrice || 0) : 0
+  const rawCodAmount = codAmountOf(order)
   const codAmount = Math.min(rawCodAmount, 300000)
 
   const payload = {
-    payment_type_id: order.paymentMethod === 'cod' ? 2 : 1,
+    payment_type_id: isCodShipment(order) ? 2 : 1,
     note: order.shopMessage || '',
     required_note: 'KHONGCHOXEMHANG',
     to_name: addr.fullName || '',
@@ -139,7 +147,7 @@ async function createGHTKOrder(order, warehouseAddress) {
 
   // GHTK dùng KG cho trọng lượng sản phẩm trong payload đơn hàng (khác API tính
   // phí dùng gram) — order.totalWeight của bạn đang lưu theo gram nên đổi lại.
-  const rawCodAmount = order.paymentMethod === 'cod' ? Number(order.totalPrice || 0) : 0
+  const rawCodAmount = codAmountOf(order)
   // GHTK quy định COD tối đa 50 triệu/đơn (khác giới hạn 300k tự đặt cho GHN ở trên)
   const codAmount = Math.min(rawCodAmount, 50000000)
 
@@ -262,6 +270,63 @@ const pushStatusHistory = (order, status, note = '', changedBy = null) => {
     changedAt: new Date(),
     changedBy: changedBy || undefined,
   })
+}
+
+// Tạo vận đơn GHN/GHTK theo hãng khách chọn; không tạo lại nếu đã có mã vận đơn
+async function dispatchShipment(order) {
+  if (!isReadyToShip(order)) return false
+  // Đơn mới chỉ giao cho đơn vị vận chuyển sau khi đã quét tem xuất kho
+  if (order.exportRequired && !order.exportedAt) return false
+  const provider = order.shippingProvider
+  if (provider !== 'ghn' && provider !== 'ghtk') return false
+  if ((provider === 'ghn' && order.ghnOrderCode) || (provider === 'ghtk' && order.ghtkLabelCode)) return false
+  try {
+    const settings = await Settings.findOne({ key: 'global' }).lean().catch(() => null)
+    const warehouseAddress = settings?.warehouseAddress || null
+    if (provider === 'ghn') {
+      const ghnData = await createGHNOrder(order, warehouseAddress)
+      if (!ghnData?.order_code) return false
+      order.ghnOrderCode   = ghnData.order_code
+      order.ghnSortCode    = ghnData.sort_code || ''
+      order.ghnTrackingUrl = `https://tracking.ghn.dev/?order_code=${ghnData.order_code}`
+    } else {
+      const ghtkData = await createGHTKOrder(order, warehouseAddress)
+      if (!ghtkData?.label) return false
+      order.ghtkLabelCode = ghtkData.label
+      order.ghtkPartnerId = ghtkData.partnerOrderId || ''
+    }
+    await order.save()
+    return true
+  } catch (e) {
+    console.error(`❌ Lỗi tạo vận đơn ${provider} (non-fatal):`, e.message)
+    return false
+  }
+}
+
+// Thanh toán xong (đủ tiền hoặc chốt COD phần còn lại): xác nhận đơn rồi mới chuyển sang đơn vị vận chuyển
+const confirmOrderAndShip = async (order, note) => {
+  if (order.status === 'pending') {
+    pushStatusHistory(order, 'confirmed', note, null)
+    await order.save()
+    await notifyCustomerOrderStatus(order, 'confirmed')
+  }
+  await dispatchShipment(order)
+}
+
+// Các trạng thái từ "đã xác nhận" trở đi chỉ hợp lệ khi đơn đã rõ cách thu tiền
+const SHIPPING_STAGE_STATUSES = ['confirmed', 'packing', 'waiting_pickup', 'picked_up', 'in_transit', 'out_for_delivery', 'delivered']
+const assertPaymentSettled = (order, res, status) => {
+  if (SHIPPING_STAGE_STATUSES.includes(status) && !isReadyToShip(order)) {
+    res.status(400)
+    throw new Error('Đơn thanh toán online chưa đủ tiền, chưa thể xác nhận hay giao hàng. Chờ khách chuyển đủ hoặc chuyển phần còn lại sang COD.')
+  }
+}
+
+const assertExported = (order, res, status) => {
+  if (order.exportRequired && !order.exportedAt && EXPORT_GATED_STATUSES.includes(status)) {
+    res.status(400)
+    throw new Error('Đơn chưa xuất kho. Hãy quét tem các máy và hoàn tất xuất kho trước khi chuyển sang bước giao hàng.')
+  }
 }
 
 // ── MỚI: nhãn tiếng Việt cho từng trạng thái — dùng để soạn nội dung
@@ -504,11 +569,14 @@ const addOrderItems = asyncHandler(async (req, res) => {
   // chừng), hoặc voucher vừa hết lượt đúng lúc này, TOÀN BỘ transaction
   // được rollback — không để lại đơn hàng "ma" hay tồn kho bị trừ nhầm.
   // Yêu cầu MongoDB chạy dạng replica set (MongoDB Atlas mặc định đã vậy).
+  // Cấp mã đơn trước khi mở transaction để lỗi ở bước này không để lại phiên mở
+  const orderCode = await buildOrderCode(orderItems[0], productMap[orderItems[0]?.product?.toString()])
+
   const session = await mongoose.startSession()
   session.startTransaction()
 
   const order = new Order({
-
+    ...(orderCode ? { orderCode } : {}),
     orderItems: orderItems.map((item) => ({
 
       name:    item.name,
@@ -545,6 +613,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     shippingPrice:       shippingPrice || 0,
     totalPrice,
     transferContent:     transferContent || '',
+    exportRequired:      true,
     // ── MỚI (A3): khởi tạo trạng thái timeline ──────────────────
     status: 'pending',
     statusHistory: [
@@ -596,42 +665,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
   // (transaction đã commit). Các bước còn lại (tạo vận đơn GHN/GHTK, gửi
   // thông báo) vẫn giữ nguyên kiểu best-effort/non-fatal như trước — vì đây
   // là các lệnh gọi API bên ngoài, không thể tham gia transaction MongoDB.
-  // đơn GHN bất kể khách chọn hãng nào (kể cả GHTK/VTP), là lỗi logic thừa.
-  if (shippingProvider === 'ghn') {
-    try {
-      const settings = await Settings.findOne({ key: 'global' }).lean().catch(() => null)
-      const warehouseAddress = settings?.warehouseAddress || null
-
-      const ghnData = await createGHNOrder(createdOrder, warehouseAddress)
-      if (ghnData?.order_code) {
-        createdOrder.ghnOrderCode   = ghnData.order_code
-        createdOrder.ghnSortCode    = ghnData.sort_code || ''
-        createdOrder.ghnTrackingUrl = `https://tracking.ghn.dev/?order_code=${ghnData.order_code}`
-        await createdOrder.save()
-        console.log('✅ Lưu ghnOrderCode vào order:', ghnData.order_code)
-      }
-    } catch (e) {
-      console.error('❌ Lỗi tạo vận đơn GHN (non-fatal):', e.message)
-    }
-  }
-
-  // MỚI: Tạo vận đơn thật lên GHTK khi khách chọn GHTK lúc checkout
-  if (shippingProvider === 'ghtk') {
-    try {
-      const settings = await Settings.findOne({ key: 'global' }).lean().catch(() => null)
-      const warehouseAddress = settings?.warehouseAddress || null
-
-      const ghtkData = await createGHTKOrder(createdOrder, warehouseAddress)
-      if (ghtkData?.label) {
-        createdOrder.ghtkLabelCode = ghtkData.label
-        createdOrder.ghtkPartnerId = ghtkData.partnerOrderId || ''
-        await createdOrder.save()
-        console.log('✅ Lưu ghtkLabelCode vào order:', ghtkData.label)
-      }
-    } catch (e) {
-      console.error('❌ Lỗi tạo vận đơn GHTK (non-fatal):', e.message)
-    }
-  }
+  // Đơn COD tạo vận đơn ngay, đơn online chờ thanh toán đủ rồi mới chuyển sang đơn vị vận chuyển
+  await dispatchShipment(createdOrder)
 
   // ── MỚI: thông báo Admin có đơn hàng mới ──────────────────────
   await createNotification({
@@ -680,12 +715,13 @@ const checkWarranty = asyncHandler(async (req, res) => {
     throw new Error('Vui lòng nhập đầy đủ mã đơn hàng và số điện thoại')
   }
 
-  if (!mongoose.Types.ObjectId.isValid(orderId)) {
+  const resolvedId = await resolveOrderId(orderId)
+  if (!resolvedId) {
     res.status(400)
-    throw new Error('Mã đơn hàng không hợp lệ — vui lòng kiểm tra lại (sao chép từ trang chi tiết đơn hàng)')
+    throw new Error('Mã đơn hàng không hợp lệ, vui lòng kiểm tra lại (VD: HS-261005-IP15-0001)')
   }
 
-  const order = await Order.findById(orderId)
+  const order = await Order.findById(resolvedId)
 
   // So khớp số điện thoại sau khi chuẩn hoá (bỏ khoảng trắng/dấu gạch) —
   // tránh false-negative do khách gõ "090 123 4567" thay vì "0901234567".
@@ -710,7 +746,7 @@ const checkWarranty = asyncHandler(async (req, res) => {
   }))
 
   res.json({
-    orderId:     order._id,
+    orderId:     order.orderCode || order._id,
     isCancelled: order.isCancelled,
     isDelivered: order.isDelivered,
     deliveredAt: order.deliveredAt,
@@ -733,10 +769,196 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       email_address: req.body.payer.email_address,
     }
     const updatedOrder = await order.save()
+    await confirmOrderAndShip(order, 'Đơn đã thanh toán, tự động xác nhận')
     res.json(updatedOrder)
   } else {
     res.status(404); throw new Error('Order not found')
   }
+})
+
+// ═══════════════ Xuất kho bằng quét tem QR ═══════════════
+
+const loadExportContext = async (order) => {
+  const ids = [...new Set((order.orderItems || []).map((i) => String(i.product)))]
+  const products = await Product.find({ _id: { $in: ids } }).select('colors.name').lean()
+  const hasColors = new Map(products.map((p) => [String(p._id), Array.isArray(p.colors) && p.colors.length > 0]))
+  const grouped = await StockUnit.aggregate([
+    { $match: { product: { $in: ids.map((id) => new mongoose.Types.ObjectId(id)) }, status: 'in_stock' } },
+    { $group: { _id: { product: '$product', color: '$color' }, n: { $sum: 1 } } },
+  ])
+  const available = new Map(grouped.map((g) => [availKey(g._id.product, g._id.color), g.n]))
+  return { hasColors, available }
+}
+
+const exportProgress = async (order) => {
+  const { hasColors, available } = await loadExportContext(order)
+  const scans = (order.exportScans || []).map((s) => ({ code: s.code, itemIndex: s.itemIndex, scannedAt: s.scannedAt }))
+  const lines = planLines({ orderItems: order.orderItems, scans, available, hasColors })
+  const manualTotal = lines.reduce((sum, l) => sum + l.manual, 0)
+  const exported = Boolean(order.exportedAt)
+  const paymentOk = isReadyToShip(order)
+  const statusOk = EXPORT_STATUSES.includes(order.status)
+  let blocked = ''
+  if (!order.exportRequired) blocked = 'Đơn này tạo trước khi có bước xuất kho nên không cần quét tem.'
+  else if (order.isCancelled || order.status === 'cancelled') blocked = 'Đơn đã hủy.'
+  else if (!exported && !paymentOk) blocked = 'Đơn online chưa đủ tiền, chờ khách chuyển đủ hoặc chuyển phần còn lại sang COD.'
+  else if (!exported && !statusOk) blocked = 'Cần xác nhận đơn trước khi xuất kho.'
+  return {
+    exportRequired: Boolean(order.exportRequired),
+    exported,
+    exportedAt: order.exportedAt || null,
+    unitCodes: order.unitCodes || [],
+    exportManualQty: order.exportManualQty || 0,
+    blocked,
+    lines,
+    scans,
+    manualTotal,
+    canComplete: !exported && !blocked && lines.every((l) => l.done) && lines.some((l) => l.qty > 0),
+  }
+}
+
+const exportPrecondition = (order, res) => {
+  if (!order.exportRequired) { res.status(400); throw new Error('Đơn này tạo trước khi có bước xuất kho nên không cần quét tem') }
+  if (order.exportedAt) { res.status(400); throw new Error('Đơn đã xuất kho') }
+  if (order.isCancelled || order.status === 'cancelled') { res.status(400); throw new Error('Đơn đã hủy') }
+  if (!isReadyToShip(order)) { res.status(400); throw new Error('Đơn online chưa đủ tiền, chưa thể xuất kho') }
+  if (!EXPORT_STATUSES.includes(order.status)) { res.status(400); throw new Error('Cần xác nhận đơn trước khi xuất kho') }
+}
+
+// @desc    Tiến độ xuất kho của đơn
+// @route   GET /api/orders/:id/export
+// @access  Private/Admin
+const getOrderExport = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+  if (!order) { res.status(404); throw new Error('Không tìm thấy đơn hàng') }
+  res.json(await exportProgress(order))
+})
+
+// @desc    Quét một tem vào đơn
+// @route   POST /api/orders/:id/export/scan
+// @access  Private/Admin
+const scanOrderExport = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+  if (!order) { res.status(404); throw new Error('Không tìm thấy đơn hàng') }
+  exportPrecondition(order, res)
+
+  const code = parseUnitCode(req.body.code)
+  if (!code) { res.status(400); throw new Error('Mã quét không phải mã tem hợp lệ') }
+
+  const unit = await StockUnit.findOne({ code }).lean()
+  const { hasColors } = await loadExportContext(order)
+  const verdict = checkScan({ unit, orderItems: order.orderItems, scans: order.exportScans, hasColors })
+  if (!verdict.ok) { res.status(400); throw new Error(verdict.error) }
+
+  const other = await Order.exists({ _id: { $ne: order._id }, exportedAt: null, 'exportScans.code': code })
+  if (other) { res.status(400); throw new Error('Tem này đang được quét cho một đơn khác chưa hoàn tất') }
+
+  const pushed = await Order.updateOne(
+    { _id: order._id, 'exportScans.code': { $ne: code } },
+    { $push: { exportScans: { code, itemIndex: verdict.itemIndex, scannedAt: new Date(), scannedBy: req.user?._id } } }
+  )
+  if (pushed.modifiedCount === 0) { res.status(400); throw new Error('Tem này đã quét cho đơn này rồi') }
+
+  const fresh = await Order.findById(order._id)
+  res.status(201).json({ code, ...(await exportProgress(fresh)) })
+})
+
+// @desc    Bỏ một tem đã quét nhầm
+// @route   DELETE /api/orders/:id/export/scan/:code
+// @access  Private/Admin
+const removeOrderExportScan = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+  if (!order) { res.status(404); throw new Error('Không tìm thấy đơn hàng') }
+  if (order.exportedAt) { res.status(400); throw new Error('Đơn đã xuất kho, không bỏ tem được') }
+  await Order.updateOne({ _id: order._id }, { $pull: { exportScans: { code: String(req.params.code).toUpperCase() } } })
+  const fresh = await Order.findById(order._id)
+  res.json(await exportProgress(fresh))
+})
+
+// @desc    Hoàn tất xuất kho: các tem đã quét chuyển sang đã bán, rồi mới tạo vận đơn
+// @route   PUT /api/orders/:id/export/complete
+// @access  Private/Admin
+const completeOrderExport = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+  if (!order) { res.status(404); throw new Error('Không tìm thấy đơn hàng') }
+  exportPrecondition(order, res)
+
+  const progress = await exportProgress(order)
+  const pending = progress.lines.filter((l) => !l.done)
+  if (pending.length > 0) {
+    res.status(400)
+    throw new Error(`Còn thiếu tem: ${pending.map((l) => `${l.name}${l.color ? ` (${l.color})` : ''} ${l.scanned}/${l.needScan}`).join(', ')}`)
+  }
+  if (progress.manualTotal > 0 && !req.body.confirmManual) {
+    res.status(400)
+    throw new Error(`Có ${progress.manualTotal} máy chưa có tem trong kho. Xác nhận xuất thủ công để tiếp tục.`)
+  }
+
+  const codes = (order.exportScans || []).map((s) => s.code)
+  if (codes.length > 0) {
+    const now = new Date()
+    const r = await StockUnit.updateMany(
+      { code: { $in: codes }, status: 'in_stock' },
+      { $set: { status: 'sold', soldOrder: order._id, soldAt: now } }
+    )
+    if ((r.modifiedCount || 0) !== codes.length) {
+      await StockUnit.updateMany(
+        { code: { $in: codes }, soldOrder: order._id, status: 'sold' },
+        { $set: { status: 'in_stock' }, $unset: { soldOrder: '', soldAt: '' } }
+      )
+      res.status(409)
+      throw new Error('Có tem vừa được bán ở đơn khác, vui lòng quét lại các tem của đơn này')
+    }
+  }
+
+  order.unitCodes = codes
+  order.exportedAt = new Date()
+  order.exportedBy = req.user?._id
+  order.exportManualQty = progress.manualTotal
+  const manualNote = progress.manualTotal > 0 ? `, ${progress.manualTotal} máy xuất thủ công` : ''
+  pushStatusHistory(order, 'waiting_pickup', `Đã xuất kho ${codes.length} máy quét tem${manualNote}, chờ đơn vị vận chuyển lấy hàng`, req.user?._id)
+  await order.save()
+
+  await dispatchShipment(order)
+  await notifyCustomerOrderStatus(order, 'waiting_pickup')
+
+  res.json(await exportProgress(order))
+})
+
+// @desc    Admin chuyển đơn online chuyển thiếu sang thu phần còn lại khi nhận hàng (COD)
+// @route   PUT /api/orders/:id/cod-remainder
+// @access  Private/Admin
+const enableCodRemainder = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+  if (!order) { res.status(404); throw new Error('Không tìm thấy đơn hàng') }
+
+  const received = order.paymentReceivedAmount || 0
+  if (order.paymentMethod === 'cod' || order.isPaid || order.isCancelled || order.status === 'cancelled') {
+    res.status(400); throw new Error('Chỉ áp dụng cho đơn online đang chờ thanh toán và chưa hủy')
+  }
+  if (order.partialCod) { res.status(400); throw new Error('Đơn đã được chuyển sang thu phần còn lại khi nhận hàng') }
+  if (received <= 0 || received >= order.totalPrice) {
+    res.status(400); throw new Error('Đơn phải đã nhận một phần tiền và còn thiếu mới chuyển được')
+  }
+
+  order.partialCod = true
+  order.partialCodAt = new Date()
+  order.codRemainderAmount = order.totalPrice - received
+  const remain = order.codRemainderAmount.toLocaleString('vi-VN')
+  pushStatusHistory(order, order.status || 'pending', `Đã nhận ${received.toLocaleString('vi-VN')}đ, phần còn lại ${remain}đ thu khi nhận hàng`, req.user?._id)
+  await order.save()
+
+  await createNotification({
+    type: 'payment_underpaid',
+    title: `Đơn #${order._id.toString().slice(-6).toUpperCase()}: thanh toán ${remain}đ khi nhận hàng`,
+    message: `Shop đã nhận ${received.toLocaleString('vi-VN')}đ. Phần còn lại ${remain}đ bạn trả cho shipper khi nhận hàng.`,
+    link: `/order/${order._id}`,
+    order: order._id,
+    user: order.user,
+  })
+
+  await confirmOrderAndShip(order, 'Chốt thu phần còn lại khi nhận hàng, xác nhận đơn')
+  res.json(order)
 })
 
 // @desc    Admin đánh dấu đã thu tiền / chưa thu tiền cho đơn hàng thanh toán COD
@@ -749,7 +971,7 @@ const updateCodPaymentStatus = asyncHandler(async (req, res) => {
     throw new Error('Order not found')
   }
 
-  if (order.paymentMethod !== 'cod') {
+  if (order.paymentMethod !== 'cod' && !order.partialCod) {
     res.status(400)
     throw new Error('Chức năng này chỉ áp dụng cho đơn hàng thanh toán khi nhận hàng (COD).')
   }
@@ -762,6 +984,8 @@ const updateCodPaymentStatus = asyncHandler(async (req, res) => {
 
   order.isPaid = isPaid
   order.paidAt = isPaid ? (order.paidAt || new Date()) : null
+  // Đơn COD phần còn lại: thu xong thì tổng đã nhận bằng giá trị đơn
+  if (order.partialCod && isPaid) order.paymentReceivedAmount = order.totalPrice
 
   const updatedOrder = await order.save()
   res.json(updatedOrder)
@@ -773,10 +997,13 @@ const updateCodPaymentStatus = asyncHandler(async (req, res) => {
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
   if (order) {
+    assertPaymentSettled(order, res, 'delivered')
+    assertExported(order, res, 'delivered')
     order.isDelivered = true
     order.deliveredAt = Date.now()
     // ── MỚI (A3): đồng bộ với timeline trạng thái ─────────────
     pushStatusHistory(order, 'delivered', 'Giao hàng thành công', req.user?._id)
+    await assignUnitsForOrder(order)
     const updatedOrder = await order.save()
 
     // ── MỚI: thông báo giao hàng thành công (Admin) ────────────
@@ -814,6 +1041,9 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
   if (!order) { res.status(404); throw new Error('Không tìm thấy đơn hàng') }
 
+  assertPaymentSettled(order, res, status)
+  assertExported(order, res, status)
+
   pushStatusHistory(order, status, note, req.user?._id)
 
   // ── Đồng bộ các cờ cũ (isDelivered/isCancelled) để tương thích
@@ -821,6 +1051,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
   if (status === 'delivered') {
     order.isDelivered = true
     order.deliveredAt = order.deliveredAt || new Date()
+    await assignUnitsForOrder(order)
   }
   if (status === 'cancelled') {
     order.isCancelled = true
@@ -835,9 +1066,13 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
   if (status === 'cancelled' || status === 'returned') {
     await restoreStockForOrder(order)
     await revertVoucherForOrder(order)
+    await flagRefundForCancelledUnpaid(order)
   }
 
   const updatedOrder = await order.save()
+
+  // Admin xác nhận đơn đã đủ điều kiện thu tiền thì tạo vận đơn nếu chưa có
+  if (SHIPPING_STAGE_STATUSES.includes(status)) await dispatchShipment(order)
 
   // ── MỚI: thông báo Admin khi trạng thái chuyển sang giao thành công ──
   if (status === 'delivered') {
@@ -883,7 +1118,7 @@ const getMyOrders = asyncHandler(async (req, res) => {
 //  - $addFields tính "rank" số cho paymentStatus/deliveryStatus theo
 //    đúng thứ tự tiến trình nghiệp vụ, rồi sort theo rank đó.
 const getOrders = asyncHandler(async (req, res) => {
-  const requestedOrder = req.query.order === 'asc' ? 1 : req.query.order === 'desc' ? -1 : null
+  const requestedOrder = sortDirection(req.query.order)
   const sortBy = req.query.sortBy
   const hasColumnSort = Boolean(sortBy) && requestedOrder !== null
 
@@ -928,54 +1163,89 @@ const getOrders = asyncHandler(async (req, res) => {
     },
   }
 
-  const pipeline = [
+  const match = {}
+  const created = dateRange(req.query.startDate, req.query.endDate)
+  if (created) match.createdAt = created
+  const total = numRange(req.query.minTotal, req.query.maxTotal)
+  if (total) match.totalPrice = total
+  if (req.query.paymentMethod === 'cod') match.paymentMethod = 'cod'
+  if (req.query.paymentMethod === 'online') match.paymentMethod = { $ne: 'cod' }
+  if (ORDER_STATUSES.includes(req.query.status)) match.deliveryStatusKey = req.query.status
+
+  const paymentRanks = { unpaid: 0, refund_requested: 1, refund_rejected: 2, paid: 3, refunded: 4 }
+  if (Object.prototype.hasOwnProperty.call(paymentRanks, req.query.paymentState)) match.paymentStatusRank = paymentRanks[req.query.paymentState]
+  if (req.query.paymentState === 'overpaid') match.overpaidRefundStatus = 'pending'
+
+  const keyword = String(req.query.keyword || '').trim()
+  if (keyword) {
+    const rx = new RegExp(escapeRegex(keyword), 'i')
+    match.$or = [
+      { orderCode: rx },
+      { $expr: { $regexMatch: { input: { $toString: '$_id' }, regex: escapeRegex(keyword), options: 'i' } } },
+      { '_userDoc.name': rx },
+      { '_userDoc.email': rx },
+      { 'shippingAddress.fullName': rx },
+      { 'shippingAddress.phone': rx },
+    ]
+  }
+
+  let sortStage = { createdAt: -1, _id: 1 } // mặc định: đơn mới nhất lên đầu
+  if (hasColumnSort) {
+    const sortFields = {
+      orderId: '_id',
+      customerName: '_userDoc.name',
+      totalPrice: 'totalPrice',
+      paymentStatus: 'paymentStatusRank',
+      deliveryStatus: 'deliveryStatusRank',
+      createdAt: 'createdAt',
+    }
+    if (Object.prototype.hasOwnProperty.call(sortFields, sortBy)) sortStage = { [sortFields[sortBy]]: requestedOrder, _id: 1 }
+  }
+
+  const stages = [
     { $lookup: { from: 'users', localField: 'user', foreignField: '_id', as: '_userDoc' } },
     { $unwind: { path: '$_userDoc', preserveNullAndEmptyArrays: true } },
     {
       $addFields: {
-        user: { _id: '$_userDoc._id', name: '$_userDoc.name' },
         deliveryStatusRank: deliveryStatusRankSwitch,
         paymentStatusRank: paymentStatusRankSwitch,
       },
     },
-    { $project: { _userDoc: 0 } },
+    {
+      $addFields: {
+        deliveryStatusKey: {
+          $arrayElemAt: [ORDER_STATUSES, '$deliveryStatusRank'],
+        },
+      },
+    },
+    { $match: match },
   ]
 
-  let sortStage = { createdAt: -1 } // mặc định: đơn mới nhất lên đầu
-  if (hasColumnSort) {
-    switch (sortBy) {
-      case 'orderId':
-        sortStage = { _id: requestedOrder }
-        break
-      case 'customerName':
-        sortStage = { '_userDoc.name': requestedOrder }
-        break
-      case 'totalPrice':
-        sortStage = { totalPrice: requestedOrder }
-        break
-      case 'paymentStatus':
-        sortStage = { paymentStatusRank: requestedOrder }
-        break
-      case 'deliveryStatus':
-        sortStage = { deliveryStatusRank: requestedOrder }
-        break
-      case 'createdAt':
-        sortStage = { createdAt: requestedOrder }
-        break
-      default:
-        sortStage = { createdAt: -1 }
-    }
+  // Không có pageNumber thì giữ kiểu trả về cũ (mảng) cho nơi khác đang gọi
+  const projectUser = { $addFields: { user: { _id: '$_userDoc._id', name: '$_userDoc.name' } } }
+  if (req.query.pageNumber === undefined) {
+    const all = await Order.aggregate([...stages, { $sort: sortStage }, projectUser, { $project: { _userDoc: 0 } }])
+    return res.json(all)
   }
 
-  // customerName cần sort TRƯỚC KHI $project xoá _userDoc
-  if (sortBy === 'customerName' && hasColumnSort) {
-    pipeline.splice(3, 0, { $sort: sortStage })
-  } else {
-    pipeline.push({ $sort: sortStage })
-  }
-
-  const orders = await Order.aggregate(pipeline)
-  res.json(orders)
+  const { page, pageSize, skip } = pageParams(req.query.pageNumber)
+  const [result] = await Order.aggregate([
+    ...stages,
+    {
+      $facet: {
+        rows: [
+          { $sort: sortStage },
+          { $skip: skip },
+          { $limit: pageSize },
+          projectUser,
+          { $project: { _userDoc: 0 } },
+        ],
+        count: [{ $count: 'n' }],
+      },
+    },
+  ])
+  const count = result?.count?.[0]?.n || 0
+  res.json({ orders: result?.rows || [], page, pages: pagesOf(count, pageSize), total: count })
 })
 
 // ── MỚI (A3): map trạng thái GHN sang 12 trạng thái nội bộ ───────
@@ -1041,10 +1311,12 @@ async function syncOrderStatusFromGHTK(order) {
     if (mappedStatus === 'delivered') {
       order.isDelivered = true
       order.deliveredAt = order.deliveredAt || new Date()
+      await assignUnitsForOrder(order)
     }
     if (mappedStatus === 'cancelled' || mappedStatus === 'returned') {
       await restoreStockForOrder(order)
       await revertVoucherForOrder(order)
+      await flagRefundForCancelledUnpaid(order)
     }
     await order.save()
     await notifyCustomerOrderStatus(order, mappedStatus)
@@ -1102,6 +1374,7 @@ async function syncOrderStatusFromGHN(order) {
     if (mappedStatus === 'delivered') {
       order.isDelivered = true
       order.deliveredAt = order.deliveredAt || new Date()
+      await assignUnitsForOrder(order)
     }
     // ── MỚI: hoàn tồn kho khi GHN báo đơn đã hủy/hoàn về — đây là
     // đường dẫn thứ 3 (ngoài approveCancelOrder và updateOrderStatus)
@@ -1110,6 +1383,7 @@ async function syncOrderStatusFromGHN(order) {
     if (mappedStatus === 'cancelled' || mappedStatus === 'returned') {
       await restoreStockForOrder(order)
       await revertVoucherForOrder(order)
+      await flagRefundForCancelledUnpaid(order)
     }
     await order.save()
     await notifyCustomerOrderStatus(order, mappedStatus)
@@ -1366,6 +1640,13 @@ const restoreStockForOrder = async (order) => {
     console.log(`ℹ️ Đơn #${order._id} đã hoàn kho trước đó, bỏ qua.`)
     return
   }
+  // Giành quyền hoàn kho bằng một lệnh nguyên tử, hai tiến trình cùng hoàn một đơn thì chỉ một bên được cộng
+  const claim = await Order.updateOne({ _id: order._id, stockRestored: { $ne: true } }, { $set: { stockRestored: true } })
+  if (claim.modifiedCount === 0) {
+    order.stockRestored = true
+    return
+  }
+  await releaseUnitsForOrder(order)
 
   try {
     const Product = (await import('../models/productModel.js')).default
@@ -1388,6 +1669,7 @@ const restoreStockForOrder = async (order) => {
     order.stockRestored = true
   } catch (e) {
     console.error('❌ Lỗi hoàn stock (non-fatal):', e.message)
+    await Order.updateOne({ _id: order._id }, { $set: { stockRestored: false } })
   }
 }
 
@@ -1409,6 +1691,33 @@ const revertVoucherForOrder = async (order) => {
   } catch (e) {
     console.error('❌ Lỗi hoàn usedCount voucher (non-fatal):', e.message)
   }
+}
+
+// Đơn chưa đủ tiền mà bị hủy: đưa số tiền đã nhận vào quy trình hoàn tiền thừa
+const flagRefundForCancelledUnpaid = async (order) => {
+  const received = order.paymentReceivedAmount || 0
+  if (order.isPaid || received <= 0 || order.overpaidRefundStatus !== 'none') return
+  order.overpaidAmount = received
+  order.overpaidRefundStatus = 'pending'
+  const shortId = order._id.toString().slice(-6).toUpperCase()
+  const money = received.toLocaleString('vi-VN')
+  pushStatusHistory(order, order.status || 'cancelled', `Đơn hủy khi mới nhận ${money}đ, cần hoàn lại cho khách`, null)
+  await createNotification({
+    type: 'payment_overpaid',
+    title: `Đơn #${shortId} cần hoàn ${money}đ`,
+    message: 'Đơn đã hủy khi khách chuyển chưa đủ, admin chuyển khoản hoàn lại thủ công.',
+    link: `/order/${order._id}`,
+    order: order._id,
+    user: null,
+  })
+  await createNotification({
+    type: 'payment_overpaid',
+    title: `Đơn #${shortId} đã hủy, hoàn lại ${money}đ`,
+    message: 'Vui lòng vào đơn hàng, nhập thông tin ngân hàng để nhận lại tiền đã chuyển.',
+    link: `/order/${order._id}`,
+    order: order._id,
+    user: order.user,
+  })
 }
 
 // ── MỚI: tự động hủy đơn thanh toán online (SePay QR) nếu quá 24 giờ vẫn
@@ -1434,6 +1743,7 @@ async function autoCancelUnpaidOnlineOrders() {
     const overdueOrders = await Order.find({
       paymentMethod: 'online',
       isPaid: false,
+      partialCod: { $ne: true },
       isCancelled: { $ne: true },
       status: { $ne: 'cancelled' },
       createdAt: { $lte: deadline },
@@ -1445,8 +1755,18 @@ async function autoCancelUnpaidOnlineOrders() {
 
     for (const order of overdueOrders) {
       try {
+        // Đơn cũ đã lỡ có vận đơn GHN thì hủy vận đơn trước, tránh shipper vẫn đi lấy hàng
+        if (order.ghnOrderCode) {
+          try {
+            const { token, shopId } = ghnCredentials()
+            await ghnFetchJson('/v2/switch-status/cancel', { token, shopId, body: { order_codes: [order.ghnOrderCode] } })
+          } catch (e) {
+            logger.warn(`[Auto-cancel] Không hủy được vận đơn GHN ${order.ghnOrderCode}: ${e.message}`)
+          }
+        }
         await restoreStockForOrder(order)
         await revertVoucherForOrder(order)
+        await flagRefundForCancelledUnpaid(order)
 
         order.isCancelled  = true
         order.cancelledAt  = Date.now()
@@ -1498,6 +1818,7 @@ const approveCancelOrder = asyncHandler(async (req, res) => {
 
   // ── Hoàn lại usedCount voucher khi Admin chấp thuận hủy ────────
   await revertVoucherForOrder(order)
+  await flagRefundForCancelledUnpaid(order)
 
   order.isCancelled  = true
   order.cancelledAt  = Date.now()
@@ -1843,6 +2164,39 @@ const sepayWebhook = async (req, res) => {
       return res.status(200).json({ success: true, message: 'Giao dịch này đã được xử lý trước đó (trùng lặp do gửi lại)' })
     }
 
+    // Đơn đã hủy mà tiền vẫn về: không đánh dấu thanh toán, chuyển vào quy trình hoàn tiền
+    if (order.isCancelled || order.status === 'cancelled') {
+      const lateAmount = Number(data.transferAmount || 0)
+      order.paymentReceivedAmount = (order.paymentReceivedAmount || 0) + lateAmount
+      if (sepayTxId) order.sepayTransactionIds.push(sepayTxId)
+      // chờ hoàn thì cộng thêm, đã hoàn rồi thì chỉ tính khoản mới, chưa có thì tính toàn bộ đã nhận
+      if (order.overpaidRefundStatus === 'pending') order.overpaidAmount = (order.overpaidAmount || 0) + lateAmount
+      else if (order.overpaidRefundStatus === 'completed') order.overpaidAmount = lateAmount
+      else order.overpaidAmount = order.paymentReceivedAmount
+      order.overpaidRefundStatus = 'pending'
+      const lateNote = `Nhận ${lateAmount.toLocaleString('vi-VN')}đ sau khi đơn đã hủy, cần hoàn lại cho khách`
+      pushStatusHistory(order, order.status, lateNote, null)
+      await order.save()
+      const lateId = order._id.toString().slice(-6).toUpperCase()
+      await createNotification({
+        type: 'payment_overpaid',
+        title: `Đơn #${lateId} đã hủy nhưng nhận thêm ${lateAmount.toLocaleString('vi-VN')}đ`,
+        message: 'Cần hoàn lại cho khách. Tổng chờ hoàn: ' + order.overpaidAmount.toLocaleString('vi-VN') + 'đ.',
+        link: `/order/${order._id}`,
+        order: order._id,
+        user: null,
+      })
+      await createNotification({
+        type: 'payment_overpaid',
+        title: `Đơn #${lateId} đã hủy, hoàn lại ${order.overpaidAmount.toLocaleString('vi-VN')}đ`,
+        message: 'Vui lòng vào đơn hàng, nhập thông tin ngân hàng để nhận lại tiền đã chuyển.',
+        link: `/order/${order._id}`,
+        order: order._id,
+        user: order.user,
+      })
+      return res.status(200).json({ success: true, message: lateNote })
+    }
+
     // MỚI: kiểm tra số tiền chuyển khoản thật (transferAmount), CỘNG DỒN với
     // các lần chuyển trước đó cho cùng đơn — hỗ trợ trường hợp khách chuyển
     // thiếu ở lần đầu rồi chuyển bù phần còn lại ở lần sau. So sánh tổng cộng
@@ -1851,6 +2205,14 @@ const sepayWebhook = async (req, res) => {
     const transferAmount = Number(data.transferAmount || 0)
     order.paymentReceivedAmount = (order.paymentReceivedAmount || 0) + transferAmount
     if (sepayTxId) order.sepayTransactionIds.push(sepayTxId)
+
+    if (order.partialCod && order.paymentReceivedAmount < order.totalPrice) {
+      // Đơn đã chuyển sang COD phần còn lại: tiền chuyển thêm làm giảm số shipper phải thu
+      order.codRemainderAmount = order.totalPrice - order.paymentReceivedAmount
+      pushStatusHistory(order, order.status || 'pending', `Nhận thêm ${transferAmount.toLocaleString('vi-VN')}đ, phần thu khi nhận hàng còn ${order.codRemainderAmount.toLocaleString('vi-VN')}đ`, null)
+      await order.save()
+      return res.status(200).json({ success: true, message: 'Đã cập nhật phần COD còn lại' })
+    }
 
     if (order.paymentReceivedAmount < order.totalPrice) {
       // Vẫn chưa đủ dù đã cộng dồn — KHÔNG đánh dấu đã thanh toán. Ghi lại
@@ -1869,6 +2231,16 @@ const sepayWebhook = async (req, res) => {
         link: `/order/${order._id}`,
         order: order._id,
         user: null, // thông báo cho admin, không phải khách
+      })
+
+      // Báo cho khách để chuyển bù phần còn thiếu
+      await createNotification({
+        type: 'payment_underpaid',
+        title: `Đơn #${order._id.toString().slice(-6).toUpperCase()} cần chuyển bù ${remaining.toLocaleString('vi-VN')}đ`,
+        message: `Đã nhận ${order.paymentReceivedAmount.toLocaleString('vi-VN')}đ / ${order.totalPrice.toLocaleString('vi-VN')}đ. Vui lòng chuyển bù phần còn thiếu với cùng nội dung chuyển khoản.`,
+        link: `/order/${order._id}`,
+        order: order._id,
+        user: order.user,
       })
 
       // Vẫn trả 200 + success:true — đây không phải lỗi kỹ thuật, chỉ là
@@ -1909,10 +2281,21 @@ const sepayWebhook = async (req, res) => {
         order: order._id,
         user: null, // thông báo cho admin
       })
+
+      // Báo cho khách để nhập thông tin ngân hàng nhận lại tiền thừa
+      await createNotification({
+        type: 'payment_overpaid',
+        title: `Đơn #${order._id.toString().slice(-6).toUpperCase()} bạn đã chuyển thừa ${overpaid.toLocaleString('vi-VN')}đ`,
+        message: 'Vui lòng vào đơn hàng, nhập thông tin ngân hàng để nhận lại tiền thừa.',
+        link: `/order/${order._id}`,
+        order: order._id,
+        user: order.user,
+      })
     }
 
     await order.save()
     console.log('[SePay Webhook] ✅ Đã cập nhật isPaid cho order:', order._id)
+    await confirmOrderAndShip(order, 'Đã nhận đủ tiền, tự động xác nhận đơn')
     return res.status(200).json({ success: true, message: 'Cập nhật thanh toán thành công' })
   } catch (error) {
     console.error('[SePay Webhook] Lỗi:', error)
@@ -1998,9 +2381,12 @@ const getRevenueAnalytics = asyncHandler(async (req, res) => {
     .sort((a, b) => b.revenue - a.revenue)
     .slice(0, 5)
 
+  const profit = await getProfitData({ start, end })
+
   res.json({
     period,
     label,
+    profit,
     dailyRevenue,
     comparison: {
       current:  { label,     total: currentAgg?.total || 0, count: currentAgg?.count || 0 },
@@ -2109,26 +2495,24 @@ const getAdminBrandBreakdown = asyncHandler(async (req, res) => {
   res.json({ months: safeMonths, fromDate: fromDate.toISOString(), labels, values, percentages, totalRevenue: total })
 })
 
-// @desc    Admin delete order
+// @desc    Admin xóa đơn: chỉ xóa được đơn đã hủy và không còn khoản tiền chờ hoàn
 // @route   DELETE /api/orders/admin/:id
 // @access  Private/Admin
 const deleteOrderByAdmin = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
   if (!order) { res.status(404); throw new Error('Order not found') }
-  if (order.isPaid) { res.status(400); throw new Error('Không thể xóa đơn đã thanh toán') }
-
-  if (order.ghnOrderCode) {
-    try {
-      const { token, shopId } = ghnCredentials()
-      await ghnFetchJson('/v2/switch-status/cancel', {
-        token, shopId, body: { order_codes: [order.ghnOrderCode] },
-      })
-    } catch (e) {
-      console.warn('⚠️ Không thể hủy vận đơn GHN khi xóa order (non-fatal):', e?.message)
-    }
+  if (!order.isCancelled && order.status !== 'cancelled') {
+    res.status(400); throw new Error('Chỉ xóa được đơn đã hủy, vui lòng hủy đơn trước')
+  }
+  const owesMoney = order.overpaidRefundStatus === 'pending'
+    || order.refundStatus === 'requested'
+    || (order.isPaid && order.refundStatus !== 'completed')
+  if (owesMoney) {
+    res.status(400); throw new Error('Đơn còn khoản tiền chờ hoàn cho khách, hoàn tiền xong mới xóa được')
   }
 
-  // (order sẽ bị xóa ngay sau đây nên không cần order.save() cho cờ voucherReverted)
+  // Đơn hủy từ trước đã hoàn kho thì bỏ qua nhờ cờ đánh dấu, đơn chưa hoàn thì hoàn nốt trước khi xóa
+  await restoreStockForOrder(order)
   await revertVoucherForOrder(order)
 
   await Order.findByIdAndDelete(req.params.id)
@@ -2140,6 +2524,11 @@ export {
   getOrderById,
   updateOrderToPaid,
   updateCodPaymentStatus,
+  enableCodRemainder,
+  getOrderExport,
+  scanOrderExport,
+  removeOrderExportScan,
+  completeOrderExport,
   updateOrderToDelivered,
   updateOrderStatus,
   getMyOrders,

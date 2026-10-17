@@ -94,7 +94,9 @@ const userSchema = mongoose.Schema(
     resetPasswordToken: { type: String },
     resetPasswordExpire: { type: Date },
 
-    // ===== Lịch sử tìm kiếm (đồng bộ đa thiết bị cho tài khoản đã đăng nhập) ===== Giới hạn 10 mục gần nhất, mới nhất ở đầu mảng — xem controller để biết
+    // ===== Lịch sử tìm kiếm (đồng bộ đa thiết bị cho tài khoản đã đăng nhập) =====
+    // Giới hạn 10 mục gần nhất, mới nhất ở đầu mảng — xem controller để biết
+    // logic dedup (tìm lại từ khóa cũ sẽ đưa nó lên đầu thay vì tạo bản trùng).
     searchHistory: [
       {
         keyword: { type: String, required: true },
@@ -102,6 +104,9 @@ const userSchema = mongoose.Schema(
         _id: false,
       },
     ],
+
+    // Tăng mỗi khi cần vô hiệu mọi token đang sống (đổi mật khẩu, khóa tài khoản)
+    tokenVersion: { type: Number, default: 0 },
 
     // ===== B1: Hạn chế COD với tài khoản giao hàng thất bại =====
     codFailCount: { type: Number, default: 0 },

@@ -1,7 +1,14 @@
 import Order from '../models/orderModel.js'
+import StockImport from '../models/stockImportModel.js'
 import { getCurrentOrderStatus } from '../config/orderStatusConfig.js'
 
-// ══════════════════════════════════════════════════════════════════ MỚI: gom TOÀN BỘ logic tính toán số liệu báo cáo doanh thu vào 1 nơi
+// ══════════════════════════════════════════════════════════════════
+// MỚI: gom TOÀN BỘ logic tính toán số liệu báo cáo doanh thu vào 1 nơi
+// duy nhất — dùng chung cho exportOrdersExcel VÀ exportRevenuePdf, để
+// 2 định dạng xuất ra luôn khớp số liệu tuyệt đối với nhau (và khớp với
+// trang Dashboard doanh thu trên web). KHÔNG thay đổi bất kỳ công thức
+// tính toán nào đã có — chỉ tập hợp lại cho gọn và tái sử dụng.
+// ══════════════════════════════════════════════════════════════════
 
 const DELIVERED_MATCH = {
   $or: [
@@ -58,7 +65,11 @@ export const STATUS_LABEL_SHORT = {
   returning: 'Hoàn về', returned: 'Đã hoàn',
 }
 
-// ── MỚI: gom 12 trạng thái chi tiết thành 3 NHÓM LỚN — dùng riêng cho Pie Chart "Trạng thái đơn hàng" (giống Haravan/KiotViet). Trước đây Pie
+// ── MỚI: gom 12 trạng thái chi tiết thành 3 NHÓM LỚN — dùng riêng cho
+// Pie Chart "Trạng thái đơn hàng" (giống Haravan/KiotViet). Trước đây Pie
+// Chart hiển thị nguyên 12 trạng thái chi tiết, nhiều trạng thái phải dùng
+// CHUNG 1 màu (không đủ màu phân biệt) khiến biểu đồ khó đọc — bảng danh
+// sách đơn hàng vẫn giữ nguyên 12 trạng thái chi tiết, KHÔNG bị ảnh hưởng.
 const STATUS_GROUP = {
   delivered: 'success',
   pending: 'processing', confirmed: 'processing', packing: 'processing',
@@ -68,10 +79,14 @@ const STATUS_GROUP = {
 }
 const GROUP_LABEL = { success: 'Thành công', processing: 'Đang xử lý', failed: 'Hủy / Thất bại' }
 const GROUP_COLOR = { success: '#22e3b6', processing: '#5eb3f6', failed: '#ff6b6b' }
-// Thứ tự cố định khi hiển thị (thay vì sort theo số lượng) — giữ đúng thứ tự nghiệp vụ Thành công → Đang xử lý → Hủy/Thất bại, dễ đọc và nhất quán giữa
+// Thứ tự cố định khi hiển thị (thay vì sort theo số lượng) — giữ đúng thứ tự
+// nghiệp vụ Thành công → Đang xử lý → Hủy/Thất bại, dễ đọc và nhất quán giữa
+// các lần xuất báo cáo khác nhau.
 const GROUP_ORDER = ['success', 'processing', 'failed']
 
-// MỚI: tách riêng thành hàm THUẦN TÚY (chỉ nhận mảng key trạng thái, không đụng tới DB hay document Order) — để viết test tự động (Jest) độc lập,
+// MỚI: tách riêng thành hàm THUẦN TÚY (chỉ nhận mảng key trạng thái, không
+// đụng tới DB hay document Order) — để viết test tự động (Jest) độc lập,
+// không cần mock Mongoose. getReportData bên dưới chỉ gọi lại hàm này.
 export const groupStatusBreakdown = (statusKeys) => {
   const groupCount = { success: 0, processing: 0, failed: 0 }
   statusKeys.forEach((key) => {
@@ -82,6 +97,72 @@ export const groupStatusBreakdown = (statusKeys) => {
     .filter((group) => groupCount[group] > 0)
     .map((group) => ({ label: GROUP_LABEL[group], value: groupCount[group], color: GROUP_COLOR[group] }))
 }
+
+// Lợi nhuận = doanh thu (đơn giao thành công) − chi phí nhập hàng trong cùng kỳ.
+// margin = lợi nhuận / doanh thu (%), null khi doanh thu = 0.
+export const computeProfit = (revenue, importCost) => {
+  const rev = Number(revenue) || 0
+  const cost = Number(importCost) || 0
+  const profit = rev - cost
+  const margin = rev > 0 ? Math.round((profit / rev) * 1000) / 10 : null
+  return { profit, margin }
+}
+
+const monthLabel = (key) => {
+  const [y, m] = key.split('-')
+  return `Tháng ${Number(m)}/${y}`
+}
+
+export const getProfitData = async ({ start, end }) => {
+  const tz = 'Asia/Ho_Chi_Minh'
+  const revenueMatch = { ...DELIVERED_MATCH, deliveredAt: { $gte: start, $lte: end } }
+  const importMatch = { importedAt: { $gte: start, $lte: end } }
+
+  const [revenueByMonth, importByMonth] = await Promise.all([
+    Order.aggregate([
+      { $match: revenueMatch },
+      { $group: { _id: { $dateToString: { format: '%Y-%m', date: '$deliveredAt', timezone: tz } }, revenue: { $sum: '$totalPrice' } } },
+    ]),
+    StockImport.aggregate([
+      { $match: importMatch },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m', date: '$importedAt', timezone: tz } },
+          cost: { $sum: '$totalCost' },
+          qty: { $sum: '$quantity' },
+          count: { $sum: 1 },
+        },
+      },
+    ]),
+  ])
+
+  const byKey = new Map()
+  revenueByMonth.forEach((r) => byKey.set(r._id, { key: r._id, revenue: r.revenue, importCost: 0, importQty: 0, importCount: 0 }))
+  importByMonth.forEach((r) => {
+    const row = byKey.get(r._id) || { key: r._id, revenue: 0, importCost: 0, importQty: 0, importCount: 0 }
+    row.importCost = r.cost
+    row.importQty = r.qty
+    row.importCount = r.count
+    byKey.set(r._id, row)
+  })
+
+  const monthly = [...byKey.values()]
+    .sort((a, b) => a.key.localeCompare(b.key))
+    .map((row) => ({ ...row, label: monthLabel(row.key), ...computeProfit(row.revenue, row.importCost) }))
+
+  const revenue = monthly.reduce((s, r) => s + r.revenue, 0)
+  const importCost = monthly.reduce((s, r) => s + r.importCost, 0)
+  const importQty = monthly.reduce((s, r) => s + r.importQty, 0)
+  const importCount = monthly.reduce((s, r) => s + r.importCount, 0)
+
+  return { revenue, importCost, importQty, importCount, ...computeProfit(revenue, importCost), monthly }
+}
+
+export const getImportRows = async ({ start, end }) =>
+  StockImport.find({ importedAt: { $gte: start, $lte: end } })
+    .populate('createdBy', 'name')
+    .sort({ importedAt: -1, createdAt: -1 })
+    .lean()
 
 export const getReportData = async ({ start, end, prevStart, prevEnd }) => {
   const granularity = pickGranularity(start, end)
@@ -175,6 +256,8 @@ export const getReportData = async ({ start, end, prevStart, prevEnd }) => {
   })
   const topCustomers = [...customerMap.values()].sort((a, b) => b.totalSpent - a.totalSpent).slice(0, 5)
 
+  const [profitData, importRows] = await Promise.all([getProfitData({ start, end }), getImportRows({ start, end })])
+
   return {
     granularity,
     revenueSeries,
@@ -185,7 +268,12 @@ export const getReportData = async ({ start, end, prevStart, prevEnd }) => {
       cancelledCount: cancelledOrders.length,
       successRate,
       cancelRate,
+      importCost: profitData.importCost,
+      profit: totalRevenue - profitData.importCost,
+      profitMargin: computeProfit(totalRevenue, profitData.importCost).margin,
     },
+    profitData,
+    importRows,
     growthPct,
     statusBreakdown,
     paymentBreakdown,

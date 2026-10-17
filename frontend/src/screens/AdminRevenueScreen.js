@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import RevenueBarChart from '../components/RevenueBarChart'
 import { getRevenueAnalytics, exportOrdersToExcel, exportRevenueToPdf } from '../actions/orderAdminActions'
+import { exportImportsExcel } from '../actions/importActions'
 
 const cardStyle = {
   background: '#1a1a2e',
@@ -50,6 +51,8 @@ const AdminRevenueScreen = () => {
   // MỚI: state loading riêng cho 2 nút export (không dùng chung loading của revenueAnalytics)
   const [exportingExcel, setExportingExcel] = useState(false)
   const [exportingPdf, setExportingPdf] = useState(false)
+  const [exportingImports, setExportingImports] = useState(false)
+  const { userInfo } = useSelector((state) => state.userLogin)
 
   const fetchData = () => {
     const params = { period }
@@ -100,6 +103,19 @@ const AdminRevenueScreen = () => {
     }
   }
 
+  const handleExportImports = async () => {
+    const range = getEffectiveDateRange()
+    if (!range.startDate || !range.endDate) return
+    setExportingImports(true)
+    try {
+      await exportImportsExcel(userInfo.token, range)
+    } catch (e) {
+      alert('Xuất báo cáo nhập hàng thất bại: ' + (e?.message || 'Lỗi không xác định'))
+    } finally {
+      setExportingImports(false)
+    }
+  }
+
   const handleExportPdf = async () => {
     const params = { period }
     if (period === 'month') { params.month = month; params.year = year }
@@ -129,6 +145,9 @@ const AdminRevenueScreen = () => {
   const comparison = data?.comparison || {}
   const topProducts = Array.isArray(data?.topProducts) ? data.topProducts : []
   const dailyRevenue = Array.isArray(data?.dailyRevenue) ? data.dailyRevenue : []
+
+  const profit = data?.profit || { revenue: 0, importCost: 0, profit: 0, margin: null, monthly: [] }
+  const fmtMoney = (n) => `${(Number(n) || 0).toLocaleString('vi-VN')}đ`
 
   const currentTotal = comparison.current?.total || 0
   const previousTotal = comparison.previous?.total || 0
@@ -255,6 +274,20 @@ const AdminRevenueScreen = () => {
           <i className='fas fa-file-pdf me-2'></i>
           {exportingPdf ? 'Đang xuất...' : 'Xuất PDF'}
         </button>
+
+        <button
+          onClick={handleExportImports}
+          disabled={exportingImports}
+          style={{
+            background: 'transparent', border: '1px solid #ffd166', borderRadius: 8,
+            padding: '9px 18px', color: '#ffd166', fontWeight: 700,
+            fontSize: 13, cursor: exportingImports ? 'wait' : 'pointer', height: 'fit-content',
+            opacity: exportingImports ? 0.6 : 1,
+          }}
+        >
+          <i className='fas fa-dolly me-2'></i>
+          {exportingImports ? 'Đang xuất...' : 'Xuất báo cáo nhập hàng'}
+        </button>
       </div>
 
       {loading && <Loader />}
@@ -292,6 +325,61 @@ const AdminRevenueScreen = () => {
                 {stats.cancelRate || 0}%
               </div>
             </div>
+          </div>
+
+          {/* ── Lợi nhuận = doanh thu − chi phí nhập hàng ── */}
+          <div style={{ ...cardStyle, marginBottom: 20 }}>
+            <h5 style={{ color: '#ffffff', fontWeight: 700, marginBottom: 6 }}>
+              Lợi nhuận — {data.label}
+            </h5>
+            <div style={{ color: '#8a8fa3', fontSize: 12, marginBottom: 14 }}>
+              Doanh thu (đơn giao thành công) trừ chi phí nhập hàng phát sinh trong cùng kỳ. <Link to='/admin/imports' style={{ color: '#33FFCC' }}>Quản lý nhập hàng</Link>
+            </div>
+            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 16 }}>
+              <div style={statCardStyle}>
+                <div style={{ color: '#b8bcc8', fontSize: 13 }}>Doanh thu</div>
+                <div style={{ color: '#33FFCC', fontSize: 22, fontWeight: 800, marginTop: 4 }}>{fmtMoney(profit.revenue)}</div>
+              </div>
+              <div style={statCardStyle}>
+                <div style={{ color: '#b8bcc8', fontSize: 13 }}>Chi phí nhập hàng</div>
+                <div style={{ color: '#ffd166', fontSize: 22, fontWeight: 800, marginTop: 4 }}>− {fmtMoney(profit.importCost)}</div>
+              </div>
+              <div style={statCardStyle}>
+                <div style={{ color: '#b8bcc8', fontSize: 13 }}>Lợi nhuận</div>
+                <div style={{ color: profit.profit >= 0 ? '#4cdb80' : '#ff6b6b', fontSize: 22, fontWeight: 800, marginTop: 4 }}>{fmtMoney(profit.profit)}</div>
+              </div>
+              <div style={statCardStyle}>
+                <div style={{ color: '#b8bcc8', fontSize: 13 }}>Biên lợi nhuận</div>
+                <div style={{ color: profit.margin !== null && profit.margin < 0 ? '#ff6b6b' : '#eef0f7', fontSize: 22, fontWeight: 800, marginTop: 4 }}>
+                  {profit.margin === null ? '—' : `${profit.margin}%`}
+                </div>
+              </div>
+            </div>
+
+            {profit.monthly.length > 0 && (
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, color: '#e0e0e0' }}>
+                  <thead>
+                    <tr style={{ background: '#0f0f23', color: '#33FFCC' }}>
+                      {['Tháng', 'Doanh thu', 'Chi phí nhập', 'Lợi nhuận', 'Biên'].map((h, i) => (
+                        <th key={h} style={{ padding: '10px 8px', textAlign: i === 0 ? 'left' : 'right' }}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {profit.monthly.map((m) => (
+                      <tr key={m.key} style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                        <td style={{ padding: '10px 8px' }}>{m.label}</td>
+                        <td style={{ padding: '10px 8px', textAlign: 'right' }}>{fmtMoney(m.revenue)}</td>
+                        <td style={{ padding: '10px 8px', textAlign: 'right' }}>{fmtMoney(m.importCost)}</td>
+                        <td style={{ padding: '10px 8px', textAlign: 'right', color: m.profit >= 0 ? '#4cdb80' : '#ff6b6b', fontWeight: 700 }}>{fmtMoney(m.profit)}</td>
+                        <td style={{ padding: '10px 8px', textAlign: 'right' }}>{m.margin === null ? '—' : `${m.margin}%`}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
           <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', marginBottom: 20 }}>

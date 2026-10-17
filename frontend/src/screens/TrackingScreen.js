@@ -72,7 +72,7 @@ const TrackingScreen = ({ match }) => {
           marginBottom: '16px',
         }}>
           <div style={{ color: '#b8bcc8', fontSize: '13px' }}>Đơn hàng</div>
-          <div style={{ color: '#ffffff', fontWeight: '700' }}>#{order._id}</div>
+          <div style={{ color: '#ffffff', fontWeight: '700' }}>{order.orderCode || `#${order._id}`}</div>
           <div style={{ marginTop: '10px', display: 'flex', gap: '18px', flexWrap: 'wrap' }}>
             <div>
               <div style={{ color: '#b8bcc8', fontSize: '13px' }}>Hãng</div>

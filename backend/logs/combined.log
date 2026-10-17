@@ -786,3 +786,1662 @@ Error: Not Found - /sw.js
     at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
     at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
 [2026-09-25 14:20:02] INFO: Server running in development mode on port 5000
+[2026-10-04 17:28:46] INFO: Server running in development mode on port 5000
+[2026-10-04 17:28:53] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-04 17:57:53] INFO: Server running in development mode on port 5000
+[2026-10-04 18:01:12] INFO: Server running in development mode on port 5000
+[2026-10-04 18:01:20] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-04 18:03:14] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-04 18:10:38] INFO: Server running in development mode on port 5000
+[2026-10-04 18:11:23] INFO: Server running in development mode on port 5000
+[2026-10-04 18:11:28] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-04 18:12:50] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-09 08:48:03] INFO: Server running in development mode on port 5000
+[2026-10-09 08:49:03] INFO: [Aging] Đã cảnh báo 13 sản phẩm tồn kho lâu
+[2026-10-09 08:50:18] INFO: Server running in development mode on port 5000
+[2026-10-09 08:50:23] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-09 09:06:30] INFO: Server running in development mode on port 5000
+[2026-10-09 09:07:32] INFO: Server running in development mode on port 5000
+[2026-10-09 09:07:49] INFO: Server running in development mode on port 5000
+[2026-10-09 09:11:05] INFO: Server running in development mode on port 5000
+[2026-10-09 09:11:09] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-09 09:12:01] INFO: Server running in development mode on port 5000
+[2026-10-09 13:23:07] INFO: Server running in development mode on port 5000
+[2026-10-09 13:23:14] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-09 13:39:44] INFO: Server running in development mode on port 5000
+[2026-10-09 13:39:55] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-09 13:45:28] INFO: Server running in development mode on port 5000
+[2026-10-09 13:45:51] INFO: Server running in development mode on port 5000
+[2026-10-09 13:45:55] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-09 13:51:43] ERROR: [POST /api/count-sessions/6ac88cef4c75414bc0aa7838/scan] Mã không đúng định dạng tem đơn vị
+Error: Mã không đúng định dạng tem đơn vị
+    at file:///E:/HariShop_mern/backend/controllers/countSessionController.js:105:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-09 14:12:25] INFO: Server running in development mode on port 5000
+[2026-10-09 14:12:51] INFO: Server running in development mode on port 5000
+[2026-10-09 14:13:09] INFO: Server running in development mode on port 5000
+[2026-10-09 14:13:42] INFO: Server running in development mode on port 5000
+[2026-10-09 14:14:03] INFO: Server running in development mode on port 5000
+[2026-10-09 14:16:55] INFO: Server running in development mode on port 5000
+[2026-10-09 14:17:00] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-09 14:18:49] ERROR: [POST /api/count-sessions/6ac88cef4c75414bc0aa7838/scan] Không tìm thấy tem này trong hệ thống
+Error: Không tìm thấy tem này trong hệ thống
+    at file:///E:/HariShop_mern/backend/controllers/countSessionController.js:110:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-09 14:22:58] ERROR: [POST /api/count-sessions/6ac88cef4c75414bc0aa7838/scan] Không tìm thấy tem này trong hệ thống
+Error: Không tìm thấy tem này trong hệ thống
+    at file:///E:/HariShop_mern/backend/controllers/countSessionController.js:110:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-09 18:51:18] INFO: Server running in development mode on port 5000
+[2026-10-09 18:51:25] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-10 10:32:48] INFO: Server running in development mode on port 5000
+[2026-10-10 10:33:11] INFO: Server running in development mode on port 5000
+[2026-10-10 10:33:18] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-11 10:10:25] INFO: Server running in development mode on port 5000
+[2026-10-11 10:10:33] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-11 10:11:08] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-11 10:11:54] INFO: Chốt phiên kiểm kê "Kiểm kê 09/10/2026 13:42": 1 sản phẩm, chỉ ghi nhận
+[2026-10-12 10:52:37] INFO: Server running in development mode on port 5000
+[2026-10-12 10:52:43] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-12 10:55:04] WARN: [SePay Webhook] Đơn #7fd39c chuyển thiếu tiền — Đã nhận cộng dồn 40.000.000đ / 44.554.900đ — còn thiếu 4.554.900đ
+[2026-10-12 11:03:07] INFO: [Auto-sync GHN] Đang kiểm tra 1 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 11:03:08] INFO: [Auto-sync GHN] Đơn #7fd39c → waiting_pickup
+[2026-10-12 11:03:08] INFO: [Auto-sync GHN] Hoàn tất — đã cập nhật 1/1 đơn.
+[2026-10-12 11:07:47] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 11:13:07] INFO: [Auto-sync GHN] Đang kiểm tra 1 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 11:22:47] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 11:23:07] INFO: [Auto-sync GHN] Đang kiểm tra 1 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 11:33:07] INFO: [Auto-sync GHN] Đang kiểm tra 1 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 11:37:47] ERROR: [GET /api/orders/6acc59ef5e4ae9f3277fd39c] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at param (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:365:14)
+    at paramCallback (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:412:21)
+    at orderIdParam (file:///E:/HariShop_mern/backend/utils/orderLookup.js:26:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 11:37:47] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 11:43:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 11:52:47] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 11:53:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 12:03:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 12:07:47] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 12:13:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 12:22:47] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 12:23:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 12:33:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 12:37:47] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 12:43:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 12:52:47] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 12:53:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 13:03:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 13:09:58] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-12 13:10:24] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 4 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 4 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 13:13:07] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 16:32:52] INFO: Server running in development mode on port 5000
+[2026-10-12 16:33:01] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-12 16:33:22] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 16:33:23] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 8 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 8 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 16:42:31] INFO: Server running in development mode on port 5000
+[2026-10-12 16:43:32] INFO: Server running in development mode on port 5000
+[2026-10-12 16:44:02] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 16:44:32] INFO: Server running in development mode on port 5000
+[2026-10-12 16:45:02] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 16:45:06] INFO: Server running in development mode on port 5000
+[2026-10-12 16:45:16] INFO: Server running in development mode on port 5000
+[2026-10-12 16:45:19] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-12 16:45:32] ERROR: [POST /api/orders] "AirPods 4" (màu Tím) vừa hết hàng hoặc không đủ số lượng. Vui lòng quay lại giỏ hàng để cập nhật.
+Error: "AirPods 4" (màu Tím) vừa hết hàng hoặc không đủ số lượng. Vui lòng quay lại giỏ hàng để cập nhật.
+    at file:///E:/HariShop_mern/backend/controllers/orderController.js:646:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 16:45:46] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 16:46:33] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-12 16:46:55] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-12 16:47:01] ERROR: [GET /api/orders/6accac51d450d8591fea9657] Order not found
+Error: Order not found
+    at file:///E:/HariShop_mern/backend/controllers/orderController.js:688:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 16:48:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 16:55:46] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 17:00:28] INFO: Server running in development mode on port 5000
+[2026-10-12 17:00:40] INFO: Server running in development mode on port 5000
+[2026-10-12 17:01:10] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 17:02:04] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:04:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:10:39] INFO: Server running in development mode on port 5000
+[2026-10-12 17:11:00] INFO: Server running in development mode on port 5000
+[2026-10-12 17:11:13] INFO: Server running in development mode on port 5000
+[2026-10-12 17:11:18] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-12 17:11:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 17:18:04] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:20:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:21:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 17:26:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:31:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 17:33:19] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:36:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:41:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 17:41:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:48:34] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:51:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 17:52:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 17:56:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:01:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 18:03:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:08:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:11:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 18:11:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:11:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: client is invalid: Lỗi gọi API:  corev2_tenant_client, Code: 400, Message: ClientID is invalid: EOF
+[2026-10-12 18:11:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: client is invalid: Lỗi gọi API:  corev2_tenant_client, Code: 400, Message: ClientID is invalid: EOF
+[2026-10-12 18:18:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:21:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 18:21:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 18:21:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 18:24:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:26:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:31:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 18:31:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 18:31:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 18:33:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:40:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:41:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 18:41:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 18:41:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 18:41:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:45:46] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 8 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 8 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 18:47:49] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 7 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 7 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 18:48:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:51:07] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 6 tem còn trong kho, sinh thêm 1 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 6 tem còn trong kho, sinh thêm 1 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 18:51:24] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 6 tem còn trong kho, sinh thêm 4 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 6 tem còn trong kho, sinh thêm 4 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 18:51:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 18:51:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 18:51:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 18:51:47] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 5 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 5 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 18:51:57] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 5 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 5 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 18:53:34] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 3 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 3 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 18:56:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 18:56:45] ERROR: [GET /api/units?productId=69df431511d34088e216b86f&color=Cam&status=in_stock] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 19:01:43] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 19:01:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 19:01:43] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 19:02:00] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 1 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 1 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 19:02:15] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 3 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 3 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 19:02:18] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 1 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 1 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 19:02:20] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 1 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 1 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 19:03:43] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 19:05:36] INFO: Server running in development mode on port 5000
+[2026-10-12 19:05:45] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-12 19:06:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 19:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 19:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 19:07:21] INFO: Nhập hàng: OPPO Reno 15 Trắng +3 (0 → 3)
+[2026-10-12 19:08:07] INFO: Nhập hàng: iPhone 16 Pro Max 512GB Trắng +5 (0 → 5)
+[2026-10-12 19:16:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 19:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 19:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 19:22:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 19:26:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 19:26:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 19:26:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 19:36:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 19:36:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 19:36:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 19:38:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 19:46:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 19:46:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 19:46:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 19:53:43] ERROR: [GET /api/orders/6acc59ef5e4ae9f3277fd39c] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at param (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:365:14)
+    at paramCallback (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:412:21)
+    at orderIdParam (file:///E:/HariShop_mern/backend/utils/orderLookup.js:26:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 19:56:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 19:56:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 19:56:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 20:06:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 20:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 20:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 20:10:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 20:16:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 20:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 20:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 20:26:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 20:26:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 20:26:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 20:26:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 20:36:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 20:36:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 20:36:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 20:42:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 20:46:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 20:46:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 20:46:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 20:56:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 20:56:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 20:56:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 20:58:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 21:06:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 21:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 21:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 21:15:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 21:16:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 21:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 21:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 21:26:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 21:26:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 21:26:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 21:31:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 21:36:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 21:36:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 21:36:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 21:46:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 21:46:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 21:46:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 21:47:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 21:56:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 21:56:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 21:56:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 22:03:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 22:06:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 22:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 22:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 22:16:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 22:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 22:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 22:19:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 22:26:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 22:26:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 22:26:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 22:35:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 22:36:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 22:36:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 22:36:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 22:46:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 22:46:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 22:46:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 22:51:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 22:56:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 22:56:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 22:56:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 23:06:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 23:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 23:06:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 23:07:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 23:16:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 23:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 23:16:06] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 23:23:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 23:26:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 23:26:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 23:26:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 23:31:31] ERROR: [POST /api/units/generate] Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 3 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+Error: Tồn kho 0, đã có 0 tem còn trong kho, sinh thêm 3 sẽ vượt tồn. Chỉ in thêm tối đa 0 tem, hoặc tick "in bù tem hỏng/mất" và ghi lý do.
+    at file:///E:/HariShop_mern/backend/controllers/unitController.js:39:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[2026-10-12 23:36:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 23:36:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 23:36:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 23:40:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-12 23:46:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 23:46:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 23:46:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 23:56:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-12 23:56:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-12 23:56:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-12 23:57:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-13 00:06:06] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-13 00:06:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd39c: GHN error (404)
+[2026-10-13 00:06:07] ERROR: [Auto-sync GHN] Lỗi đơn #7fd4bd: GHN error (404)
+[2026-10-13 00:13:42] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-13 20:13:31] INFO: Server running in development mode on port 5000
+[2026-10-13 20:13:40] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-10-13 20:14:02] INFO: [Auto-sync GHN] Đang kiểm tra 2 đơn hàng (lô 5 đơn/lần)...
+[2026-10-13 20:14:02] INFO: [Auto-cancel] Tự động hủy 1 đơn quá 24h chưa thanh toán...
+[2026-10-13 20:14:03] INFO: [Auto-cancel] Đã hủy đơn #7fd39c
+[2026-10-13 20:24:02] INFO: [Auto-sync GHN] Đang kiểm tra 1 đơn hàng (lô 5 đơn/lần)...
+[2026-10-13 20:28:41] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-10-13 20:34:02] INFO: [Auto-sync GHN] Đang kiểm tra 1 đơn hàng (lô 5 đơn/lần)...

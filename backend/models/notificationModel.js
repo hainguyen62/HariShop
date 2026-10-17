@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 
-// Thông báo cho Admin — đơn giản hoá cho quy mô 1 shop (không tách theo từng tài khoản admin cụ thể). Nếu sau này có nhiều admin, có thể thêm field
+// Thông báo cho Admin — đơn giản hoá cho quy mô 1 shop (không tách theo từng
+// tài khoản admin cụ thể). Nếu sau này có nhiều admin, có thể thêm field
+// `recipient` để lọc theo từng người.
 const notificationSchema = mongoose.Schema(
   {
     type: {
@@ -15,6 +17,7 @@ const notificationSchema = mongoose.Schema(
         // MỚI: khách chuyển khoản SePay thiếu/thừa so với giá trị đơn
         'payment_underpaid',
         'payment_overpaid',
+        'stock_aging',      // MỚI: sản phẩm tồn kho quá ngưỡng
         // ── Thông báo cho Khách hàng ──
         'order_placed',     // Đặt hàng thành công
         'order_status',     // Cập nhật trạng thái đơn hàng (12 bước)

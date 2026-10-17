@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -37,6 +37,8 @@ const PlaceOrderScreen = ({ history }) => {
         )
       : cart.cartItems || []
 
+
+
   // VN validation for missing shipping fields - Simplified (no district)
   const missingShipping = !cart.shippingAddress.fullName || !cart.shippingAddress.phone || 
       !cart.shippingAddress.province || 
@@ -58,8 +60,10 @@ const PlaceOrderScreen = ({ history }) => {
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
 
+  const submittedRef = useRef(false)
+
   useEffect(() => {
-    if (success) {
+    if (submittedRef.current && success && order) {
       history.push(`/order/${order._id}`)
       dispatch({ type: USER_DETAILS_RESET })
       dispatch({ type: ORDER_CREATE_RESET })
@@ -67,6 +71,7 @@ const PlaceOrderScreen = ({ history }) => {
   }, [history, success, dispatch, order])
 
   const placeOrderHandler = () => {
+    submittedRef.current = true
     dispatch(
       createOrder({
         orderItems,
@@ -87,6 +92,7 @@ const PlaceOrderScreen = ({ history }) => {
       })
     )
   }
+
 
   return (
     <>
@@ -112,6 +118,7 @@ const PlaceOrderScreen = ({ history }) => {
               <p><strong style={{ color: '#33FFCC' }}>Số nhà, tên đường:</strong> {cart.shippingAddress.detail}</p>
             </div>
           </div>
+
 
           <ListGroup.Item>
             <h2>Phương Thức Thanh Toán</h2>

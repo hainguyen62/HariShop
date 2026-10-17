@@ -4,6 +4,8 @@ import { Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import { downloadInvoice, sendInvoiceEmail } from '../actions/invoiceActions'
+import { getCurrentOrderStatus } from '../constants/orderStatusConfig'
 import {
   getOrderDetails,
   deliverOrder,
@@ -18,8 +20,10 @@ import {
   completeOverpaidRefund,
   submitOverpaidRefundBankInfo,
   updateCodPaymentStatus,
+  enableCodRemainder,
 } from '../actions/orderActions'
 import { deleteOrderByAdmin } from '../actions/orderAdminActions'
+import OrderExportPanel from '../components/OrderExportPanel'
 import { unlockCod } from '../actions/userActions'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 
@@ -719,6 +723,8 @@ const OrderScreen = ({ match, history }) => {
   const [overpaidRefundNote, setOverpaidRefundNote] = useState('')
 
   // MỚI: form khách gửi thông tin ngân hàng để nhận lại tiền chuyển thừa
+  const [invoiceBusy, setInvoiceBusy] = useState('')
+  const [invoiceMessage, setInvoiceMessage] = useState(null)
   const [showOverpaidBankForm, setShowOverpaidBankForm] = useState(false)
   const [overpaidBankName, setOverpaidBankName] = useState('')
   const [overpaidAccountNumber, setOverpaidAccountNumber] = useState('')
@@ -815,6 +821,13 @@ const OrderScreen = ({ match, history }) => {
     }
   }
 
+  const enableCodRemainderHandler = () => {
+    const remain = ((order.totalPrice || 0) - (order.paymentReceivedAmount || 0)).toLocaleString('vi-VN')
+    if (window.confirm(`Chuyển phần còn lại ${remain}đ sang thu khi nhận hàng? Đơn sẽ được xác nhận và gửi sang đơn vị vận chuyển.`)) {
+      dispatch(enableCodRemainder(orderId))
+    }
+  }
+
   // ── MỚI (A5): khách gửi yêu cầu hoàn tiền ─────────────────────
   const submitRefundHandler = (e) => {
     e.preventDefault()
@@ -855,6 +868,39 @@ const OrderScreen = ({ match, history }) => {
     }
   }
 
+  const canIssueInvoice = () => {
+    const status = getCurrentOrderStatus(order)
+    if (['cancelled', 'returning', 'returned', 'delivery_failed'].includes(status)) return false
+    return Boolean(order.isPaid) || status === 'delivered'
+  }
+
+  const downloadInvoiceHandler = async () => {
+    setInvoiceBusy('download')
+    setInvoiceMessage(null)
+    try {
+      await downloadInvoice(orderId, userInfo.token)
+    } catch (e) {
+      setInvoiceMessage({ variant: 'danger', text: e.message })
+    } finally {
+      setInvoiceBusy('')
+    }
+  }
+
+  const sendInvoiceHandler = async () => {
+    if (!window.confirm(`Gửi hoá đơn PDF tới email ${order.user?.email || 'của khách'}?`)) return
+    setInvoiceBusy('send')
+    setInvoiceMessage(null)
+    try {
+      const info = await sendInvoiceEmail(orderId, userInfo.token)
+      setInvoiceMessage({ variant: 'success', text: `Đã gửi hoá đơn tới ${info.invoiceSentTo}` })
+      dispatch(getOrderDetails(orderId))
+    } catch (e) {
+      setInvoiceMessage({ variant: 'danger', text: e.message })
+    } finally {
+      setInvoiceBusy('')
+    }
+  }
+
   // MỚI: Admin xác nhận đã chuyển khoản thủ công hoàn tiền THỪA (SePay QR)
   const completeOverpaidRefundHandler = () => {
     if (window.confirm(`Xác nhận ĐÃ chuyển khoản hoàn ${order.overpaidAmount?.toLocaleString('vi-VN')}đ tiền thừa cho khách?`)) {
@@ -888,6 +934,7 @@ const OrderScreen = ({ match, history }) => {
   // Hiện QR nếu: chọn online, chưa thanh toán, chưa hủy, có transferContent
   const showQR = order.paymentMethod === 'online'
     && !order.isPaid
+    && !order.partialCod
     && !order.isCancelled
     && !!order.transferContent
 
@@ -905,7 +952,7 @@ const OrderScreen = ({ match, history }) => {
           <i className='fas fa-receipt me-2' style={{ color: '#33FFCC' }}></i>
           Chi tiết đơn hàng
         </h2>
-        <span style={{ color: '#b8bcc8', fontSize: '13px', marginLeft: 'auto' }}>#{order._id}</span>
+        <span style={{ color: '#b8bcc8', fontSize: '13px', marginLeft: 'auto' }}>{order.orderCode || `#${order._id}`}</span>
       </div>
 
       <div style={{ ...sectionStyle, padding: '16px 24px', display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -924,8 +971,13 @@ const OrderScreen = ({ match, history }) => {
           <StatusBadge color='#ff6b6b'><i className='fas fa-clock'></i> Chưa thanh toán</StatusBadge>
         )}
         {/* MỚI: chỉ hiện đếm ngược khi thanh toán online, chưa trả tiền, và đơn chưa bị hủy */}
-        {order.paymentMethod === 'online' && !order.isPaid && !order.isCancelled && (
+        {order.paymentMethod === 'online' && !order.isPaid && !order.isCancelled && !order.partialCod && (
           <AutoCancelStatusBadge createdAt={order.createdAt} />
+        )}
+        {order.partialCod && !order.isPaid && !order.isCancelled && (
+          <StatusBadge color='#ffd166'>
+            <i className='fas fa-hand-holding-usd'></i> Thu khi nhận hàng: {(order.codRemainderAmount || 0).toLocaleString('vi-VN')}đ
+          </StatusBadge>
         )}
         {order.cancelRequest?.requested && !order.isCancelled && (
           <StatusBadge color='#ffd166'><i className='fas fa-hourglass-half'></i> Đang chờ duyệt hủy</StatusBadge>
@@ -1024,7 +1076,7 @@ const OrderScreen = ({ match, history }) => {
                   : <StatusBadge color='#ffd166'><i className='fas fa-clock'></i> Chưa thanh toán</StatusBadge>}
 
                 {/* MỚI: Admin đánh dấu đã thu/chưa thu tiền — chỉ áp dụng cho đơn COD */}
-                {userInfo?.isAdmin && order.paymentMethod === 'cod' && (
+                {userInfo?.isAdmin && (order.paymentMethod === 'cod' || order.partialCod) && (
                   <button
                     onClick={toggleCodPaymentHandler}
                     disabled={loadingCodPayment}
@@ -1046,6 +1098,26 @@ const OrderScreen = ({ match, history }) => {
                 )}
               </div>
             </div>
+            {userInfo?.isAdmin && order.paymentMethod === 'online' && !order.isPaid && !order.isCancelled && !order.partialCod
+              && (order.paymentReceivedAmount || 0) > 0 && (
+              <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                <span style={{ color: '#b8bcc8', fontSize: '13px' }}>
+                  Đã nhận {(order.paymentReceivedAmount || 0).toLocaleString('vi-VN')}đ, còn thiếu {((order.totalPrice || 0) - (order.paymentReceivedAmount || 0)).toLocaleString('vi-VN')}đ
+                </span>
+                <button
+                  onClick={enableCodRemainderHandler}
+                  disabled={loadingCodPayment}
+                  style={{ background: 'transparent', border: '1px solid rgba(255,209,102,0.6)', color: '#ffd166', borderRadius: '8px', padding: '5px 12px', fontSize: '12.5px', fontWeight: '600', cursor: loadingCodPayment ? 'not-allowed' : 'pointer', opacity: loadingCodPayment ? 0.6 : 1 }}
+                >
+                  <i className='fas fa-hand-holding-usd me-1'></i> Thu phần còn lại khi nhận hàng
+                </button>
+              </div>
+            )}
+            {order.partialCod && !order.isPaid && (
+              <div style={{ marginTop: '10px', color: '#b8bcc8', fontSize: '13px' }}>
+                Đã chuyển khoản {(order.paymentReceivedAmount || 0).toLocaleString('vi-VN')}đ, phần còn lại {(order.codRemainderAmount || 0).toLocaleString('vi-VN')}đ thanh toán cho shipper khi nhận hàng.
+              </div>
+            )}
             {errorCodPayment && <div style={{ marginTop: '10px' }}><Message variant='danger'>{errorCodPayment}</Message></div>}
           </div>
 
@@ -1133,6 +1205,40 @@ const OrderScreen = ({ match, history }) => {
                       Hủy bỏ
                     </button>
                   </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* MỚI: Hoá đơn, khách tải PDF; admin tải và gửi qua email */}
+          {(isOwner || userInfo?.isAdmin) && canIssueInvoice() && (
+            <div style={sectionStyle}>
+              <h5 style={{ color: '#33FFCC', fontWeight: '700', marginBottom: '16px' }}>
+                <i className='fas fa-file-invoice me-2'></i>Hoá đơn
+              </h5>
+              {invoiceMessage && <Message variant={invoiceMessage.variant}>{invoiceMessage.text}</Message>}
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <button
+                  onClick={downloadInvoiceHandler} disabled={invoiceBusy !== ''}
+                  style={{ background: 'transparent', border: '1px solid #33FFCC', color: '#33FFCC', borderRadius: '10px', padding: '10px 22px', fontSize: '14px', fontWeight: '600', cursor: invoiceBusy ? 'wait' : 'pointer', opacity: invoiceBusy ? 0.6 : 1 }}
+                >
+                  <i className='fas fa-download me-2'></i>{invoiceBusy === 'download' ? 'Đang tạo...' : 'Tải hoá đơn PDF'}
+                </button>
+                {userInfo?.isAdmin && (
+                  <button
+                    onClick={sendInvoiceHandler} disabled={invoiceBusy !== ''}
+                    style={{ background: '#33FFCC', border: 'none', color: '#0f0f23', borderRadius: '10px', padding: '10px 22px', fontSize: '14px', fontWeight: '700', cursor: invoiceBusy ? 'wait' : 'pointer', opacity: invoiceBusy ? 0.6 : 1 }}
+                  >
+                    <i className='fas fa-envelope me-2'></i>{invoiceBusy === 'send' ? 'Đang gửi...' : 'Gửi hoá đơn qua email'}
+                  </button>
+                )}
+              </div>
+              {userInfo?.isAdmin && (
+                <div style={{ color: '#8a8fa3', fontSize: '13px', marginTop: '10px' }}>
+                  Email khách: {order.user?.email || '—'}
+                  {order.invoiceSentAt && (
+                    <> · Đã gửi {order.invoiceSentCount > 1 ? `${order.invoiceSentCount} lần, gần nhất ` : ''}lúc {new Date(order.invoiceSentAt).toLocaleString('vi-VN')}</>
+                  )}
                 </div>
               )}
             </div>
@@ -1488,7 +1594,16 @@ const OrderScreen = ({ match, history }) => {
               )}
             </div>
 
-            {userInfo?.isAdmin && !order.isPaid && (
+            {userInfo?.isAdmin && order.exportRequired && !order.isCancelled && (
+              <OrderExportPanel
+                orderId={order._id}
+                token={userInfo.token}
+                status={`${order.status}|${order.isPaid}|${order.partialCod}`}
+                onDone={() => dispatch(getOrderDetails(orderId))}
+              />
+            )}
+
+            {userInfo?.isAdmin && (order.isCancelled || order.status === 'cancelled') && (
               <button
                 onClick={() => setShowConfirmDeleteOrder(true)}
                 disabled={loadingDelete}
@@ -1507,7 +1622,7 @@ const OrderScreen = ({ match, history }) => {
 
             <ConfirmDeleteModal
               show={showConfirmDeleteOrder}
-              title={'Xoá đơn hàng này?'}
+              title={'Xoá vĩnh viễn đơn hàng đã hủy này?'}
               confirmText={'Xoá'}
               cancelText={'Huỷ'}
               onCancel={() => setShowConfirmDeleteOrder(false)}

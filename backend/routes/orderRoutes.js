@@ -5,6 +5,11 @@ import {
   getOrderById,
   updateOrderToPaid,
   updateCodPaymentStatus,
+  enableCodRemainder,
+  getOrderExport,
+  scanOrderExport,
+  removeOrderExportScan,
+  completeOrderExport,
   updateOrderToDelivered,
   updateOrderStatus,
   getMyOrders,
@@ -21,23 +26,32 @@ import {
   checkWarranty,
   sepayWebhook,
 } from '../controllers/orderController.js'
+import { downloadInvoice, sendInvoiceEmail } from '../controllers/invoiceController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
+import { orderIdParam } from '../utils/orderLookup.js'
+
+router.param('id', orderIdParam)
 
 router.route('/').post(protect, addOrderItems).get(protect, admin, getOrders)
 router.route('/myorders').get(protect, getMyOrders)
 
-// SePay webhook — PUBLIC (không dùng protect, SePay gọi từ server của họ)
+// ✅ SePay webhook — PUBLIC (không dùng protect, SePay gọi từ server của họ)
 router.route('/sepay-webhook').post(sepayWebhook)
 
-// Tra cứu bảo hành — PUBLIC (không cần đăng nhập, khách vãng lai tự
+// MỚI: Tra cứu bảo hành — PUBLIC (không cần đăng nhập, khách vãng lai tự
 // xác minh bằng mã đơn hàng + số điện thoại). Đặt TRƯỚC route '/:id' để
 // tránh bị hiểu nhầm 'warranty-check' là 1 giá trị :id.
 router.route('/warranty-check').post(checkWarranty)
 
 router.route('/:id').get(protect, getOrderById)
 router.route('/:id/pay').put(protect, admin, updateOrderToPaid)
-//Admin đánh dấu đã thu/chưa thu tiền cho đơn COD
+// MỚI: Admin đánh dấu đã thu/chưa thu tiền cho đơn COD
 router.route('/:id/cod-payment').put(protect, admin, updateCodPaymentStatus)
+router.route('/:id/cod-remainder').put(protect, admin, enableCodRemainder)
+router.route('/:id/export').get(protect, admin, getOrderExport)
+router.route('/:id/export/scan').post(protect, admin, scanOrderExport)
+router.route('/:id/export/scan/:code').delete(protect, admin, removeOrderExportScan)
+router.route('/:id/export/complete').put(protect, admin, completeOrderExport)
 router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered)
 router.route('/:id/status').put(protect, admin, updateOrderStatus)
 router.route('/:id/track').get(protect, trackOrder)
@@ -46,6 +60,8 @@ router.route('/:id/approve-cancel').put(protect, admin, approveCancelOrder)
 router.route('/:id/reject-cancel').put(protect, admin, rejectCancelOrder)
 router.route('/:id/refund-request').put(protect, requestRefund)
 router.route('/:id/refund-complete').put(protect, admin, completeRefund)
+router.route('/:id/invoice').get(protect, downloadInvoice)
+router.route('/:id/invoice/send').post(protect, admin, sendInvoiceEmail)
 router.route('/:id/refund-adjust').put(protect, admin, adjustRefundAmount)
 router.route('/:id/overpaid-refund-bank-info').put(protect, submitOverpaidRefundBankInfo)
 router.route('/:id/overpaid-refund-complete').put(protect, admin, completeOverpaidRefund)

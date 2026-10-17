@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Voucher from '../models/voucherModel.js'
+import { escapeRegex, dateRange, sortDirection, pageParams, pagesOf } from '../utils/listQuery.js'
 
 const normalizeCode = (code) => String(code || '').trim().toUpperCase()
 
@@ -45,6 +46,7 @@ const applyVoucherLogic = ({ voucher, orderAmount, userId = null, shippingFee = 
       return { ok: false, message: 'Mã giảm giá đã hết hạn' }
     }
   }
+
 
   const usageLimit = Number(voucher.usageLimit || 0)
   const usedCount  = Number(voucher.usedCount  || 0)
@@ -98,6 +100,7 @@ const applyVoucherLogic = ({ voucher, orderAmount, userId = null, shippingFee = 
     discountAmount = cap > 0 ? Math.min(cap, Number(shippingFee || 0)) : Number(shippingFee || 0)
   }
 
+
   discountAmount =
     voucher.type === 'freeship'
       ? Math.max(0, Math.min(discountAmount, Number(shippingFee || 0)))
@@ -134,7 +137,11 @@ const applyVoucher = asyncHandler(async (req, res) => {
   })
 })
 
-// ── MỚI: GET /api/vouchers/available — danh sách voucher cho KHÁCH xem ở popup checkout (khác getVouchers vốn chỉ dành cho admin quản lý).
+// ── MỚI: GET /api/vouchers/available — danh sách voucher cho KHÁCH xem ở
+// popup checkout (khác getVouchers vốn chỉ dành cho admin quản lý).
+// Query optional: orderAmount, shippingFee, categories (comma-separated)
+// để tính sẵn discountAmount/eligible cho từng voucher, tránh phải gọi
+// validate riêng cho từng cái ở frontend.
 const getAvailableVouchers = asyncHandler(async (req, res) => {
   const now = new Date()
   const orderAmount = Number(req.query.orderAmount || 0)
@@ -180,7 +187,9 @@ const getAvailableVouchers = asyncHandler(async (req, res) => {
   res.json(result)
 })
 
-// ── MỚI: POST /api/vouchers/validate — dùng cho cả "nhập mã tay" lẫn tự động re-check khi giỏ hàng thay đổi. Khác /apply (cũ, public, không
+// ── MỚI: POST /api/vouchers/validate — dùng cho cả "nhập mã tay" lẫn
+// tự động re-check khi giỏ hàng thay đổi. Khác /apply (cũ, public, không
+// biết user) ở chỗ: có req.user để kiểm tra perUserLimit.
 const validateVoucher = asyncHandler(async (req, res) => {
   const code = normalizeCode(req.body?.code)
   const orderAmount = Number(req.body?.orderAmount)
@@ -221,7 +230,10 @@ const validateVoucher = asyncHandler(async (req, res) => {
   })
 })
 
-// ── MỚI: POST /api/vouchers/calculate — tính lại toàn bộ breakdown thanh toán khi có/không có voucher, dùng để hiển thị "Tạm tính / Voucher /
+// ── MỚI: POST /api/vouchers/calculate — tính lại toàn bộ breakdown thanh
+// toán khi có/không có voucher, dùng để hiển thị "Tạm tính / Voucher /
+// Phí vận chuyển / Tổng thanh toán" luôn khớp với backend (tránh sai số
+// làm tròn hoặc frontend tự tính sai).
 const calculateVoucher = asyncHandler(async (req, res) => {
   const code = req.body?.code ? normalizeCode(req.body.code) : ''
   const itemsPrice = Number(req.body?.itemsPrice || 0)
@@ -269,10 +281,71 @@ const calculateVoucher = asyncHandler(async (req, res) => {
   })
 })
 
+const SORTABLE_VOUCHER_FIELDS = new Set([
+  'code', 'name', 'type', 'value', 'minOrder', 'maxDiscount',
+  'usageLimit', 'usedCount', 'startsAt', 'expiresAt', 'isActive', 'createdAt',
+])
+
+export const buildVoucherFilter = (query, now = new Date()) => {
+  const and = []
+  const keyword = String(query.keyword || '').trim()
+  if (keyword) {
+    const rx = new RegExp(escapeRegex(keyword), 'i')
+    and.push({ $or: [{ code: rx }, { name: rx }] })
+  }
+  if (['percent', 'fixed', 'freeship'].includes(query.type)) and.push({ type: query.type })
+
+  const notStarted = { startsAt: { $gt: now } }
+  const started = { $or: [{ startsAt: null }, { startsAt: { $lte: now } }] }
+  const hasUses = { $or: [{ usageLimit: 0 }, { $expr: { $lt: ['$usedCount', '$usageLimit'] } }] }
+  switch (query.status) {
+    case 'paused':
+      and.push({ isActive: false })
+      break
+    case 'expired':
+      and.push({ isActive: true, expiresAt: { $lt: now } })
+      break
+    case 'upcoming':
+      and.push({ isActive: true, expiresAt: { $gte: now } }, notStarted)
+      break
+    case 'exhausted':
+      and.push({ isActive: true, expiresAt: { $gte: now }, usageLimit: { $gt: 0 }, $expr: { $gte: ['$usedCount', '$usageLimit'] } })
+      break
+    case 'active':
+      and.push({ isActive: true, expiresAt: { $gte: now } }, started, hasUses)
+      break
+    default:
+  }
+
+  // Voucher có hiệu lực giao với khoảng ngày được chọn
+  const range = dateRange(query.startDate, query.endDate)
+  if (range?.$gte) and.push({ expiresAt: { $gte: range.$gte } })
+  if (range?.$lte) and.push({ $or: [{ startsAt: null }, { startsAt: { $lte: range.$lte } }] })
+
+  return and.length ? { $and: and } : {}
+}
+
 const getVouchers = asyncHandler(async (req, res) => {
-  const vouchers = await Voucher.find({}).sort({ createdAt: -1 })
-  res.json(vouchers)
+  const filter = buildVoucherFilter(req.query)
+  const dir = sortDirection(req.query.order)
+  const sort =
+    SORTABLE_VOUCHER_FIELDS.has(req.query.sortBy) && dir !== null
+      ? { [req.query.sortBy]: dir, _id: 1 }
+      : { createdAt: -1, _id: 1 }
+
+  // Không có pageNumber thì giữ kiểu trả về cũ (mảng) cho nơi khác đang gọi
+  if (req.query.pageNumber === undefined) {
+    return res.json(await Voucher.find(filter).sort(sort))
+  }
+
+  const { page, pageSize, skip } = pageParams(req.query.pageNumber)
+  const [total, vouchers] = await Promise.all([
+    Voucher.countDocuments(filter),
+    Voucher.find(filter).sort(sort).skip(skip).limit(pageSize),
+  ])
+  res.json({ vouchers, page, pages: pagesOf(total, pageSize), total })
 })
+
 
 const createVoucher = asyncHandler(async (req, res) => {
   const body = req.body || {}
@@ -315,6 +388,7 @@ const createVoucher = asyncHandler(async (req, res) => {
 
   res.status(201).json(voucher)
 })
+
 
 const updateVoucher = asyncHandler(async (req, res) => {
   const { id }  = req.params

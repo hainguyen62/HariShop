@@ -1,6 +1,7 @@
 import express from 'express'
 import passport from '../config/passport.js'
-import generateToken from '../utils/generateToken.js'
+import { startSession } from '../utils/generateToken.js'
+import { refreshToken, logoutUser } from '../controllers/sessionController.js'
 const router = express.Router()
 
 import {
@@ -33,6 +34,8 @@ import { protect, admin } from '../middleware/authMiddleware.js'
 
 /* ===================== AUTH ===================== */
 router.post('/login', authUser)
+router.post('/refresh', refreshToken)
+router.post('/logout', logoutUser)
 router.route('/').post(registerUser).get(protect, admin, getUsers)
 
 /* ===================== B11: GOOGLE OAUTH ===================== */
@@ -49,12 +52,16 @@ router.get(
     session: false,
     failureRedirect: `${process.env.CLIENT_URL || 'http://localhost:3000'}/login?error=google_auth_failed`,
   }),
-  (req, res) => {
-    // req.user được passport gán từ GoogleStrategy verify callback
-    const token = generateToken(req.user._id)
-    const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000'
-    // Chuyển hướng về FE kèm token, FE sẽ tự lấy profile đầy đủ (xem GoogleAuthScreen)
-    res.redirect(`${clientUrl}/google-auth?token=${token}`)
+  async (req, res, next) => {
+    try {
+      // req.user được passport gán từ GoogleStrategy verify callback
+      await startSession(req, res, req.user)
+      const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000'
+      // Token nằm ở cookie refresh, FE gọi /refresh để lấy token truy cập (xem GoogleAuthScreen)
+      res.redirect(`${clientUrl}/google-auth`)
+    } catch (e) {
+      next(e)
+    }
   }
 )
 
@@ -93,6 +100,7 @@ router
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser)
+
 
 router.put('/:id/unlock-cod', protect, admin, unlockCod)
 

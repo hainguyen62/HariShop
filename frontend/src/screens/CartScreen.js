@@ -27,6 +27,7 @@ const CartScreen = ({ match, location, history }) => {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
+  const { userInfo } = useSelector((state) => state.userLogin)
 
   // MỚI: giữ nguyên trạng thái tick chọn giữa các lần vào lại trang giỏ hàng (localStorage),
   // KHÔNG tự động chọn tất cả nữa — chỉ tự tick sản phẩm VỪA được thêm vào giỏ.
@@ -85,6 +86,7 @@ const CartScreen = ({ match, location, history }) => {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
+
 
   const removeFromCartHandler = (id, color) => {
     dispatch(removeFromCart(id, color))
@@ -172,9 +174,9 @@ const CartScreen = ({ match, location, history }) => {
         <Col md={8}>
           {cartItems.length === 0 ? (
             <Message>
-              Giỏ hàng của bạn đang trống.{' '}
-              <Link to='/' style={{ color: '#33FFCC', fontWeight: '600' }}>
-                Tiếp tục mua sắm
+              {userInfo ? 'Giỏ hàng của bạn đang trống.' : 'Vui lòng đăng nhập để xem và thêm sản phẩm vào giỏ hàng.'}{' '}
+              <Link to={userInfo ? '/' : '/login?redirect=/cart'} style={{ color: '#33FFCC', fontWeight: '600' }}>
+                {userInfo ? 'Tiếp tục mua sắm' : 'Đăng nhập'}
               </Link>
             </Message>
           ) : (

@@ -5,7 +5,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { getOrderStatusInfo, getCurrentOrderStatus } from '../config/orderStatusConfig.js'
 import { resolvePeriodRange } from '../utils/reportPeriod.js'
-import { getReportData, STATUS_LABEL_SHORT, STATUS_COLOR } from '../utils/reportData.js'
+import { getReportData, getImportRows, STATUS_LABEL_SHORT, STATUS_COLOR } from '../utils/reportData.js'
 import { renderBarChartPng, renderPieChartPng } from '../utils/chartRenderer.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -55,8 +55,136 @@ const applyRowBorderAndBanding = (row, rowIndexInTable) => {
   }
 }
 
+
+const fmtMoney = (n) => `${(Number(n) || 0).toLocaleString('vi-VN')}đ`
+
+const groupImportsByProduct = (rows) => {
+  const map = new Map()
+  rows.forEach((r) => {
+    const key = `${r.product}_${r.color || ''}`
+    const cur = map.get(key) || { name: r.productName, color: r.color || '', qty: 0, cost: 0 }
+    cur.qty += r.quantity
+    cur.cost += r.totalCost
+    map.set(key, cur)
+  })
+  return [...map.values()]
+    .map((g) => ({ ...g, avgCost: g.qty > 0 ? Math.round(g.cost / g.qty) : 0 }))
+    .sort((a, b) => b.cost - a.cost)
+}
+
+const addImportRowsSheet = (workbook, rows, meta) => {
+  const sheet = workbook.addWorksheet('Nhập hàng')
+  sheet.columns = [
+    { header: 'STT', key: 'stt', width: 6 },
+    { header: 'Ngày nhập', key: 'importedAt', width: 18 },
+    { header: 'Sản phẩm', key: 'productName', width: 34 },
+    { header: 'Màu sắc', key: 'color', width: 14 },
+    { header: 'Số lượng', key: 'quantity', width: 11 },
+    { header: 'Giá nhập (đơn vị)', key: 'unitCost', width: 18 },
+    { header: 'Thành tiền', key: 'totalCost', width: 18 },
+    { header: 'Tồn trước', key: 'stockBefore', width: 11 },
+    { header: 'Tồn sau', key: 'stockAfter', width: 11 },
+    { header: 'Nhà cung cấp', key: 'supplier', width: 22 },
+    { header: 'Ghi chú', key: 'note', width: 26 },
+    { header: 'Người nhập', key: 'createdBy', width: 18 },
+    { header: 'Mã lô', key: 'lotCode', width: 24 },
+  ]
+  styleHeaderRow(sheet.getRow(1))
+  sheet.views = [{ state: 'frozen', ySplit: 1 }]
+  sheet.autoFilter = { from: 'A1', to: 'M1' }
+
+  rows.forEach((r, idx) => {
+    const row = sheet.addRow({
+      stt: idx + 1,
+      lotCode: r.lotCode || '',
+      importedAt: r.importedAt,
+      productName: r.productName,
+      color: r.color || '—',
+      quantity: r.quantity,
+      unitCost: r.unitCost,
+      totalCost: r.totalCost,
+      stockBefore: r.stockBefore,
+      stockAfter: r.stockAfter,
+      supplier: r.supplier || '',
+      note: r.note || '',
+      createdBy: r.createdBy?.name || '',
+    })
+    row.getCell('importedAt').numFmt = DATE_FMT
+    row.getCell('unitCost').numFmt = MONEY_FMT
+    row.getCell('totalCost').numFmt = MONEY_FMT
+    applyRowBorderAndBanding(row, idx)
+  })
+
+  if (rows.length === 0) {
+    sheet.addRow({ productName: 'Không có phiếu nhập trong khoảng thời gian này.' })
+  } else {
+    const last = rows.length + 1
+    const totalRow = sheet.addRow({})
+    totalRow.getCell('productName').value = 'TỔNG CỘNG'
+    totalRow.getCell('quantity').value = { formula: `SUM(E2:E${last})`, result: rows.reduce((s, r) => s + r.quantity, 0) }
+    totalRow.getCell('totalCost').value = { formula: `SUM(G2:G${last})`, result: rows.reduce((s, r) => s + r.totalCost, 0) }
+    totalRow.getCell('totalCost').numFmt = MONEY_FMT
+    totalRow.font = { bold: true }
+  }
+  sheet.addRow({})
+  sheet.addRow({ productName: `Ngày xuất báo cáo: ${meta.generatedAt.toLocaleString('vi-VN')} — Người xuất: ${meta.exportedBy || 'Admin'}` })
+    .font = { italic: true, size: 9, color: { argb: 'FF999999' } }
+  return sheet
+}
+
+const addProfitSheet = (workbook, profitData) => {
+  const sheet = workbook.addWorksheet('Lợi nhuận', { views: [{ showGridLines: false }] })
+  sheet.columns = [{ width: 20 }, { width: 20 }, { width: 22 }, { width: 20 }, { width: 18 }]
+  sheet.mergeCells('A1:E1')
+  sheet.getCell('A1').value = 'LỢI NHUẬN = DOANH THU − CHI PHÍ NHẬP HÀNG'
+  sheet.getCell('A1').font = { bold: true, size: 14, color: { argb: BRAND.dark } }
+  sheet.getCell('A1').alignment = { horizontal: 'center' }
+  sheet.mergeCells('A2:E2')
+  sheet.getCell('A2').value = 'Doanh thu tính trên đơn Giao thành công; chi phí nhập hàng tính theo ngày nhập trong kỳ.'
+  sheet.getCell('A2').font = { italic: true, size: 10, color: { argb: 'FF777777' } }
+  sheet.getCell('A2').alignment = { horizontal: 'center' }
+
+  const header = sheet.getRow(4)
+  header.values = ['Tháng', 'Doanh thu', 'Chi phí nhập hàng', 'Lợi nhuận', 'Biên lợi nhuận']
+  styleHeaderRow(header)
+
+  const { monthly } = profitData
+  let r = 5
+  monthly.forEach((m, idx) => {
+    const row = sheet.getRow(r)
+    row.getCell(1).value = m.label
+    row.getCell(2).value = m.revenue
+    row.getCell(3).value = m.importCost
+    row.getCell(4).value = { formula: `B${r}-C${r}`, result: m.profit }
+    row.getCell(5).value = { formula: `IF(B${r}=0,"",D${r}/B${r})`, result: m.margin === null ? '' : m.margin / 100 }
+    ;[2, 3, 4].forEach((c) => { row.getCell(c).numFmt = MONEY_FMT })
+    row.getCell(5).numFmt = '0.0%'
+    applyRowBorderAndBanding(row, idx)
+    r++
+  })
+
+  if (monthly.length === 0) {
+    sheet.getCell(`A${r}`).value = 'Không có dữ liệu trong khoảng thời gian này.'
+    return sheet
+  }
+
+  const first = 5
+  const last = r - 1
+  const total = sheet.getRow(r)
+  total.getCell(1).value = 'TỔNG CỘNG'
+  total.getCell(2).value = { formula: `SUM(B${first}:B${last})`, result: profitData.revenue }
+  total.getCell(3).value = { formula: `SUM(C${first}:C${last})`, result: profitData.importCost }
+  total.getCell(4).value = { formula: `B${r}-C${r}`, result: profitData.profit }
+  total.getCell(5).value = { formula: `IF(B${r}=0,"",D${r}/B${r})`, result: profitData.margin === null ? '' : profitData.margin / 100 }
+  ;[2, 3, 4].forEach((c) => { total.getCell(c).numFmt = MONEY_FMT })
+  total.getCell(5).numFmt = '0.0%'
+  total.font = { bold: true }
+  total.eachCell((cell) => { cell.border = { top: { style: 'medium' }, bottom: { style: 'medium' } } })
+  return sheet
+}
+
 export const buildExcelWorkbook = async (reportData, meta) => {
-  const { kpis, revenueSeries, statusBreakdown, paymentBreakdown, topProducts, topCustomers, ordersInPeriod, growthPct } = reportData
+  const { kpis, revenueSeries, statusBreakdown, paymentBreakdown, topProducts, topCustomers, ordersInPeriod, growthPct, profitData, importRows } = reportData
   const { label, exportedBy, generatedAt, statusFilter } = meta
 
   const workbook = new ExcelJS.Workbook()
@@ -111,7 +239,26 @@ export const buildExcelWorkbook = async (reportData, meta) => {
   })
   for (let r = cardStartRow; r < cardStartRow + cardHeight; r++) dash.getRow(r).height = 22
 
-  let cursorRow = cardStartRow + cardHeight + 2
+  const profitCards = [
+    { icon: '🛒', label: 'Chi phí nhập hàng', value: fmtMoney(kpis.importCost), color: 'FF8A8FA3' },
+    { icon: '💵', label: 'Lợi nhuận', value: fmtMoney(kpis.profit), color: kpis.profit >= 0 ? BRAND.primary : 'FFFF6B6B' },
+    { icon: '📊', label: 'Biên lợi nhuận', value: kpis.profitMargin === null ? '—' : `${kpis.profitMargin}%`, color: 'FFFFD166' },
+  ]
+  const profitRowStart = cardStartRow + cardHeight + 1
+  profitCards.forEach((card, i) => {
+    const colStart = i * 2 + 1
+    const colStartLetter = String.fromCharCode(64 + colStart)
+    const colEndLetter = String.fromCharCode(64 + colStart + 1)
+    dash.mergeCells(`${colStartLetter}${profitRowStart}:${colEndLetter}${profitRowStart + cardHeight - 1}`)
+    const cell = dash.getCell(`${colStartLetter}${profitRowStart}`)
+    cell.value = `${card.icon}\n${card.value}\n${card.label}`
+    cell.font = { bold: true, size: 13, color: { argb: BRAND.white } }
+    cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true }
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: card.color } }
+  })
+  for (let r = profitRowStart; r < profitRowStart + cardHeight; r++) dash.getRow(r).height = 22
+
+  let cursorRow = profitRowStart + cardHeight + 1
 
   // Tỷ lệ hủy đơn + so sánh kỳ trước (dòng phụ, không phải card lớn)
   dash.mergeCells(`A${cursorRow}:J${cursorRow}`)
@@ -255,12 +402,17 @@ export const buildExcelWorkbook = async (reportData, meta) => {
   })
   if (topCustomers.length === 0) custSheet.addRow({ name: 'Chưa có dữ liệu trong khoảng thời gian này.' })
 
+  addProfitSheet(workbook, profitData)
+  addImportRowsSheet(workbook, importRows, { generatedAt, exportedBy })
+
   return workbook
 }
 
-// ══════════════════════════════════════════════════════════════════ PDF — xây dựng báo cáo nhiều trang từ reportData (không phụ thuộc DB)
+// ══════════════════════════════════════════════════════════════════
+// PDF — xây dựng báo cáo nhiều trang từ reportData (không phụ thuộc DB)
+// ══════════════════════════════════════════════════════════════════
 export const buildPdfReport = async (reportData, meta, res) => {
-  const { kpis, revenueSeries, statusBreakdown, topProducts, topCustomers, ordersInPeriod, growthPct, prevLabel } = reportData
+  const { kpis, revenueSeries, statusBreakdown, topProducts, topCustomers, ordersInPeriod, growthPct, prevLabel, profitData, importRows } = reportData
   const { label, exportedBy, generatedAt } = meta
 
   const doc = new PDFDocument({ size: 'A4', margin: 40, bufferPages: true })
@@ -305,6 +457,9 @@ export const buildPdfReport = async (reportData, meta, res) => {
         : `Doanh thu kỳ này giảm ${Math.abs(growthPct)}% so với ${prevLabel}.`
     )
   }
+  bullets.push(
+    `Chi phí nhập hàng trong kỳ là ${fmtMoney(kpis.importCost)}, lợi nhuận (doanh thu − nhập hàng) đạt ${fmtMoney(kpis.profit)}${kpis.profitMargin === null ? '' : ` (biên ${kpis.profitMargin}%)`}.`
+  )
   bullets.forEach((b) => {
     doc.circle(44, doc.y + 5, 2).fill(C.primary)
     doc.fillColor('#333').text(b, 56, doc.y - 2, { width: PAGE_W - 96 })
@@ -323,6 +478,8 @@ export const buildPdfReport = async (reportData, meta, res) => {
     { icon: '✗', label: 'Đơn hủy', value: String(kpis.cancelledCount), color: C.red },
     { icon: '▲', label: 'Tỷ lệ thành công', value: `${kpis.successRate}%`, color: '#ffd166' },
     { icon: '▼', label: 'Tỷ lệ hủy đơn', value: `${kpis.cancelRate}%`, color: C.red },
+    { icon: '-', label: 'Chi phí nhập hàng', value: fmtMoney(kpis.importCost), color: '#8a8fa3' },
+    { icon: '+', label: 'Lợi nhuận', value: fmtMoney(kpis.profit), color: kpis.profit >= 0 ? '#0fa37f' : C.red },
   ]
   const cardW = (PAGE_W - 80 - 20) / 2
   const cardH = 80
@@ -363,6 +520,74 @@ export const buildPdfReport = async (reportData, meta, res) => {
     doc.font('VN-Bold').fontSize(16).fillColor(C.dark).text('DOANH THU THEO THỜI GIAN', { align: 'center' })
     doc.moveDown(0.5)
     doc.font('VN').fontSize(11).fillColor('#666').text('Không có dữ liệu doanh thu trong khoảng thời gian này.', { align: 'center' })
+  }
+
+  // ── TRANG: LỢI NHUẬN & CHI PHÍ NHẬP HÀNG ────────────────────────
+  doc.addPage()
+  doc.fillColor(C.dark).font('VN-Bold').fontSize(15).text('LỢI NHUẬN & CHI PHÍ NHẬP HÀNG')
+  doc.moveDown(0.6)
+  {
+    const boxY = doc.y
+    doc.roundedRect(40, boxY, PAGE_W - 80, 66, 8).fill('#f5f7fa')
+    doc.fillColor('#333').font('VN').fontSize(11)
+      .text(`Doanh thu ${fmtMoney(kpis.totalRevenue)}  −  Chi phí nhập hàng ${fmtMoney(kpis.importCost)}`, 56, boxY + 14, { width: PAGE_W - 112 })
+    doc.font('VN-Bold').fontSize(12).fillColor(kpis.profit >= 0 ? '#0fa37f' : C.red)
+      .text(`=  Lợi nhuận ${fmtMoney(kpis.profit)}${kpis.profitMargin === null ? '' : `   (biên ${kpis.profitMargin}%)`}`, 56, boxY + 38, { width: PAGE_W - 112 })
+    doc.y = boxY + 84
+  }
+
+  const profitCols = [
+    { label: 'Tháng', x: 40, w: 100, align: 'left' },
+    { label: 'Doanh thu', x: 140, w: 110, align: 'right' },
+    { label: 'Chi phí nhập', x: 255, w: 110, align: 'right' },
+    { label: 'Lợi nhuận', x: 370, w: 100, align: 'right' },
+    { label: 'Biên', x: 475, w: 80, align: 'right' },
+  ]
+  {
+    let ty = doc.y
+    doc.rect(40, ty - 3, 515, 16).fill(C.dark)
+    doc.font('VN-Bold').fontSize(9).fillColor(C.white)
+    profitCols.forEach((c) => doc.text(c.label, c.x, ty, { width: c.w, align: c.align, lineBreak: false }))
+    ty += 18
+    doc.font('VN').fontSize(9).fillColor('#333')
+    profitData.monthly.forEach((m, idx) => {
+      if (ty > PAGE_H - 80) { doc.addPage(); ty = 50 }
+      if (idx % 2 === 1) doc.rect(40, ty - 2, 515, 14).fill('#f5f7fa')
+      const vals = [m.label, fmtMoney(m.revenue), fmtMoney(m.importCost), fmtMoney(m.profit), m.margin === null ? '—' : `${m.margin}%`]
+      profitCols.forEach((c, i) => {
+        doc.fillColor(i === 3 && m.profit < 0 ? C.red : '#333').text(vals[i], c.x, ty, { width: c.w, align: c.align, lineBreak: false })
+      })
+      ty += 14
+    })
+    if (profitData.monthly.length === 0) { doc.fillColor('#666').text('Không có dữ liệu trong khoảng thời gian này.', 40, ty); ty += 14 }
+    doc.y = ty + 16
+  }
+
+  doc.font('VN-Bold').fontSize(13).fillColor(C.dark).text('NHẬP HÀNG THEO SẢN PHẨM', 40, doc.y)
+  doc.moveDown(0.4)
+  {
+    const groups = groupImportsByProduct(importRows).slice(0, 15)
+    let ty = doc.y
+    doc.rect(40, ty - 3, 515, 16).fill(C.dark)
+    doc.font('VN-Bold').fontSize(9).fillColor(C.white)
+    doc.text('Sản phẩm', 44, ty, { width: 260, lineBreak: false })
+    doc.text('SL nhập', 305, ty, { width: 60, align: 'right', lineBreak: false })
+    doc.text('Giá nhập TB', 370, ty, { width: 90, align: 'right', lineBreak: false })
+    doc.text('Tổng chi phí', 462, ty, { width: 93, align: 'right', lineBreak: false })
+    ty += 18
+    doc.font('VN').fontSize(9).fillColor('#333')
+    groups.forEach((g, idx) => {
+      if (ty > PAGE_H - 60) { doc.addPage(); ty = 50 }
+      if (idx % 2 === 1) doc.rect(40, ty - 2, 515, 14).fill('#f5f7fa')
+      doc.fillColor('#333')
+      doc.text(`${g.name}${g.color ? ` — ${g.color}` : ''}`, 44, ty, { width: 258, lineBreak: false, ellipsis: true })
+      doc.text(String(g.qty), 305, ty, { width: 60, align: 'right', lineBreak: false })
+      doc.text(fmtMoney(g.avgCost), 370, ty, { width: 90, align: 'right', lineBreak: false })
+      doc.text(fmtMoney(g.cost), 462, ty, { width: 93, align: 'right', lineBreak: false })
+      ty += 14
+    })
+    if (groups.length === 0) { doc.text('Chưa có phiếu nhập trong khoảng thời gian này.', 44, ty); ty += 14 }
+    doc.y = ty + 8
   }
 
   // ── TRANG: TOP SẢN PHẨM / TOP KHÁCH HÀNG / TRẠNG THÁI ĐƠN ──────
@@ -497,7 +722,9 @@ export const buildPdfReport = async (reportData, meta, res) => {
   doc.end()
 }
 
-// ══════════════════════════════════════════════════════════════════ ROUTE HANDLERS (kết nối DB qua getReportData)
+// ══════════════════════════════════════════════════════════════════
+// ROUTE HANDLERS (kết nối DB qua getReportData)
+// ══════════════════════════════════════════════════════════════════
 
 // @desc    Xuất danh sách đơn hàng + báo cáo doanh thu ra Excel (.xlsx, nhiều Sheet)
 // @route   GET /api/orders/admin/export/excel?startDate=&endDate=&status=
@@ -526,6 +753,57 @@ const exportOrdersExcel = asyncHandler(async (req, res) => {
   res.send(buffer)
 })
 
+// @desc    Xuất báo cáo nhập hàng ra Excel (.xlsx)
+// @route   GET /api/imports/export/excel?startDate=&endDate=
+// @access  Private/Admin
+const exportImportsExcel = asyncHandler(async (req, res) => {
+  const { startDate, endDate } = req.query
+  if (!startDate || !endDate) {
+    res.status(400)
+    throw new Error('Vui lòng chọn khoảng thời gian (startDate, endDate)')
+  }
+  const start = new Date(startDate); start.setHours(0, 0, 0, 0)
+  const end = new Date(endDate); end.setHours(23, 59, 59, 999)
+
+  const rows = await getImportRows({ start, end })
+  const meta = { generatedAt: new Date(), exportedBy: req.user?.name }
+
+  const workbook = new ExcelJS.Workbook()
+  workbook.creator = meta.exportedBy || 'HariShop Admin'
+  workbook.created = meta.generatedAt
+  addImportRowsSheet(workbook, rows, meta)
+
+  const sumSheet = workbook.addWorksheet('Tổng hợp theo sản phẩm')
+  sumSheet.columns = [
+    { header: 'STT', key: 'stt', width: 6 },
+    { header: 'Sản phẩm', key: 'name', width: 36 },
+    { header: 'Màu sắc', key: 'color', width: 14 },
+    { header: 'Tổng số lượng nhập', key: 'qty', width: 20 },
+    { header: 'Giá nhập trung bình', key: 'avgCost', width: 20 },
+    { header: 'Tổng chi phí', key: 'cost', width: 20 },
+  ]
+  styleHeaderRow(sumSheet.getRow(1))
+  const groups = groupImportsByProduct(rows)
+  groups.forEach((g, idx) => {
+    const row = sumSheet.addRow({ stt: idx + 1, name: g.name, color: g.color || '—', qty: g.qty, avgCost: g.avgCost, cost: g.cost })
+    row.getCell('avgCost').numFmt = MONEY_FMT
+    row.getCell('cost').numFmt = MONEY_FMT
+    applyRowBorderAndBanding(row, idx)
+  })
+  if (groups.length > 0) {
+    const total = sumSheet.addRow({ name: 'TỔNG CỘNG' })
+    total.getCell('qty').value = { formula: `SUM(D2:D${groups.length + 1})`, result: groups.reduce((s, g) => s + g.qty, 0) }
+    total.getCell('cost').value = { formula: `SUM(F2:F${groups.length + 1})`, result: groups.reduce((s, g) => s + g.cost, 0) }
+    total.getCell('cost').numFmt = MONEY_FMT
+    total.font = { bold: true }
+  }
+
+  const buffer = await workbook.xlsx.writeBuffer()
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  res.setHeader('Content-Disposition', `attachment; filename="bao-cao-nhap-hang_${startDate}_${endDate}.xlsx"`)
+  res.send(buffer)
+})
+
 const exportRevenuePdf = asyncHandler(async (req, res) => {
   const { start, end, prevStart, prevEnd, label, prevLabel } = resolvePeriodRange(req.query)
   const reportData = await getReportData({ start, end, prevStart, prevEnd })
@@ -534,4 +812,4 @@ const exportRevenuePdf = asyncHandler(async (req, res) => {
   await buildPdfReport(reportData, { label, exportedBy: req.user?.name, generatedAt: new Date() }, res)
 })
 
-export { exportOrdersExcel, exportRevenuePdf }
+export { exportOrdersExcel, exportRevenuePdf, exportImportsExcel }

@@ -64,6 +64,7 @@ const productSchema = mongoose.Schema(
       ref: 'User',
     },
     name:        { type: String, required: true },
+    productCode: { type: String, unique: true, sparse: true, index: true },
     image:       { type: String, required: true },
     bannerImage: { type: String, default: '' },
     warrantyMonths: { type: Number, default: 12 },
@@ -84,13 +85,20 @@ const productSchema = mongoose.Schema(
 
     weight: { type: Number, default: 0 },
 
-    // ── Tìm kiếm thông minh (autocomplete): bản đã bỏ dấu + viết thường của name/brand, tự động tính lại mỗi khi lưu (xem pre('save') bên dưới).
+    // ── Tìm kiếm thông minh (autocomplete): bản đã bỏ dấu + viết thường của
+    // name/brand, tự động tính lại mỗi khi lưu (xem pre('save') bên dưới).
+    // Tách riêng field này (thay vì chuẩn hóa lúc truy vấn) để có thể đánh
+    // index và regex nhanh mà không cần quét toàn bộ collection.
     nameNormalized:  { type: String, default: '' },
     brandNormalized: { type: String, default: '' },
 
     aiReviewSummary: { type: aiReviewSummarySchema, default: () => ({}) },
 
     flashSale: { type: flashSaleSchema, default: () => ({}) },
+
+    // Ngưỡng cảnh báo tồn kho lâu (ngày) riêng cho sản phẩm, 0 = dùng ngưỡng chung
+    agingThresholdDays: { type: Number, default: 0, min: 0 },
+    agingAlertedAt: { type: Date, default: null },
   },
   { timestamps: true }
 )

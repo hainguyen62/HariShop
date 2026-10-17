@@ -2,7 +2,13 @@ import { Server } from 'socket.io'
 import jwt from 'jsonwebtoken'
 import User from './models/userModel.js'
 
-// ═══════════════════ B9: Thông báo real-time bằng Socket.io ═══════════════════ Mỗi client khi kết nối sẽ gửi kèm JWT token (event 'auth') để server xác thực
+// ═══════════════════ B9: Thông báo real-time bằng Socket.io ═══════════════════
+// Mỗi client khi kết nối sẽ gửi kèm JWT token (event 'auth') để server xác thực
+// và cho tham gia đúng "phòng" (room) của mình:
+//   - room `user:<userId>`  → nhận thông báo riêng của khách hàng đó
+//   - room `admin`          → nhận thông báo dành cho Admin (đơn mới, yêu cầu huỷ...)
+// Khi có thông báo mới được tạo (createNotification), server emit thẳng vào đúng
+// room tương ứng — client nhận được NGAY LẬP TỨC, không cần polling/F5.
 
 let io = null
 
@@ -19,8 +25,8 @@ export const initSocket = (httpServer) => {
       try {
         if (!token) return
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const user = await User.findById(decoded.id).select('isAdmin')
-        if (!user) return
+        const user = await User.findById(decoded.id).select('isAdmin tokenVersion')
+        if (!user || (decoded.tv || 0) !== (user.tokenVersion || 0)) return
 
         socket.join(`user:${decoded.id}`)
         if (user.isAdmin) socket.join('admin')
@@ -35,6 +41,7 @@ export const initSocket = (httpServer) => {
     })
   })
 
+  console.log('🔌 Socket.io đã khởi tạo (B9: thông báo real-time)')
   return io
 }
 

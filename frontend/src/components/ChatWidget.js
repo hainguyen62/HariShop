@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { addToCart } from '../actions/cartActions'
 
-// ═══════════════════ B2: AI Chatbot tư vấn sản phẩm ═══════════════════ Widget chat nổi (floating button) góc phải màn hình.
+// ═══════════════════ B2: AI Chatbot tư vấn sản phẩm ═══════════════════
+// Widget chat nổi (floating button) góc phải màn hình.
+// Lịch sử hội thoại chỉ lưu trong state của component (session) —
+// tự động mất khi đóng/tải lại tab, KHÔNG lưu localStorage/DB.
 
 const QUICK_PROMPTS = [
   'Điện thoại tầm 10 triệu, pin trâu',
@@ -86,9 +89,11 @@ const ChatWidget = () => {
     const color = product.colors && product.colors.length > 0
       ? (product.colors.find((c) => c.countInStock > 0)?.name || product.colors[0].name)
       : 'Mặc định'
-    dispatch(addToCart(product._id, 1, color))
-    setAddedProductId(product._id)
-    setTimeout(() => setAddedProductId(''), 1800)
+    dispatch(addToCart(product._id, 1, color)).then((result) => {
+      if (!result || !result.ok) return
+      setAddedProductId(product._id)
+      setTimeout(() => setAddedProductId(''), 1800)
+    })
   }
 
   const clearChat = () => {

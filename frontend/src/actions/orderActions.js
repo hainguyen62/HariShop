@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toQueryString } from '../utils/listControls'
 import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -56,6 +57,7 @@ import {
 
 
 import { logout } from './userActions'
+import { removePurchasedFromServer } from './cartActions'
 
 const getErrorMessage = (error) => {
   try {
@@ -92,17 +94,8 @@ export const createOrder = (order) => async (dispatch, getState) => {
       payload: { purchasedItems },
     })
 
-    // cập nhật localStorage tương ứng
-    // (cart reducer sẽ cập nhật cart.cartItems; phần localStorage này giúp đồng bộ ngay lập tức)
-    const state = getState()
-    const remaining = (state.cart.cartItems || []).filter((ci) => {
-      return !purchasedItems.some(
-        (pi) =>
-          pi.product === ci.product &&
-          (pi.color || '') === (ci.color || '')
-      )
-    })
-    localStorage.setItem('cartItems', JSON.stringify(remaining))
+    // Xóa các dòng đã mua khỏi giỏ trên server
+    dispatch(removePurchasedFromServer(purchasedItems.map((pi) => ({ product: pi.product, color: pi.color || '' }))))
 
     localStorage.removeItem('deliveryMethod')
     localStorage.removeItem('voucherCode')
@@ -176,6 +169,21 @@ export const updateCodPaymentStatus = (orderId, isPaid) => async (dispatch, getS
 
     const { data } = await axios.put(`/api/orders/${orderId}/cod-payment`, { isPaid }, config)
 
+    dispatch({ type: ORDER_COD_PAYMENT_SUCCESS, payload: data })
+  } catch (error) {
+    const message = getErrorMessage(error)
+    if (message === 'Not authorized, token failed') dispatch(logout())
+    dispatch({ type: ORDER_COD_PAYMENT_FAIL, payload: message })
+  }
+}
+
+// Admin chuyển đơn online chuyển thiếu sang thu phần còn lại khi nhận hàng (dùng chung state với COD payment)
+export const enableCodRemainder = (orderId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ORDER_COD_PAYMENT_REQUEST })
+    const { userLogin: { userInfo } } = getState()
+    const config = { headers: { Authorization: `Bearer ${userInfo.token}` } }
+    const { data } = await axios.put(`/api/orders/${orderId}/cod-remainder`, {}, config)
     dispatch({ type: ORDER_COD_PAYMENT_SUCCESS, payload: data })
   } catch (error) {
     const message = getErrorMessage(error)
@@ -393,7 +401,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
 
 // MỚI: nhận thêm { sortBy, order } (click-to-sort kiểu FC Online).
 // Không truyền gì vẫn hoạt động như cũ (giữ tương thích ngược).
-export const listOrders = ({ sortBy = '', order = '' } = {}) => async (dispatch, getState) => {
+export const listOrders = (params = {}) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_LIST_REQUEST })
 
@@ -403,8 +411,8 @@ export const listOrders = ({ sortBy = '', order = '' } = {}) => async (dispatch,
       headers: { Authorization: `Bearer ${userInfo.token}` },
     }
 
-    let query = '/api/orders'
-    if (sortBy && order) query += `?sortBy=${sortBy}&order=${order}`
+    const qs = toQueryString(params)
+    const query = qs ? `/api/orders?${qs}` : '/api/orders'
 
     const { data } = await axios.get(query, config)
 

@@ -7,12 +7,18 @@ import {
   deleteOrderByAdmin,
 } from '../controllers/orderController.js'
 import { exportOrdersExcel, exportRevenuePdf } from '../controllers/exportController.js'
+import { orderIdParam } from '../utils/orderLookup.js'
+
 
 const router = express.Router()
+
+router.param('id', orderIdParam)
+
 
 router
   .route('/revenue-summary')
   .get(protect, admin, getAdminRevenueSummary)
+
 
 router
   .route('/brand-breakdown')
@@ -31,6 +37,7 @@ router
 router
   .route('/export/pdf')
   .get(protect, admin, exportRevenuePdf)
+
 
 router
   .route('/:id')

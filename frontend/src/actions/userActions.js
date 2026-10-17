@@ -1,4 +1,8 @@
 import axios from 'axios'
+import { toQueryString } from '../utils/listControls'
+import { setSessionFlag, clearSessionFlag, refreshAccessToken } from '../utils/authSession'
+import { loadCart } from './cartActions'
+import { CART_CLEAR_ITEMS } from '../constants/cartConstants'
 import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
@@ -70,7 +74,8 @@ export const login = (email, password) => async (dispatch) => {
       payload: data,
     })
 
-    localStorage.setItem('userInfo', JSON.stringify(data))
+    setSessionFlag()
+    dispatch(loadCart())
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -83,48 +88,49 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 // LOGIN VỚI GOOGLE (B11)
-export const loginWithGoogleToken = (token) => async (dispatch) => {
+// Backend đặt cookie refresh rồi chuyển về /google-auth; FE đổi cookie lấy token truy cập.
+export const loginWithGoogleSession = () => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST })
-
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-
-    const { data } = await axios.get('/api/users/profile', config)
-
-    const userData = { ...data, token }
-
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
-      payload: userData,
-    })
-
-    localStorage.setItem('userInfo', JSON.stringify(userData))
+    const data = await refreshAccessToken()
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
+    setSessionFlag()
+    dispatch(loadCart())
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
       payload:
-        error.response && error.response.data.message
+        error.response && error.response.data && error.response.data.message
           ? error.response.data.message
           : error.message,
     })
   }
 }
 
-// LOGOUT
-export const logout = () => (dispatch) => {
+// Giữ tên cũ để các nơi gọi cũ vẫn chạy; tham số token không còn dùng
+export const loginWithGoogleToken = () => loginWithGoogleSession()
+
+// LOGOUT: thu hồi phiên ở server rồi dọn dữ liệu cục bộ; giỏ hàng nằm trên server nên không bị xóa
+export const logout = (expired = false) => async (dispatch) => {
+  try {
+    await axios.post('/api/users/logout', null, { timeout: 5000 })
+  } catch (e) {
+    // Không gọi được server vẫn đăng xuất cục bộ
+  }
+  clearSessionFlag()
   localStorage.removeItem('userInfo')
-  localStorage.removeItem('cartItems')
   localStorage.removeItem('shippingAddress')
   localStorage.removeItem('paymentMethod')
+  localStorage.removeItem('selectedCartItems')
 
   dispatch({ type: USER_LOGOUT })
   dispatch({ type: USER_DETAILS_RESET })
   dispatch({ type: ORDER_LIST_MY_RESET })
   dispatch({ type: USER_LIST_RESET })
+  dispatch({ type: CART_CLEAR_ITEMS })
 
-  document.location.href = '/login'
+  const here = window.location.pathname
+  document.location.href = expired && here !== '/login' ? `/login?redirect=${here}` : '/login'
 }
 
 // REGISTER - Updated for structured address
@@ -177,7 +183,8 @@ export const verifyOtp = (email, otp) => async (dispatch) => {
       payload: data,
     })
 
-    localStorage.setItem('userInfo', JSON.stringify(data))
+    setSessionFlag()
+    dispatch(loadCart())
   } catch (error) {
     const message =
       error.response && error.response.data && error.response.data.message
@@ -345,7 +352,6 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       payload: data,
     })
 
-    localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -364,7 +370,9 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 }
 
 // ADMIN - LIST USERS (Admin-only endpoint)
-export const listUsers = ({ sortBy = '', order = '' } = {}) => async (dispatch, getState) => {
+// MỚI: nhận thêm { sortBy, order } (click-to-sort kiểu FC Online).
+// Không truyền gì vẫn hoạt động như cũ (giữ tương thích ngược).
+export const listUsers = (params = {}) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_LIST_REQUEST })
 
@@ -387,8 +395,8 @@ export const listUsers = ({ sortBy = '', order = '' } = {}) => async (dispatch, 
       },
     }
 
-    let query = '/api/users'
-    if (sortBy && order) query += `?sortBy=${sortBy}&order=${order}`
+    const qs = toQueryString(params)
+    const query = qs ? `/api/users?${qs}` : '/api/users'
 
     const { data } = await axios.get(query, config)
 

@@ -13,6 +13,7 @@ import {
 } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 import { addToCart } from '../actions/cartActions'
+import { openLoginPrompt } from '../actions/loginPromptActions'
 import RelatedProducts from '../components/RelatedProducts'
 import ReviewSummary from '../components/ReviewSummary'
 import CountdownTimer from '../components/CountdownTimer'
@@ -61,8 +62,12 @@ const ProductScreen = ({ history, match }) => {
     }
   }, [dispatch, match, product?._id, successProductReview, product?.colors, color]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const addToCartHandler = () => {
-    dispatch(addToCart(match.params.id, qty, color))
+  const addToCartHandler = async () => {
+    const result = await dispatch(addToCart(match.params.id, qty, color))
+    if (!result || !result.ok) {
+      if (result && result.reason === 'error') window.alert(result.message)
+      return
+    }
     setSuccessAddToCart(true)
     setTimeout(() => setSuccessAddToCart(false), 3000)
   }
@@ -73,6 +78,10 @@ const ProductScreen = ({ history, match }) => {
   const displayImage = selectedColorImage || product?.image
 
   const buyNowHandler = () => {
+    if (!userInfo) {
+      dispatch(openLoginPrompt(window.location.pathname))
+      return
+    }
     // Buy Now bypass cart: navigate with params
     const params = new URLSearchParams({
       buyNow: 'true',
@@ -105,11 +114,8 @@ const ProductScreen = ({ history, match }) => {
 
   return (
     <>
-      <div
-        role='button'
-        tabIndex={0}
-        onClick={() => history.goBack()}
-        onKeyPress={(e) => { if (e.key === 'Enter') history.goBack() }}
+      <Link
+        to='/'
         style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -122,12 +128,10 @@ const ProductScreen = ({ history, match }) => {
           textDecoration: 'none',
           fontSize: '14px',
           fontWeight: '600',
-          cursor: 'pointer',
-          background: 'transparent',
         }}
       >
         <i className='fas fa-arrow-left'></i> Trở Về
-      </div>
+      </Link>
 
       {loading ? (
         <Loader />
@@ -184,7 +188,7 @@ const ProductScreen = ({ history, match }) => {
                   <Rating value={product.rating} text={`${product.numReviews || 0} đánh giá`} />
                 </div>
 
-                <div>
+                <div style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '14px', marginBottom: '14px' }}>
                   <div style={{ color: '#b8bcc8', fontSize: '13px', marginBottom: '4px' }}>Giá bán</div>
                   {product.isFlashSaleActive && !flashSaleExpired ? (
                     <div>
@@ -208,6 +212,13 @@ const ProductScreen = ({ history, match }) => {
                       {product.price?.toLocaleString('vi-VN')}đ
                     </span>
                   )}
+                </div>
+
+                <div>
+                  <div style={{ color: '#b8bcc8', fontSize: '13px', marginBottom: '8px' }}>Mô tả sản phẩm</div>
+                  <p style={{ color: '#e0e0e0', fontSize: '14px', lineHeight: '1.7', margin: 0 }}>
+                    {product.description}
+                  </p>
                 </div>
               </div>
             </Col>
@@ -458,30 +469,6 @@ const ProductScreen = ({ history, match }) => {
               </div>
             </Col>
           </Row>
-
-          {/* ===== MÔ TẢ SẢN PHẨM ===== */}
-          {product.description && (
-            <div style={{ ...cardStyle, marginTop: '16px' }}>
-              <h3 style={{
-                color: '#33FFCC',
-                fontWeight: '700',
-                marginBottom: '20px',
-                paddingBottom: '16px',
-                borderBottom: '2px solid rgba(51,255,204,0.2)',
-              }}>
-                <i className='fas fa-align-left me-2'></i>Mô Tả Sản Phẩm
-              </h3>
-              <p style={{
-                color: '#e0e0e0',
-                fontSize: '14px',
-                lineHeight: '1.9',
-                margin: 0,
-                whiteSpace: 'pre-line',
-              }}>
-                {product.description}
-              </p>
-            </div>
-          )}
 
           {/* ===== THÔNG SỐ KỸ THUẬT ===== */}
           {product.specs && Object.values(product.specs).some((v) => v) && (
