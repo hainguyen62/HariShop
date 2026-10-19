@@ -13,7 +13,7 @@ const inputStyle = {
   borderRadius: 8, padding: '8px 10px', fontSize: 15,
 }
 const cell = { padding: '8px 8px' }
-const FEEDBACK_COLOR = { ok: '#4cdb80', dup: '#ffd166', err: '#ff6b6b' }
+const FEEDBACK_COLOR = { ok: '#4cdb80', dup: '#ffd166', err: '#ff6b6b', bad: '#ff6b6b' }
 
 const diffColor = (d) => (d === 0 ? '#4cdb80' : d < 0 ? '#ff6b6b' : '#ffd166')
 
@@ -94,7 +94,10 @@ const CountSessionScreen = ({ match }) => {
         setFeedback({ type: 'ok', text: `${r.productName}${r.color ? ` (${r.color})` : ''}: đã quét ${r.counted}, hệ thống ${r.systemQty}`, code: r.code })
         await load()
       } catch (e) {
-        if (e.duplicate) {
+        if (e.abnormal) {
+          setFeedback({ type: 'bad', text: `${e.message}. Không tính vào số đã quét.` })
+          await load()
+        } else if (e.duplicate) {
           setFeedback({ type: 'dup', text: `Tem đã quét rồi: ${e.detail.productName}${e.detail.color ? ` (${e.detail.color})` : ''}`, code: e.detail.code })
         } else {
           setFeedback({ type: 'err', text: e.message })
@@ -195,6 +198,18 @@ const CountSessionScreen = ({ match }) => {
               </label>
             )}
           </div>
+
+          {data.anomalies && data.anomalies.length > 0 && (
+            <div style={{ ...cardStyle, borderColor: 'rgba(255,107,107,0.5)' }}>
+              <h6 style={{ color: '#ff6b6b', marginBottom: 12 }}>Tem bất thường ({data.anomalies.length})</h6>
+              {data.anomalies.map((a) => (
+                <div key={a.code} style={{ padding: '6px 0', color: '#eef0f7', fontSize: 13, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div>{a.productName}{a.color ? ` (${a.color})` : ''} <span style={{ color: '#8a8fa3' }}>{a.code}</span></div>
+                  <div style={{ color: '#ff9b9b' }}>{a.reason}</div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {open && data.recent.length > 0 && (
             <div style={cardStyle}>

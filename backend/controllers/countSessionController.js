@@ -3,11 +3,12 @@ import mongoose from 'mongoose'
 import Product from '../models/productModel.js'
 import StockCount from '../models/stockCountModel.js'
 import StockUnit from '../models/stockUnitModel.js'
+import Order from '../models/orderModel.js'
 import { CountSession, CountScan } from '../models/countSessionModel.js'
 import logger from '../utils/logger.js'
 import { buildCountLines } from '../utils/stockCount.js'
 import { parseUnitCode } from '../utils/unitCode.js'
-import { buildSessionRows, countKey } from '../utils/countSession.js'
+import { buildSessionRows, countKey, unitScanIssue } from '../utils/countSession.js'
 import { pageParams, pagesOf } from '../utils/listQuery.js'
 
 const PRODUCT_FIELDS = 'name productCode countInStock colors.name colors.countInStock'
@@ -72,7 +73,10 @@ const getSessions = asyncHandler(async (req, res) => {
 const getSession = asyncHandler(async (req, res) => {
   const session = await loadSession(req.params.id, res)
   const scanCount = await CountScan.countDocuments({ session: session._id })
-  const base = { _id: session._id, name: session.name, status: session.status, createdAt: session.createdAt, closedAt: session.closedAt, scanCount }
+  const base = {
+    _id: session._id, name: session.name, status: session.status, createdAt: session.createdAt, closedAt: session.closedAt, scanCount,
+    anomalies: session.anomalies || [],
+  }
 
   if (session.status === 'closed') {
     return res.json({ ...base, result: session.result || null, rows: session.result?.products || [], recent: [] })
@@ -113,6 +117,18 @@ const scanUnit = asyncHandler(async (req, res) => {
   if (!product) {
     res.status(404)
     throw new Error('Sản phẩm của tem này không còn tồn tại')
+  }
+
+  const orderCode = unit.status === 'sold'
+    ? (await Order.findOne({ unitCodes: code }).select('orderCode').lean())?.orderCode || ''
+    : ''
+  const issue = unitScanIssue(unit, orderCode)
+  if (issue) {
+    await CountSession.updateOne(
+      { _id: session._id, 'anomalies.code': { $ne: code } },
+      { $push: { anomalies: { code, status: unit.status, productName: product.name, color: unit.color, orderCode, reason: issue } } }
+    )
+    return res.status(409).json({ message: issue, abnormal: true, code, productName: product.name, color: unit.color, status: unit.status, orderCode })
   }
 
   try {

@@ -29,3 +29,12 @@ export const buildSessionRows = (products, counts, { includeUnscanned = false } 
   }
   return rows
 }
+
+// Chỉ tem còn trong kho mới được tính vào số đã quét; trả về lý do nếu tem bất thường
+export const unitScanIssue = (unit, orderCode = '') => {
+  if (!unit || unit.status === 'in_stock') return null
+  if (unit.status === 'sold') {
+    return `Tem đã bán${orderCode ? ` cho đơn ${orderCode}` : ''}, máy này lẽ ra không còn trong kho`
+  }
+  return `Tem đã hủy${unit.voidReason ? ` (${unit.voidReason})` : ''}, máy này lẽ ra đã bị loại khỏi kho`
+}

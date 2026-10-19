@@ -11,6 +11,10 @@ const wrap = async (promise) => {
   } catch (error) {
     const err = new Error(getApiError(error))
     const data = error.response && error.response.data
+    if (data && data.abnormal) {
+      err.abnormal = true
+      err.detail = data
+    }
     if (data && data.duplicate) {
       err.duplicate = true
       err.detail = data

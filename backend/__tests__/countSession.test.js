@@ -1,5 +1,5 @@
 import { formatUnitCode, parseUnitCode, colorCodeOf, colorCodesFor, colorCodeFor } from '../utils/unitCode.js'
-import { buildSessionRows, countKey } from '../utils/countSession.js'
+import { buildSessionRows, countKey, unitScanIssue } from '../utils/countSession.js'
 
 describe('mã tem đơn vị', () => {
   const day = new Date('2026-10-05T03:00:00Z')
@@ -72,5 +72,18 @@ describe('buildSessionRows', () => {
     const all = buildSessionRows([phone, plain], counts, { includeUnscanned: true })
     expect(all).toHaveLength(2)
     expect(all[1].lines[0]).toEqual({ color: '', systemQty: 10, countedQty: 0, diff: -10 })
+  })
+})
+
+describe('tem bất thường khi kiểm kê', () => {
+  it('tem còn trong kho được tính bình thường', () => {
+    expect(unitScanIssue({ status: 'in_stock' })).toBeNull()
+  })
+  it('tem đã bán báo kèm mã đơn', () => {
+    expect(unitScanIssue({ status: 'sold' }, 'HS-1')).toMatch(/đã bán cho đơn HS-1/)
+    expect(unitScanIssue({ status: 'sold' })).toMatch(/đã bán/)
+  })
+  it('tem đã hủy báo kèm lý do', () => {
+    expect(unitScanIssue({ status: 'void', voidReason: 'rách tem' })).toMatch(/đã hủy \(rách tem\)/)
   })
 })
