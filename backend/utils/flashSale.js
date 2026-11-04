@@ -1,8 +1,9 @@
-// ═══════════════════ B8: Flash Sale / giảm giá có thời hạn ═══════════════════ "Đang diễn ra" được TÍNH TOÁN TẠI THỜI ĐIỂM ĐỌC (dựa vào giờ hiện tại so với
+import { colorPriceOf, hasColorPrices } from './colorPricing.js'
 
-// Kiểm tra & tính giá sau giảm cho 1 sản phẩm — dùng được cho cả mongoose
-// document lẫn plain object (kết quả .lean()).
-export const computeFlashSale = (product) => {
+// Flash sale được tính tại thời điểm đọc theo giờ hiện tại, hết hạn thì giá tự về giá gốc
+
+// Tính giá sau giảm cho sản phẩm, hoặc cho một màu nếu truyền color
+export const computeFlashSale = (product, color) => {
   const fs = product.flashSale
 
   if (!fs || !fs.isActive || !fs.discountPercent || !fs.startsAt || !fs.endsAt) {
@@ -18,7 +19,8 @@ export const computeFlashSale = (product) => {
   }
 
   const discountPercent = fs.discountPercent
-  const salePrice = Math.max(0, Math.round(product.price * (1 - discountPercent / 100)))
+  const basePrice = color === undefined ? product.price : colorPriceOf(product, color)
+  const salePrice = Math.max(0, Math.round(basePrice * (1 - discountPercent / 100)))
 
   return {
     isFlashSaleActive: true,
@@ -28,9 +30,12 @@ export const computeFlashSale = (product) => {
   }
 }
 
-// Gắn các field tính toán được (isFlashSaleActive, salePrice...) vào 1 sản phẩm
-// trước khi trả về cho Frontend.
-export const attachFlashSale = (product) => ({ ...product, ...computeFlashSale(product) })
+// Gắn thông tin flash sale và cờ giá khác nhau theo màu vào sản phẩm trước khi trả về frontend
+export const attachFlashSale = (product) => ({
+  ...product,
+  ...computeFlashSale(product),
+  hasColorPrices: hasColorPrices(product),
+})
 
 // Gắn cho cả mảng sản phẩm
 export const attachFlashSaleToList = (products) => (products || []).map(attachFlashSale)
@@ -46,8 +51,7 @@ export const normalizeFlashSale = (input) => {
   const endsAt = input.endsAt ? new Date(input.endsAt) : null
 
   let isActive = !!input.isActive
-  // Nếu thiếu % giảm, hoặc thiếu ngày, hoặc ngày không hợp lệ, hoặc kết thúc <= bắt đầu
-  // → tự tắt isActive để tránh lưu 1 flash sale "hỏng" (isActive nhưng thiếu dữ liệu).
+  // Thiếu % giảm hoặc ngày không hợp lệ thì tự tắt để không lưu flash sale hỏng
   if (isActive) {
     const validDates = startsAt && endsAt && !Number.isNaN(startsAt.getTime()) && !Number.isNaN(endsAt.getTime())
     if (!validDates || endsAt <= startsAt || discountPercent <= 0) {

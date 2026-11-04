@@ -11,7 +11,8 @@ const wrap = async (promise) => {
   } catch (error) {
     const err = new Error(getApiError(error))
     const data = error.response && error.response.data
-    if (data && data.abnormal) {
+    if (data && (data.abnormal || data.staged)) {
+      err.staged = Boolean(data.staged)
       err.abnormal = true
       err.detail = data
     }

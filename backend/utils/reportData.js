@@ -52,7 +52,7 @@ export const STATUS_COLOR = {
 }
 export const STATUS_LABEL_VI = {
   delivered: 'Giao thành công', cancelled: 'Đã hủy', pending: 'Đã đặt hàng', confirmed: 'Đã xác nhận',
-  packing: 'Đang đóng gói', waiting_pickup: 'Chờ lấy hàng', picked_up: 'Đã lấy hàng',
+  packing: 'Đã đóng gói', waiting_pickup: 'Chờ lấy hàng', picked_up: 'Đã lấy hàng',
   in_transit: 'Đang vận chuyển', out_for_delivery: 'Đang giao hàng', delivery_failed: 'Giao thất bại',
   returning: 'Đang hoàn về', returned: 'Đã hoàn về',
 }
@@ -60,7 +60,7 @@ export const STATUS_LABEL_VI = {
 // đơn hàng (PDF) để không bị wrap xuống dòng gây đè chữ lên hàng dưới.
 export const STATUS_LABEL_SHORT = {
   delivered: 'Thành công', cancelled: 'Đã hủy', pending: 'Đã đặt', confirmed: 'Xác nhận',
-  packing: 'Đóng gói', waiting_pickup: 'Chờ lấy', picked_up: 'Đã lấy',
+  packing: 'Đã đóng gói', waiting_pickup: 'Chờ lấy', picked_up: 'Đã lấy',
   in_transit: 'Vận chuyển', out_for_delivery: 'Đang giao', delivery_failed: 'Thất bại',
   returning: 'Hoàn về', returned: 'Đã hoàn',
 }

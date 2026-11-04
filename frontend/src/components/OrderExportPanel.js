@@ -11,7 +11,7 @@ const inputStyle = {
 }
 const COLORS = { ok: '#4cdb80', err: '#ff6b6b' }
 
-// Khung xuất kho: quét tem từng máy, đủ số lượng mới hoàn tất để tạo vận đơn
+// Khung đóng gói: quét tem từng máy, đủ số lượng mới hoàn tất để tạo vận đơn
 const OrderExportPanel = ({ orderId, token, status, onDone }) => {
   const [data, setData] = useState(null)
   const [error, setError] = useState('')
@@ -67,7 +67,7 @@ const OrderExportPanel = ({ orderId, token, status, onDone }) => {
   }
 
   const complete = async () => {
-    if (!window.confirm('Hoàn tất xuất kho? Các máy đã quét sẽ chuyển sang đã bán và đơn được gửi cho đơn vị vận chuyển.')) return
+    if (!window.confirm('Hoàn tất đóng gói? Các máy đã quét sẽ chuyển sang đã bán, đơn chuyển sang Đã đóng gói và được gửi cho đơn vị vận chuyển.')) return
     setBusy(true)
     try {
       setData(await completeOrderExport(token, orderId, { confirmManual }))
@@ -87,11 +87,14 @@ const OrderExportPanel = ({ orderId, token, status, onDone }) => {
   if (data.exported) {
     return (
       <div style={{ ...box, border: '1px solid rgba(76,219,128,0.4)' }}>
-        <h6 style={{ color: '#4cdb80', fontWeight: 700 }}><i className='fas fa-dolly me-2'></i>Đã xuất kho</h6>
+        <h6 style={{ color: '#4cdb80', fontWeight: 700 }}><i className='fas fa-box me-2'></i>Đã đóng gói</h6>
         <div style={{ color: '#b8bcc8', fontSize: 13 }}>
           Lúc {new Date(data.exportedAt).toLocaleString('vi-VN')}, {data.unitCodes.length} máy quét tem
           {data.exportManualQty > 0 ? `, ${data.exportManualQty} máy xuất thủ công` : ''}.
         </div>
+        {/^(packing|waiting_pickup)\|/.test(status) && (
+          <div style={{ color: '#ffd166', fontSize: 13, marginTop: 6 }}>Đang chờ shipper lấy, máy vẫn còn ở cửa hàng.</div>
+        )}
         {data.unitCodes.length > 0 && (
           <div style={{ color: '#eef0f7', fontSize: 12, marginTop: 8, wordBreak: 'break-all' }}>{data.unitCodes.join(', ')}</div>
         )}
@@ -101,7 +104,7 @@ const OrderExportPanel = ({ orderId, token, status, onDone }) => {
 
   return (
     <div style={box}>
-      <h6 style={{ color: '#33FFCC', fontWeight: 700, marginBottom: 12 }}><i className='fas fa-qrcode me-2'></i>Xuất kho bằng quét tem</h6>
+      <h6 style={{ color: '#33FFCC', fontWeight: 700, marginBottom: 12 }}><i className='fas fa-qrcode me-2'></i>Đóng gói bằng quét tem</h6>
       {data.blocked ? (
         <div style={{ color: '#ffd166', fontSize: 14 }}>{data.blocked}</div>
       ) : (
@@ -172,7 +175,7 @@ const OrderExportPanel = ({ orderId, token, status, onDone }) => {
             disabled={!data.canComplete || busy || (data.manualTotal > 0 && !confirmManual)}
             style={{ width: '100%', marginTop: 14, background: '#33FFCC', color: '#0f0f23', border: 'none', borderRadius: 12, padding: 12, fontWeight: 700, opacity: (!data.canComplete || busy || (data.manualTotal > 0 && !confirmManual)) ? 0.5 : 1 }}
           >
-            {busy ? 'Đang xử lý...' : 'Hoàn tất xuất kho'}
+            {busy ? 'Đang xử lý...' : 'Hoàn tất đóng gói'}
           </button>
         </>
       )}

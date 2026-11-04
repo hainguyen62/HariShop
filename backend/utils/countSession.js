@@ -30,11 +30,18 @@ export const buildSessionRows = (products, counts, { includeUnscanned = false } 
   return rows
 }
 
-// Chỉ tem còn trong kho mới được tính vào số đã quét; trả về lý do nếu tem bất thường
-export const unitScanIssue = (unit, orderCode = '') => {
+// Đơn đã đóng gói nhưng shipper chưa lấy: máy còn ở cửa hàng nên quét thấy là bình thường
+export const STAGED_ORDER_STATUSES = ['packing', 'waiting_pickup']
+
+// Chỉ tem còn trong kho mới được tính. Trả về { kind: 'staged' | 'abnormal', reason } hoặc null
+export const unitScanIssue = (unit, order = null) => {
   if (!unit || unit.status === 'in_stock') return null
   if (unit.status === 'sold') {
-    return `Tem đã bán${orderCode ? ` cho đơn ${orderCode}` : ''}, máy này lẽ ra không còn trong kho`
+    const code = order?.orderCode || ''
+    if (order && STAGED_ORDER_STATUSES.includes(order.status)) {
+      return { kind: 'staged', reason: `Máy đã đóng gói cho đơn ${code}, đang chờ shipper lấy, vẫn còn ở cửa hàng. Không tính vào số đã quét` }
+    }
+    return { kind: 'abnormal', reason: `Tem đã bán${code ? ` cho đơn ${code}` : ''}, máy này lẽ ra không còn trong kho` }
   }
-  return `Tem đã hủy${unit.voidReason ? ` (${unit.voidReason})` : ''}, máy này lẽ ra đã bị loại khỏi kho`
+  return { kind: 'abnormal', reason: `Tem đã hủy${unit.voidReason ? ` (${unit.voidReason})` : ''}, máy này lẽ ra đã bị loại khỏi kho` }
 }

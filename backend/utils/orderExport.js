@@ -1,4 +1,4 @@
-// Quy tắc xuất kho bằng quét tem: thuần tính toán, không truy cập cơ sở dữ liệu
+// Quy tắc đóng gói bằng quét tem: thuần tính toán, không truy cập cơ sở dữ liệu
 
 // Sản phẩm không có màu: giỏ hàng ghi "Mặc định" nhưng tem lưu màu rỗng
 export const unitColorOf = (item, hasColors) => (hasColors.get(String(item.product)) ? item.color || '' : '')
@@ -22,7 +22,7 @@ export const planLines = ({ orderItems, scans, available, hasColors }) => {
 export const checkScan = ({ unit, orderItems, scans, hasColors }) => {
   if (!unit) return { ok: false, error: 'Không tìm thấy tem này trong hệ thống' }
   if (unit.status === 'sold') return { ok: false, error: 'Tem này đã bán cho đơn khác' }
-  if (unit.status !== 'in_stock') return { ok: false, error: 'Tem này đã bị hủy, không xuất kho được' }
+  if (unit.status !== 'in_stock') return { ok: false, error: 'Tem này đã bị hủy, không đóng gói được' }
   if ((scans || []).some((s) => s.code === unit.code)) return { ok: false, error: 'Tem này đã quét cho đơn này rồi' }
   const matches = []
   ;(orderItems || []).forEach((item, index) => {
@@ -35,4 +35,4 @@ export const checkScan = ({ unit, orderItems, scans, hasColors }) => {
 }
 
 export const EXPORT_STATUSES = ['confirmed', 'packing']
-export const EXPORT_GATED_STATUSES = ['waiting_pickup', 'picked_up', 'in_transit', 'out_for_delivery', 'delivered']
+export const EXPORT_GATED_STATUSES = ['packing', 'waiting_pickup', 'picked_up', 'in_transit', 'out_for_delivery', 'delivered']

@@ -7,10 +7,10 @@ const countSessionSchema = mongoose.Schema(
     note:      { type: String, default: '' },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     closedAt:  { type: Date },
-    // Tem quét ra nhưng không còn trong kho (đã bán hoặc đã hủy), không tính vào số đã quét
+    // Tem quét ra nhưng không còn trong kho; kind staged = đơn chờ shipper lấy, abnormal = bất thường
     anomalies: { type: [{
       code: String, status: String, productName: String, color: String,
-      orderCode: String, reason: String, scannedAt: { type: Date, default: Date.now },
+      orderCode: String, reason: String, kind: { type: String, default: 'abnormal' }, scannedAt: { type: Date, default: Date.now },
     }], default: [] },
     // Kết quả chốt phiên, lưu lại để xem về sau
     result:    { type: mongoose.Schema.Types.Mixed },

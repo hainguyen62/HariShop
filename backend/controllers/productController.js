@@ -3,6 +3,7 @@ import Product from '../models/productModel.js'
 import Order from '../models/orderModel.js'
 import { callAI } from '../utils/aiProvider.js'
 import { dateRange, numRange, escapeRegex } from '../utils/listQuery.js'
+import { buildKeywordFilter } from '../utils/productSearch.js'
 import { nextProductCode } from '../utils/orderCode.js'
 import { attachFlashSale, attachFlashSaleToList, normalizeFlashSale } from '../utils/flashSale.js'
 
@@ -15,9 +16,7 @@ const normalizeImagePath = (value, fallback = '') => {
   return `/uploads/${value}`
 }
 
-// @desc    Fetch all products (search + filter + sort + paginate)
-// @route   GET /api/products
-// @access  Public
+// GET /api/products: tìm kiếm, lọc, sắp xếp, phân trang
 const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
@@ -44,19 +43,13 @@ const getProducts = asyncHandler(async (req, res) => {
     throw new Error('Invalid price filter values')
   }
 
-  const keyword = req.query.keyword
-    ? { $or: [
-        { name: { $regex: req.query.keyword, $options: 'i' } },
-        { productCode: { $regex: escapeRegex(req.query.keyword), $options: 'i' } },
-      ] }
-    : {}
+  const keyword = buildKeywordFilter(req.query.keyword)
 
   const brandFilter = req.query.brand
     ? { brand: { $regex: `^${req.query.brand}$`, $options: 'i' } }
     : {}
 
-  // MỚI: lọc theo danh mục, dùng cho việc điều hướng từ gợi ý tìm kiếm
-  // (autocomplete) khi khách bấm vào 1 danh mục.
+  // Lọc theo danh mục khi khách bấm vào gợi ý tìm kiếm
   const categoryFilter = req.query.category
     ? { category: { $regex: `^${req.query.category}$`, $options: 'i' } }
     : {}
@@ -320,9 +313,7 @@ DANH SÁCH ĐÁNH GIÁ (kèm số sao, đánh số thứ tự):
 ${reviewsText}
 `.trim()
 
-// @desc    Lấy bản tóm tắt đánh giá do AI tạo (có cache, chỉ tạo lại khi có review mới)
-// @route   GET /api/products/:id/review-summary
-// @access  Public
+// GET /api/products/:id/review-summary: tóm tắt đánh giá bằng AI, chỉ tạo lại khi có review mới
 const getReviewSummary = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id).select('name reviews aiReviewSummary')
   if (!product) {
@@ -374,8 +365,7 @@ const getReviewSummary = asyncHandler(async (req, res) => {
     return JSON.parse(jsonMatch ? jsonMatch[0] : text) // ném lỗi nếu không parse được
   }
 
-  // Tóm tắt đánh giá là tác vụ "nặng" nhất (đầu ra dài hơn B3), nên cho phép thử lại
-  // nhiều lần hơn (tối đa 3 lần) trước khi báo lỗi cho khách.
+  // Cho thử lại tối đa 3 lần trước khi báo lỗi
   const MAX_ATTEMPTS = 3
   let parsed
   let lastErr
@@ -471,8 +461,7 @@ const createProduct = asyncHandler(async (req, res) => {
     category:    category    || 'Sample category',
     numReviews:  0,
     description: description || 'Sample description',
-    // Nếu có colors thì lưu vào, countInStock sẽ tự tính bởi pre('save')
-    // Nếu không có colors thì dùng countInStock truyền lên
+    // Có màu thì tồn kho tự tính theo màu khi lưu
     colors:       Array.isArray(colors) && colors.length > 0 ? colors : [],
     countInStock: Array.isArray(colors) && colors.length > 0 ? 0 : (countInStock || 0),
     specs: normalizeSpecs(specs),
@@ -508,8 +497,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.brand       = brand
     product.category    = category
 
-    // Cập nhật colors: nếu frontend gửi mảng colors thì dùng
-    // countInStock sẽ tự tính lại bởi pre('save')
+    // Có gửi màu thì tồn kho tự tính lại khi lưu
     if (Array.isArray(colors) && colors.length > 0) {
       product.colors = colors
       // countInStock sẽ được tính tự động bởi pre('save')
@@ -603,9 +591,7 @@ const deleteProductReview = asyncHandler(async (req, res) => {
   res.json({ message: 'Đã xóa đánh giá' })
 })
 
-// @desc    Danh sách hãng và danh mục đang có, dùng cho ô lọc ở trang admin
-// @route   GET /api/products/filter-options
-// @access  Public
+// GET /api/products/filter-options: hãng và danh mục cho ô lọc ở trang admin
 const getFilterOptions = asyncHandler(async (req, res) => {
   const [brands, categories] = await Promise.all([
     Product.distinct('brand'),

@@ -13,6 +13,7 @@ import {
 } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 import { addToCart } from '../actions/cartActions'
+import { unitPriceOf } from '../utils/colorPricing'
 import { openLoginPrompt } from '../actions/loginPromptActions'
 import RelatedProducts from '../components/RelatedProducts'
 import ReviewSummary from '../components/ReviewSummary'
@@ -72,10 +73,10 @@ const ProductScreen = ({ history, match }) => {
     setTimeout(() => setSuccessAddToCart(false), 3000)
   }
 
-  // MỚI: ảnh chính sẽ đổi theo màu đang chọn — nếu màu đó có ảnh riêng thì
-  // hiển thị ảnh đó, không thì dùng ảnh mặc định của sản phẩm.
+  // Ảnh đổi theo màu đang chọn, màu chưa có ảnh dùng ảnh chính
   const selectedColorImage = product?.colors?.find((c) => c.name === color)?.image
   const displayImage = selectedColorImage || product?.image
+  const shownPrice = unitPriceOf(product, color)
 
   const buyNowHandler = () => {
     if (!userInfo) {
@@ -193,10 +194,10 @@ const ProductScreen = ({ history, match }) => {
                   {product.isFlashSaleActive && !flashSaleExpired ? (
                     <div>
                       <span style={{ color: '#ff6b6b', fontSize: '1.4rem', fontWeight: '700', display: 'block', wordBreak: 'break-all' }}>
-                        {product.salePrice?.toLocaleString('vi-VN')}đ
+                        {shownPrice.sale?.toLocaleString('vi-VN')}đ
                       </span>
                       <span style={{ color: '#6b7085', fontSize: '1rem', textDecoration: 'line-through', display: 'block', marginTop: '2px' }}>
-                        {product.price?.toLocaleString('vi-VN')}đ
+                        {shownPrice.base?.toLocaleString('vi-VN')}đ
                       </span>
                       <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                         <span style={{ background: '#ff6b6b', color: '#fff', fontWeight: '700', fontSize: '12px', padding: '3px 10px', borderRadius: '14px' }}>
@@ -209,7 +210,7 @@ const ProductScreen = ({ history, match }) => {
                     <span 
                       style={{ color: '#33FFCC', fontSize: '1.4rem', fontWeight: '700', wordBreak: 'break-all' }}
                     >
-                      {product.price?.toLocaleString('vi-VN')}đ
+                      {shownPrice.base?.toLocaleString('vi-VN')}đ
                     </span>
                   )}
                 </div>
@@ -241,10 +242,10 @@ const ProductScreen = ({ history, match }) => {
                   {product.isFlashSaleActive && !flashSaleExpired ? (
                     <>
                       <span style={{ color: '#ff6b6b', fontSize: '1.1rem', fontWeight: '700', marginTop: '4px', display: 'block', wordBreak: 'break-all' }}>
-                        {product.salePrice?.toLocaleString('vi-VN')}đ
+                        {shownPrice.sale?.toLocaleString('vi-VN')}đ
                       </span>
                       <span style={{ color: '#6b7085', fontSize: '0.85rem', textDecoration: 'line-through', display: 'block', marginTop: '2px', fontWeight: '500' }}>
-                        {product.price?.toLocaleString('vi-VN')}đ
+                        {shownPrice.base?.toLocaleString('vi-VN')}đ
                       </span>
                       <div style={{ marginTop: '6px' }}>
                         <CountdownTimer endsAt={product.flashSaleEndsAt} onExpire={() => setFlashSaleExpired(true)} />
@@ -254,7 +255,7 @@ const ProductScreen = ({ history, match }) => {
                     <span 
                       style={{ color: '#33FFCC', fontSize: '1.1rem', fontWeight: '700', marginTop: '4px', display: 'block', wordBreak: 'break-all' }}
                     >
-                      {product.price?.toLocaleString('vi-VN')}đ
+                      {shownPrice.base?.toLocaleString('vi-VN')}đ
                     </span>
                   )}
                 </div>

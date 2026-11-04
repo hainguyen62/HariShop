@@ -209,14 +209,7 @@ async function createGHTKOrder(order, warehouseAddress) {
   }
 }
 
-// ── MỚI: trừ tồn kho AN TOÀN dưới tải đồng thời — dùng findOneAndUpdate với
-// điều kiện "đủ hàng" ngay trong câu lệnh (atomic ở tầng MongoDB), thay vì
-// đọc → sửa trong bộ nhớ → save() như trước (2 request có thể cùng đọc thấy
-// "còn hàng" rồi cùng trừ, dẫn tới bán vượt tồn kho khi nhiều người đặt cùng
-// lúc một sản phẩm sắp hết). Chạy bên trong `session` của 1 transaction —
-// nếu BẤT KỲ sản phẩm nào không đủ hàng, hàm throw để caller abort toàn bộ
-// transaction (tất cả hoặc không gì cả, kể cả khi đơn có nhiều sản phẩm và
-// 1 trong số đó hết hàng giữa chừng).
+// Trừ tồn kho nguyên tử trong transaction, thiếu hàng ở bất kỳ sản phẩm nào thì hủy cả đơn
 async function deductStockAtomic(orderItems, productMap, session) {
   for (const item of orderItems) {
     const product = productMap[item.product?.toString()]
@@ -230,7 +223,7 @@ async function deductStockAtomic(orderItems, productMap, session) {
           _id: item.product,
           colors: { $elemMatch: { name: item.color, countInStock: { $gte: item.qty } } },
         },
-        { $inc: { 'colors.$.countInStock': -item.qty } },
+        { $inc: { 'colors.$.countInStock': -item.qty, countInStock: -item.qty } },
         { session, new: true }
       )
     } else {
@@ -275,7 +268,7 @@ const pushStatusHistory = (order, status, note = '', changedBy = null) => {
 // Tạo vận đơn GHN/GHTK theo hãng khách chọn; không tạo lại nếu đã có mã vận đơn
 async function dispatchShipment(order) {
   if (!isReadyToShip(order)) return false
-  // Đơn mới chỉ giao cho đơn vị vận chuyển sau khi đã quét tem xuất kho
+  // Đơn mới chỉ giao cho đơn vị vận chuyển sau khi đã quét tem đóng gói
   if (order.exportRequired && !order.exportedAt) return false
   const provider = order.shippingProvider
   if (provider !== 'ghn' && provider !== 'ghtk') return false
@@ -325,7 +318,7 @@ const assertPaymentSettled = (order, res, status) => {
 const assertExported = (order, res, status) => {
   if (order.exportRequired && !order.exportedAt && EXPORT_GATED_STATUSES.includes(status)) {
     res.status(400)
-    throw new Error('Đơn chưa xuất kho. Hãy quét tem các máy và hoàn tất xuất kho trước khi chuyển sang bước giao hàng.')
+    throw new Error('Đơn chưa đóng gói. Hãy quét tem các máy và hoàn tất đóng gói trước khi chuyển sang bước giao hàng.')
   }
 }
 
@@ -334,7 +327,7 @@ const assertExported = (order, res, status) => {
 const ORDER_STATUS_LABELS_VI = {
   pending:          'Đơn hàng đã được đặt thành công',
   confirmed:        'Đơn hàng đã được xác nhận',
-  packing:          'Đơn hàng đang được đóng gói',
+  packing:          'Đơn hàng đã được đóng gói, đang chờ đơn vị vận chuyển lấy hàng',
   waiting_pickup:   'Đơn hàng đang chờ đơn vị vận chuyển lấy hàng',
   picked_up:        'Đơn vị vận chuyển đã lấy hàng',
   in_transit:       'Đơn hàng đang được vận chuyển',
@@ -799,10 +792,10 @@ const exportProgress = async (order) => {
   const paymentOk = isReadyToShip(order)
   const statusOk = EXPORT_STATUSES.includes(order.status)
   let blocked = ''
-  if (!order.exportRequired) blocked = 'Đơn này tạo trước khi có bước xuất kho nên không cần quét tem.'
+  if (!order.exportRequired) blocked = 'Đơn này tạo trước khi có bước đóng gói bằng quét tem nên không cần quét tem.'
   else if (order.isCancelled || order.status === 'cancelled') blocked = 'Đơn đã hủy.'
   else if (!exported && !paymentOk) blocked = 'Đơn online chưa đủ tiền, chờ khách chuyển đủ hoặc chuyển phần còn lại sang COD.'
-  else if (!exported && !statusOk) blocked = 'Cần xác nhận đơn trước khi xuất kho.'
+  else if (!exported && !statusOk) blocked = 'Cần xác nhận đơn trước khi đóng gói.'
   return {
     exportRequired: Boolean(order.exportRequired),
     exported,
@@ -818,14 +811,14 @@ const exportProgress = async (order) => {
 }
 
 const exportPrecondition = (order, res) => {
-  if (!order.exportRequired) { res.status(400); throw new Error('Đơn này tạo trước khi có bước xuất kho nên không cần quét tem') }
-  if (order.exportedAt) { res.status(400); throw new Error('Đơn đã xuất kho') }
+  if (!order.exportRequired) { res.status(400); throw new Error('Đơn này tạo trước khi có bước đóng gói bằng quét tem nên không cần quét tem') }
+  if (order.exportedAt) { res.status(400); throw new Error('Đơn đã đóng gói') }
   if (order.isCancelled || order.status === 'cancelled') { res.status(400); throw new Error('Đơn đã hủy') }
-  if (!isReadyToShip(order)) { res.status(400); throw new Error('Đơn online chưa đủ tiền, chưa thể xuất kho') }
-  if (!EXPORT_STATUSES.includes(order.status)) { res.status(400); throw new Error('Cần xác nhận đơn trước khi xuất kho') }
+  if (!isReadyToShip(order)) { res.status(400); throw new Error('Đơn online chưa đủ tiền, chưa thể đóng gói') }
+  if (!EXPORT_STATUSES.includes(order.status)) { res.status(400); throw new Error('Cần xác nhận đơn trước khi đóng gói') }
 }
 
-// @desc    Tiến độ xuất kho của đơn
+// @desc    Tiến độ đóng gói của đơn
 // @route   GET /api/orders/:id/export
 // @access  Private/Admin
 const getOrderExport = asyncHandler(async (req, res) => {
@@ -869,13 +862,13 @@ const scanOrderExport = asyncHandler(async (req, res) => {
 const removeOrderExportScan = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
   if (!order) { res.status(404); throw new Error('Không tìm thấy đơn hàng') }
-  if (order.exportedAt) { res.status(400); throw new Error('Đơn đã xuất kho, không bỏ tem được') }
+  if (order.exportedAt) { res.status(400); throw new Error('Đơn đã đóng gói, không bỏ tem được') }
   await Order.updateOne({ _id: order._id }, { $pull: { exportScans: { code: String(req.params.code).toUpperCase() } } })
   const fresh = await Order.findById(order._id)
   res.json(await exportProgress(fresh))
 })
 
-// @desc    Hoàn tất xuất kho: các tem đã quét chuyển sang đã bán, rồi mới tạo vận đơn
+// @desc    Hoàn tất đóng gói: tem đã quét chuyển sang đã bán, đơn sang "Đã đóng gói", rồi tạo vận đơn
 // @route   PUT /api/orders/:id/export/complete
 // @access  Private/Admin
 const completeOrderExport = asyncHandler(async (req, res) => {
@@ -916,11 +909,11 @@ const completeOrderExport = asyncHandler(async (req, res) => {
   order.exportedBy = req.user?._id
   order.exportManualQty = progress.manualTotal
   const manualNote = progress.manualTotal > 0 ? `, ${progress.manualTotal} máy xuất thủ công` : ''
-  pushStatusHistory(order, 'waiting_pickup', `Đã xuất kho ${codes.length} máy quét tem${manualNote}, chờ đơn vị vận chuyển lấy hàng`, req.user?._id)
+  pushStatusHistory(order, 'packing', `Đã đóng gói ${codes.length} máy quét tem${manualNote}, chờ đơn vị vận chuyển lấy hàng`, req.user?._id)
   await order.save()
 
   await dispatchShipment(order)
-  await notifyCustomerOrderStatus(order, 'waiting_pickup')
+  await notifyCustomerOrderStatus(order, 'packing')
 
   res.json(await exportProgress(order))
 })
@@ -1302,7 +1295,8 @@ async function syncOrderStatusFromGHTK(order) {
 
   const mappedStatus = GHTK_TO_ORDER_STATUS[currentStatusCode]
   let statusChanged = false
-  if (mappedStatus && mappedStatus !== order.status && !order.isCancelled) {
+  const regress = order.exportedAt && (mappedStatus === 'pending' || mappedStatus === 'confirmed')
+  if (mappedStatus && !regress && mappedStatus !== order.status && !order.isCancelled) {
     pushStatusHistory(order, mappedStatus, `Tự động cập nhật từ GHTK (mã ${currentStatusCode})`)
     if (mappedStatus === 'cancelled') {
       order.isCancelled = true

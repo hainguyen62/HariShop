@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import colors from 'colors'
 import morgan from 'morgan'
 import helmet from 'helmet'
+import compression from 'compression'
 
 // ES module __dirname fix
 const __filename = fileURLToPath(import.meta.url)
@@ -20,9 +21,6 @@ import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import orderAdminRoutes from './routes/orderAdminRoutes.js'
-// (Đã gỡ import sepayWebhookRoutes — route đó dùng sai định dạng payload và
-// sai chuẩn chữ ký so với SePay thật. Xác thực HMAC nay được làm đúng ngay
-// trong route /api/orders/sepay-webhook, xem orderController.js.)
 import voucherRoutes from './routes/voucherRoutes.js'
 
 import uploadRoutes from './routes/uploadRoutes.js'
@@ -41,6 +39,7 @@ import cartRoutes from './routes/cartRoutes.js'
 import chatRoutes from './routes/chatRoutes.js'
 import { initSocket } from './socket.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
+import { createRateLimiter } from './middleware/rateLimitMiddleware.js'
 import passport, { configureGoogleStrategy } from './config/passport.js' // B11: Google OAuth
 import { configureCloudinary } from './config/cloudinary.js' // B10: Cloudinary
 // ✅ XÓA import transporter ở đây
@@ -178,8 +177,7 @@ async function ensureDefaultWarehouseSettings() {
   )
 }
 
-// B11: Khởi tạo GoogleStrategy TẠI ĐÂY (sau dotenv.config() ở trên) để
-// process.env.GOOGLE_CLIENT_ID/SECRET chắc chắn đã có giá trị.
+// Khởi tạo Google OAuth sau khi dotenv đã nạp biến môi trường
 configureGoogleStrategy()
 
 // B10: Tương tự, cấu hình Cloudinary SAU dotenv.config() (không phải lúc import)
@@ -190,6 +188,18 @@ const app = express()
 app.set('trust proxy', 1)
 
 app.use(helmet({ contentSecurityPolicy: false }))
+app.use(compression())
+
+const MINUTE = 60 * 1000
+const limitPost = (max, windowMs) => createRateLimiter({ windowMs, max, methods: ['POST'] })
+app.use('/api', createRateLimiter({ windowMs: 5 * MINUTE, max: 600, skip: (req) => req.path.includes('webhook') }))
+app.use('/api/users/login', limitPost(30, 15 * MINUTE))
+app.use('/api/users/forgotpassword', limitPost(10, 60 * MINUTE))
+app.use('/api/users/verify-otp', limitPost(20, 15 * MINUTE))
+app.use('/api/users/resend-otp', limitPost(10, 15 * MINUTE))
+app.post('/api/users', limitPost(10, 60 * MINUTE))
+app.post('/api/orders', limitPost(30, 10 * MINUTE))
+app.post('/api/products/:id/reviews', limitPost(20, 10 * MINUTE))
 
 app.use(express.json({
   verify: (req, res, buf) => {
@@ -284,8 +294,7 @@ async function start() {
   await connectDB()
   await ensureDefaultWarehouseSettings()
 
-  //dùng http.createServer thay vì app.listen trực tiếp, để gắn được
-  // Socket.io lên CÙNG server (cùng port, không cần mở port riêng).
+  // Socket.io dùng chung server và port với API
   const httpServer = http.createServer(app)
   initSocket(httpServer)
 
@@ -293,29 +302,18 @@ async function start() {
     logger.info(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
   })
 
-  //Tự động đồng bộ trạng thái đơn hàng từ GHN theo định kỳ (kết hợp
-  // với luồng thủ công — khách/admin vẫn bấm "Theo dõi vận chuyển" được như
-  // cũ, đây chỉ là thêm 1 lớp tự động chạy nền, không thay thế).
-  // Mặc định 10 phút/lần — đủ nhanh để cập nhật kịp thời, vừa tránh gọi GHN
-  // quá dồn dập (xem thêm ghi chú rate limit trong autoSyncPendingGHNOrders).
+  // Đồng bộ trạng thái vận đơn GHN và GHTK mỗi 10 phút
   const AUTO_SYNC_INTERVAL_MS = 10 * 60 * 1000 // 10 phút
 
-  // Chờ 30 giây sau khi server khởi động rồi mới chạy lần đầu (tránh chạy
-  // ngay lúc DB/kết nối vừa mới lên, dễ gây lỗi thoáng qua).
+  // Chờ 30 giây sau khi khởi động rồi mới chạy lần đầu
   setTimeout(() => {
     autoSyncPendingGHNOrders().catch((e) =>
       logger.error(`[Auto-sync GHN] Lỗi lần chạy đầu: ${e.message}`)
     )
-    //tương tự GHN, nhưng cho đơn giao qua GHTK (ghtkLabelCode). Xem
-    // cảnh báo về mapping trạng thái GHTK chưa verify với đơn thật trong
-    // ghi chú của GHTK_TO_ORDER_STATUS (orderController.js).
     autoSyncPendingGHTKOrders().catch((e) =>
       logger.error(`[Auto-sync GHTK] Lỗi lần chạy đầu: ${e.message}`)
     )
-    // MỚI: hàm này đã được viết đúng từ trước (hủy đơn online quá 24h chưa
-    // thanh toán, trừ/hoàn kho, hoàn voucher) nhưng chưa từng được gọi ở đâu —
-    // badge đếm ngược phía frontend vẫn hiện "quá hạn" đúng giờ, nhưng đơn
-    // thực tế không bao giờ được hủy trong database vì thiếu dòng gọi này.
+    // Hủy đơn online quá 24 giờ chưa thanh toán
     autoCancelUnpaidOnlineOrders().catch((e) =>
       logger.error(`[Auto-cancel] Lỗi lần chạy đầu: ${e.message}`)
     )

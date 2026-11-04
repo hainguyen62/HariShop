@@ -35,6 +35,7 @@ const ProductAddScreen = ({ history }) => {
   const [colorName, setColorName] = useState('')
   const [colorHex, setColorHex] = useState('#888888')
   const [colorStock, setColorStock] = useState(0)
+  const [colorPrice, setColorPrice] = useState('')
   const [colorError, setColorError] = useState('')
   // MỚI: ảnh riêng cho màu đang chuẩn bị thêm + trạng thái upload theo từng dòng màu đã thêm
   const [colorImage, setColorImage] = useState('')
@@ -110,6 +111,7 @@ const ProductAddScreen = ({ history }) => {
 
   // Tổng stock từ tất cả màu
   const totalStock = colors.reduce((sum, c) => sum + Number(c.countInStock), 0)
+  const lowestColorPrice = colors.length > 0 ? Math.min(...colors.map((c) => Number(c.price) || Number(price) || 0)) : 0
 
   // MỚI: upload ảnh riêng cho màu đang chuẩn bị thêm (form "+ Thêm màu mới")
   const uploadColorImageHandler = async (e) => {
@@ -168,9 +170,11 @@ const ProductAddScreen = ({ history }) => {
         name: colorName.trim(),
         hexCode: colorHex,
         countInStock: Number(colorStock),
-        image: colorImage, // MỚI: ảnh riêng theo màu (có thể để trống)
+        image: colorImage,
+        price: Number(colorPrice) > 0 ? Number(colorPrice) : Number(price) || 0,
       },
     ])
+    setColorPrice('')
     setColorName('')
     setColorHex('#888888')
     setColorStock(0)
@@ -182,6 +186,10 @@ const ProductAddScreen = ({ history }) => {
   }
 
   // Cho phép sửa stock của màu đã thêm trực tiếp trong danh sách
+  const updateColorPrice = (index, newPrice) => {
+    setColors(colors.map((c, i) => (i === index ? { ...c, price: Number(newPrice) } : c)))
+  }
+
   const updateColorStock = (index, newStock) => {
     setColors(
       colors.map((c, i) =>
@@ -233,7 +241,7 @@ const ProductAddScreen = ({ history }) => {
     dispatch(
       createProduct({
         name,
-        price,
+        price: colors.length > 0 ? lowestColorPrice : price,
         image,
         bannerImage,
         brand,
@@ -277,12 +285,20 @@ const ProductAddScreen = ({ history }) => {
           </Form.Group>
 
           <Form.Group controlId='price'>
-            <Form.Label>Giá</Form.Label>
+            <Form.Label>
+              Giá
+              {colors.length > 0 && (
+                <span style={{ marginLeft: 10, fontSize: 12, color: '#33FFCC', fontWeight: 'normal' }}>
+                  Tự lấy giá thấp nhất trong các màu, sửa giá ở từng màu bên dưới
+                </span>
+              )}
+            </Form.Label>
             <Form.Control
               type='number'
               placeholder='Enter price'
-              value={price}
+              value={colors.length > 0 ? lowestColorPrice : price}
               onChange={(e) => setPrice(e.target.value)}
+              disabled={colors.length > 0}
               style={inputStyle}
             />
           </Form.Group>
@@ -527,6 +543,14 @@ const ProductAddScreen = ({ history }) => {
 
                     {/* Input sửa stock trực tiếp */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ color: '#aaa', fontSize: 12 }}>Giá:</span>
+                      <Form.Control
+                      type='number'
+                      min={0}
+                      value={c.price}
+                      onChange={(e) => updateColorPrice(i, e.target.value)}
+                      style={{ ...inputStyle, width: 120, padding: '3px 6px', fontSize: 13 }}
+                      />
                       <span style={{ color: '#aaa', fontSize: 12 }}>Còn:</span>
                       <Form.Control
                         type='number'
@@ -600,6 +624,18 @@ const ProductAddScreen = ({ history }) => {
                       borderRadius: 4,
                       cursor: 'pointer',
                     }}
+                  />
+                </div>
+
+                <div style={{ flex: 1, minWidth: 110 }}>
+                  <div style={{ fontSize: 11, color: '#aaa', marginBottom: 3 }}>Giá màu (để trống = giá chung)</div>
+                  <Form.Control
+                    type='number'
+                    min={0}
+                    placeholder={String(price || 0)}
+                    value={colorPrice}
+                    onChange={(e) => setColorPrice(e.target.value)}
+                    style={{ ...inputStyle, fontSize: 13 }}
                   />
                 </div>
 

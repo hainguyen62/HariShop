@@ -94,7 +94,10 @@ const CountSessionScreen = ({ match }) => {
         setFeedback({ type: 'ok', text: `${r.productName}${r.color ? ` (${r.color})` : ''}: đã quét ${r.counted}, hệ thống ${r.systemQty}`, code: r.code })
         await load()
       } catch (e) {
-        if (e.abnormal) {
+        if (e.staged) {
+          setFeedback({ type: 'dup', text: e.message })
+          await load()
+        } else if (e.abnormal) {
           setFeedback({ type: 'bad', text: `${e.message}. Không tính vào số đã quét.` })
           await load()
         } else if (e.duplicate) {
@@ -143,6 +146,9 @@ const CountSessionScreen = ({ match }) => {
 
   if (loading) return <Loader />
   const open = data && data.status === 'open'
+  const anomalies = (data && data.anomalies) || []
+  const staged = anomalies.filter((x) => x.kind === 'staged')
+  const abnormal = anomalies.filter((x) => x.kind !== 'staged')
   const rows = data ? data.rows : []
 
   return (
@@ -199,10 +205,22 @@ const CountSessionScreen = ({ match }) => {
             )}
           </div>
 
-          {data.anomalies && data.anomalies.length > 0 && (
+          {staged.length > 0 && (
+            <div style={{ ...cardStyle, borderColor: 'rgba(255,209,102,0.5)' }}>
+              <h6 style={{ color: '#ffd166', marginBottom: 12 }}>Máy đã đóng gói, chờ shipper lấy ({staged.length})</h6>
+              {staged.map((a) => (
+                <div key={a.code} style={{ padding: '6px 0', color: '#eef0f7', fontSize: 13, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div>{a.productName}{a.color ? ` (${a.color})` : ''} <span style={{ color: '#8a8fa3' }}>{a.code}</span></div>
+                  <div style={{ color: '#ffd166' }}>Đơn {a.orderCode}, vẫn ở cửa hàng, không tính vào số đã quét</div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {abnormal.length > 0 && (
             <div style={{ ...cardStyle, borderColor: 'rgba(255,107,107,0.5)' }}>
-              <h6 style={{ color: '#ff6b6b', marginBottom: 12 }}>Tem bất thường ({data.anomalies.length})</h6>
-              {data.anomalies.map((a) => (
+              <h6 style={{ color: '#ff6b6b', marginBottom: 12 }}>Tem bất thường ({abnormal.length})</h6>
+              {abnormal.map((a) => (
                 <div key={a.code} style={{ padding: '6px 0', color: '#eef0f7', fontSize: 13, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                   <div>{a.productName}{a.color ? ` (${a.color})` : ''} <span style={{ color: '#8a8fa3' }}>{a.code}</span></div>
                   <div style={{ color: '#ff9b9b' }}>{a.reason}</div>

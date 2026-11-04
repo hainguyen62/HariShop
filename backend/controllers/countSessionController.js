@@ -119,16 +119,20 @@ const scanUnit = asyncHandler(async (req, res) => {
     throw new Error('Sản phẩm của tem này không còn tồn tại')
   }
 
-  const orderCode = unit.status === 'sold'
-    ? (await Order.findOne({ unitCodes: code }).select('orderCode').lean())?.orderCode || ''
-    : ''
-  const issue = unitScanIssue(unit, orderCode)
+  const order = unit.status === 'sold'
+    ? await Order.findOne({ unitCodes: code }).select('orderCode status').lean()
+    : null
+  const orderCode = order?.orderCode || ''
+  const issue = unitScanIssue(unit, order)
   if (issue) {
     await CountSession.updateOne(
       { _id: session._id, 'anomalies.code': { $ne: code } },
-      { $push: { anomalies: { code, status: unit.status, productName: product.name, color: unit.color, orderCode, reason: issue } } }
+      { $push: { anomalies: { code, status: unit.status, productName: product.name, color: unit.color, orderCode, reason: issue.reason, kind: issue.kind } } }
     )
-    return res.status(409).json({ message: issue, abnormal: true, code, productName: product.name, color: unit.color, status: unit.status, orderCode })
+    return res.status(409).json({
+      message: issue.reason, abnormal: issue.kind === 'abnormal', staged: issue.kind === 'staged',
+      code, productName: product.name, color: unit.color, status: unit.status, orderCode,
+    })
   }
 
   try {

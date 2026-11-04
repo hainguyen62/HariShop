@@ -15,15 +15,14 @@ const formatVnd = (value) => {
 const Product = ({ product }) => {
   const dispatch = useDispatch()
   const compareItems = useSelector((state) => state.compare.compareItems)
-  // MỚI (B8): khi đếm ngược về 0 ngay trên màn hình, ẩn ribbon/giá giảm NGAY LẬP TỨC
-  // (không cần đợi tải lại trang mới cập nhật) — tự quay về hiển thị giá gốc.
+  // Hết đếm ngược thì quay về giá gốc ngay, không cần tải lại trang
   const [expired, setExpired] = useState(false)
 
   if (!product) return null
 
   const {
     _id, name, image, price, rating, numReviews, countInStock,
-    isFlashSaleActive, discountPercent, salePrice, flashSaleEndsAt,
+    isFlashSaleActive, discountPercent, salePrice, flashSaleEndsAt, hasColorPrices,
   } = product
   const flashSaleActive = isFlashSaleActive && !expired
   const isInCompare = compareItems.some((x) => x._id === _id)
@@ -153,7 +152,7 @@ const Product = ({ product }) => {
           flashSaleActive ? (
             <div style={{ marginBottom: '4px' }}>
               <h4 style={{ color: '#ff6b6b', margin: 0, fontWeight: '800', fontSize: '1.25rem', lineHeight: 1.2 }}>
-                {formatVnd(salePrice)}đ
+                {hasColorPrices ? 'Từ ' : ''}{formatVnd(salePrice)}đ
               </h4>
               <span style={{
                 color: '#6b7085', fontSize: '13px', textDecoration: 'line-through', display: 'block', marginTop: '2px',
@@ -168,7 +167,7 @@ const Product = ({ product }) => {
               fontWeight: '800',
               fontSize: '1.25rem',
             }}>
-              {formatVnd(price)}đ
+              {hasColorPrices ? 'Từ ' : ''}{formatVnd(price)}đ
             </h4>
           )
         ) : null}

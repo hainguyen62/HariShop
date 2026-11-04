@@ -17,9 +17,7 @@ const orderSchema = mongoose.Schema(
         weight:  { type: Number, default: 0 },
         // ── MỚI: lưu màu sắc khách đã chọn ──────────────────────
         color:   { type: String, default: '' },
-        // MỚI: snapshot số tháng bảo hành tại thời điểm mua (không lấy lại
-        // từ Product sau này — tránh trường hợp Admin sửa số tháng bảo
-        // hành của sản phẩm rồi ảnh hưởng ngược tới các đơn cũ đã bán).
+        // Số tháng bảo hành chốt tại lúc mua
         warrantyMonths: { type: Number, default: 12 },
         product: {
           type: mongoose.Schema.Types.ObjectId,
@@ -74,22 +72,15 @@ const orderSchema = mongoose.Schema(
 
     isPaid:    { type: Boolean, required: true, default: false },
     paidAt:    { type: Date },
-    // MỚI: hỗ trợ trường hợp khách chuyển nhiều lần (VD lần đầu thiếu tiền,
-    // lần sau chuyển bù phần còn lại) — cộng dồn để so với tổng đơn thay vì
-    // chỉ so từng lần chuyển riêng lẻ.
+    // Tổng tiền khách đã chuyển qua nhiều lần
     paymentReceivedAmount: { type: Number, default: 0 },
-    // Chống đếm trùng nếu SePay gửi lại (retry) cùng 1 giao dịch — lưu theo
-    // đúng khuyến nghị chính thức của SePay: dùng trường `id` để chống trùng.
+    // Mã giao dịch SePay đã ghi nhận, chống đếm trùng khi SePay gửi lại
     sepayTransactionIds: { type: [String], default: [] },
-    // MỚI: theo dõi việc hoàn tiền thừa (khách chuyển nhiều hơn giá trị đơn)
-    // — quy trình HOÀN THỦ CÔNG có cấu trúc: hệ thống chỉ tự phát hiện +
-    // đánh dấu "pending", admin tự chuyển khoản thật bên ngoài rồi bấm xác
-    // nhận "completed" trong Admin (không có API chuyển tiền tự động, SePay
-    // chỉ đọc được biến động số dư, không có quyền chuyển tiền đi).
-    // Admin chốt thu phần còn thiếu khi nhận hàng (COD phần còn lại) cho đơn online đã chuyển một phần
+    // Admin chốt thu phần còn thiếu khi nhận hàng cho đơn online đã chuyển một phần
     partialCod:           { type: Boolean, default: false },
     codRemainderAmount:   { type: Number, default: 0 },
     partialCodAt:         { type: Date },
+    // Hoàn tiền thừa: hệ thống đánh dấu pending, admin chuyển khoản tay rồi xác nhận completed
     overpaidAmount:       { type: Number, default: 0 },
     overpaidRefundStatus: { type: String, enum: ['none', 'pending', 'completed'], default: 'none' },
     overpaidRefundedAt:   { type: Date },
@@ -97,9 +88,7 @@ const orderSchema = mongoose.Schema(
 
     deliveryMethod:  { type: String, default: 'nhanh' },
     voucherCode:     { type: String, default: '' },
-    // MỚI: lưu đầy đủ thông tin voucher tại thời điểm đặt hàng (không chỉ
-    // code+discountAmount như trước) — để lịch sử đơn hàng không đổi dù
-    // sau này voucher gốc bị admin sửa/xoá.
+    // Voucher chốt tại lúc đặt, không đổi khi voucher gốc bị sửa hoặc xóa
     voucherId:       { type: mongoose.Schema.Types.ObjectId, ref: 'Voucher' },
     voucherName:     { type: String, default: '' },
     discountType:    { type: String, default: '' }, // 'percent' | 'fixed' | 'freeship'
@@ -116,13 +105,9 @@ const orderSchema = mongoose.Schema(
     isCancelled:  { type: Boolean, default: false },
     cancelledAt:  { type: Date },
     cancelReason: { type: String, default: '' },
-    // MỚI: chống hoàn kho 2 lần cho cùng 1 đơn (có nhiều đường dẫn tới
-    // trạng thái 'cancelled'/'returned': approveCancelOrder VÀ
-    // updateOrderStatus — nếu không có cờ này, cả 2 cùng chạy trên
-    // 1 đơn sẽ cộng dư tồn kho ảo).
+    // Chống hoàn kho hai lần cho cùng một đơn
     stockRestored: { type: Boolean, default: false },
-    // MỚI: chống hoàn usedCount/usedBy của voucher 2 lần — cùng lý do
-    // với stockRestored ở trên (đơn có thể bị hủy qua nhiều đường dẫn).
+    // Chống hoàn voucher hai lần
     voucherReverted: { type: Boolean, default: false },
     cancelRequest: {
       requested:   { type: Boolean, default: false },
@@ -160,7 +145,7 @@ const orderSchema = mongoose.Schema(
       enum: [
         'pending',           // 1. Đơn hàng đã được đặt thành công
         'confirmed',         // 2. Shop đã xác nhận và chuẩn bị hàng
-        'packing',           // 3. Đang đóng gói hàng hóa
+        'packing',           // 3. Đã đóng gói, chờ shipper lấy
         'waiting_pickup',    // 4. Chờ đơn vị vận chuyển lấy hàng
         'picked_up',         // 5. GHN đã lấy hàng thành công
         'in_transit',        // 6. Đang vận chuyển đến kho trung gian
@@ -202,9 +187,7 @@ const orderSchema = mongoose.Schema(
     invoiceSentAt:    { type: Date },
     invoiceSentTo:    { type: String, default: '' },
     invoiceSentCount: { type: Number, default: 0 },
-    // MỚI: thông tin ngân hàng khách cung cấp riêng cho trường hợp chuyển
-    // khoản dư (overpaid) — refundBankInfo ở trên chỉ dùng cho luồng hoàn
-    // tiền do huỷ/giao thất bại, không tự động áp dụng cho overpaid.
+    // Ngân hàng khách cung cấp riêng cho khoản chuyển dư
     overpaidRefundBankInfo: {
       bankName:      { type: String, default: '' },
       accountNumber: { type: String, default: '' },
@@ -224,23 +207,19 @@ const orderSchema = mongoose.Schema(
   { timestamps: true }
 )
 
-// MỚI: index cho các query thực sự dùng trong code (không index tràn lan —
-// mỗi index thêm chi phí ghi, chỉ thêm khi có bằng chứng query cần).
-// 1) Lịch sử đơn hàng của khách, mới nhất trước (getMyOrders, frequentlyBoughtTogether)
+// Lịch sử đơn của khách, mới nhất trước
 orderSchema.index({ user: 1, createdAt: -1 })
-// 2) Webhook SePay tra đơn theo mã chuyển khoản — quan trọng nhất vì chạy mỗi
-// lần có giao dịch thật. partialFilterExpression: chỉ index các đơn ĐÃ có
-// transferContent (loại các đơn '' mặc định lúc mới tạo/COD), giữ index nhỏ gọn.
+// Webhook SePay tra đơn theo mã chuyển khoản, chỉ index đơn đã có mã
 orderSchema.index(
   { transferContent: 1 },
   { partialFilterExpression: { transferContent: { $ne: '' } } }
 )
-// 3) Sort mặc định danh sách đơn ở Admin + báo cáo doanh thu theo khoảng ngày
+// Danh sách đơn ở admin và báo cáo theo ngày
 orderSchema.index({ createdAt: -1 })
-// 4) Job tự động hủy đơn online quá 24h chưa thanh toán — thứ tự field theo
-// quy tắc ESR (Equality trước, Range sau): paymentMethod + isPaid là điều
-// kiện bằng, createdAt là điều kiện khoảng.
+// Job tự hủy đơn online quá hạn chưa thanh toán
 orderSchema.index({ paymentMethod: 1, isPaid: 1, createdAt: 1 })
+// Tra đơn theo mã tem đã xuất kho
+orderSchema.index({ unitCodes: 1 })
 
 const Order = mongoose.model('Order', orderSchema)
 

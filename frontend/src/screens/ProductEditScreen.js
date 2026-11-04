@@ -37,6 +37,7 @@ const ProductEditScreen = ({ match, history }) => {
   const [colorName, setColorName] = useState('')
   const [colorHex, setColorHex] = useState('#888888')
   const [colorStock, setColorStock] = useState(0)
+  const [colorPrice, setColorPrice] = useState('')
   const [colorError, setColorError] = useState('')
   // MỚI: ảnh riêng cho màu đang chuẩn bị thêm + trạng thái upload theo từng dòng màu đã thêm
   const [colorImage, setColorImage] = useState('')
@@ -73,8 +74,7 @@ const ProductEditScreen = ({ match, history }) => {
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
 
-  // MỚI: cần token để đính kèm header Authorization khi gọi /api/upload
-  // (route này giờ yêu cầu đăng nhập admin, trước đây không cần).
+  // Token để gọi /api/upload
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
@@ -111,6 +111,7 @@ const ProductEditScreen = ({ match, history }) => {
             hexCode:      c.hexCode || '#888888',
             countInStock: c.countInStock,
             image:        c.image || '',
+            price:        Number(c.price) > 0 ? c.price : product.price,
           })))
         }
         // ── MỚI: load thông số kỹ thuật từ sản phẩm hiện tại ────
@@ -179,6 +180,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   // Tổng stock từ tất cả màu
   const totalStock = colors.reduce((sum, c) => sum + Number(c.countInStock), 0)
+  const lowestColorPrice = colors.length > 0 ? Math.min(...colors.map((c) => Number(c.price) || Number(price) || 0)) : 0
 
   // MỚI: upload ảnh riêng cho màu đang chuẩn bị thêm (form "+ Thêm màu mới")
   const uploadColorImageHandler = async (e) => {
@@ -233,8 +235,15 @@ const ProductEditScreen = ({ match, history }) => {
     setColorError('')
     setColors([
       ...colors,
-      { name: colorName.trim(), hexCode: colorHex, countInStock: Number(colorStock), image: colorImage },
+      {
+        name: colorName.trim(),
+        hexCode: colorHex,
+        countInStock: Number(colorStock),
+        image: colorImage,
+        price: Number(colorPrice) > 0 ? Number(colorPrice) : Number(price) || 0,
+      },
     ])
+    setColorPrice('')
     setColorName('')
     setColorHex('#888888')
     setColorStock(0)
@@ -243,6 +252,10 @@ const ProductEditScreen = ({ match, history }) => {
 
   const removeColor = (index) => {
     setColors(colors.filter((_, i) => i !== index))
+  }
+
+  const updateColorPrice = (index, newPrice) => {
+    setColors(colors.map((c, i) => (i === index ? { ...c, price: Number(newPrice) } : c)))
   }
 
   const updateColorStock = (index, newStock) => {
@@ -255,13 +268,12 @@ const ProductEditScreen = ({ match, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    // ── SỬA BUG: KHÔNG còn bắt buộc phải có màu — sản phẩm không
-    // dùng biến thể màu sẽ dùng ô "Tồn kho thủ công" (manualStock) ──
+    // Không có màu thì dùng ô tồn kho nhập tay
     dispatch(
       updateProduct({
         _id:         productId,
         name,
-        price,
+        price: colors.length > 0 ? lowestColorPrice : price,
         image,
         bannerImage,
         brand,
@@ -306,12 +318,20 @@ const ProductEditScreen = ({ match, history }) => {
             </Form.Group>
 
             <Form.Group controlId='price'>
-              <Form.Label>Giá</Form.Label>
+              <Form.Label>
+                Giá
+                {colors.length > 0 && (
+                  <span style={{ marginLeft: 10, fontSize: 12, color: '#33FFCC', fontWeight: 'normal' }}>
+                    Tự lấy giá thấp nhất trong các màu, sửa giá ở từng màu bên dưới
+                  </span>
+                )}
+              </Form.Label>
               <Form.Control
                 type='number'
                 placeholder='Enter price'
-                value={price}
+                value={colors.length > 0 ? lowestColorPrice : price}
                 onChange={(e) => setPrice(e.target.value)}
+                disabled={colors.length > 0}
                 style={inputStyle}
               />
             </Form.Group>
@@ -518,6 +538,14 @@ const ProductEditScreen = ({ match, history }) => {
                         {c.name}
                       </span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ color: '#aaa', fontSize: 12 }}>Giá:</span>
+                      <Form.Control
+                        type='number'
+                        min={0}
+                        value={c.price}
+                        onChange={(e) => updateColorPrice(i, e.target.value)}
+                        style={{ ...inputStyle, width: 120, padding: '3px 6px', fontSize: 13 }}
+                      />
                         <span style={{ color: '#aaa', fontSize: 12 }}>Còn:</span>
                         <Form.Control
                           type='number'
@@ -575,6 +603,17 @@ const ProductEditScreen = ({ match, history }) => {
                         border: '1px solid rgba(51,255,204,0.35)',
                         borderRadius: 4, cursor: 'pointer',
                       }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 110 }}>
+                    <div style={{ fontSize: 11, color: '#aaa', marginBottom: 3 }}>Giá màu (để trống = giá chung)</div>
+                    <Form.Control
+                      type='number'
+                      min={0}
+                      placeholder={String(price || 0)}
+                      value={colorPrice}
+                      onChange={(e) => setColorPrice(e.target.value)}
+                      style={{ ...inputStyle, fontSize: 13 }}
                     />
                   </div>
                   <div style={{ flex: 1, minWidth: 80 }}>

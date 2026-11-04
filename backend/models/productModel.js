@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { normalizeForSearch } from '../utils/vietnameseNormalize.js'
+import { responseCache } from '../utils/memoryCache.js'
 
 const reviewSchema = mongoose.Schema(
   {
@@ -20,6 +21,7 @@ const colorSchema = mongoose.Schema({
   hexCode:      { type: String, default: '#888888' }, // mã màu hiển thị
   countInStock: { type: Number, required: true, default: 0 },
   image:        { type: String, default: '' },
+  price:        { type: Number, default: 0, min: 0 },
 })
 
 const specsSchema = mongoose.Schema(
@@ -85,10 +87,7 @@ const productSchema = mongoose.Schema(
 
     weight: { type: Number, default: 0 },
 
-    // ── Tìm kiếm thông minh (autocomplete): bản đã bỏ dấu + viết thường của
-    // name/brand, tự động tính lại mỗi khi lưu (xem pre('save') bên dưới).
-    // Tách riêng field này (thay vì chuẩn hóa lúc truy vấn) để có thể đánh
-    // index và regex nhanh mà không cần quét toàn bộ collection.
+    // Tên và hãng đã bỏ dấu, viết thường, tự tính lại khi lưu
     nameNormalized:  { type: String, default: '' },
     brandNormalized: { type: String, default: '' },
 
@@ -109,6 +108,12 @@ productSchema.pre('save', function () {
       (sum, c) => sum + (Number(c.countInStock) || 0),
       0
     )
+    const basePrice = Number(this.price) || 0
+    this.colors.forEach((c) => {
+      if (!(Number(c.price) > 0)) c.price = basePrice
+    })
+    const lowest = Math.min(...this.colors.map((c) => c.price))
+    if (lowest > 0) this.price = lowest
   }
   // Tự động tính lại bản không dấu mỗi khi name/brand thay đổi
   if (this.isModified('name')) this.nameNormalized = normalizeForSearch(this.name)
@@ -123,6 +128,17 @@ productSchema.index({ createdAt: -1 })
 productSchema.index({ price: 1 })
 productSchema.index({ price: -1 })
 productSchema.index({ name: 'text' })
+productSchema.index({ countInStock: 1 })
+
+const clearResponseCache = () => responseCache.clear()
+productSchema.post('save', clearResponseCache)
+productSchema.post('insertMany', clearResponseCache)
+productSchema.post('deleteOne', { document: true, query: false }, clearResponseCache)
+productSchema.post(
+  ['updateOne', 'updateMany', 'findOneAndUpdate', 'findOneAndDelete', 'deleteOne', 'deleteMany'],
+  { document: false, query: true },
+  clearResponseCache
+)
 
 const Product = mongoose.model('Product', productSchema)
 

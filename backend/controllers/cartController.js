@@ -46,17 +46,13 @@ const respondWithCart = async (res, cart, { reconcile = true } = {}) => {
   res.json({ items, changes })
 }
 
-// @desc    Lấy giỏ hàng của tài khoản (đã đối chiếu giá và tồn kho)
-// @route   GET /api/cart
-// @access  Private
+// GET /api/cart: lấy giỏ hàng của tài khoản (đã đối chiếu giá và tồn kho)
 const getCart = asyncHandler(async (req, res) => {
   const cart = await getOrCreateCart(req.user._id)
   await respondWithCart(res, cart)
 })
 
-// @desc    Đặt số lượng cho một dòng (thêm mới hoặc thay số lượng)
-// @route   PUT /api/cart/item
-// @access  Private
+// PUT /api/cart/item: đặt số lượng cho một dòng (thêm mới hoặc thay số lượng)
 const setCartItem = asyncHandler(async (req, res) => {
   const { product: productId } = req.body
   const qty = Number(req.body.qty)
@@ -75,21 +71,19 @@ const setCartItem = asyncHandler(async (req, res) => {
   const line = findLine(cart.items, productId, color)
   if (line) {
     line.qty = qty
-    line.price = currentPriceOf(product)
+    line.price = currentPriceOf(product, color)
   } else {
     if (cart.items.length >= MAX_CART_LINES) {
       res.status(400)
       throw new Error(`Giỏ hàng tối đa ${MAX_CART_LINES} sản phẩm.`)
     }
-    cart.items.push({ product: productId, color, qty, price: currentPriceOf(product) })
+    cart.items.push({ product: productId, color, qty, price: currentPriceOf(product, color) })
   }
   await cart.save()
   await respondWithCart(res, cart, { reconcile: false })
 })
 
-// @desc    Xóa một dòng khỏi giỏ
-// @route   POST /api/cart/remove
-// @access  Private
+// POST /api/cart/remove: xóa một dòng khỏi giỏ
 const removeCartItem = asyncHandler(async (req, res) => {
   const { product, color } = req.body
   const cart = await getOrCreateCart(req.user._id)
@@ -98,9 +92,7 @@ const removeCartItem = asyncHandler(async (req, res) => {
   await respondWithCart(res, cart, { reconcile: false })
 })
 
-// @desc    Xóa các dòng đã đặt hàng
-// @route   POST /api/cart/remove-purchased
-// @access  Private
+// POST /api/cart/remove-purchased: xóa các dòng đã đặt hàng
 const removePurchased = asyncHandler(async (req, res) => {
   const list = Array.isArray(req.body.items) ? req.body.items : []
   const cart = await getOrCreateCart(req.user._id)
@@ -109,9 +101,7 @@ const removePurchased = asyncHandler(async (req, res) => {
   await respondWithCart(res, cart, { reconcile: false })
 })
 
-// @desc    Xóa toàn bộ giỏ
-// @route   POST /api/cart/clear
-// @access  Private
+// POST /api/cart/clear: xóa toàn bộ giỏ
 const clearCart = asyncHandler(async (req, res) => {
   const cart = await getOrCreateCart(req.user._id)
   cart.items = []

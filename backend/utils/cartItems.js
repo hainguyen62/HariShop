@@ -1,4 +1,5 @@
 import { computeFlashSale } from './flashSale.js'
+import { colorPriceOf, colorImageOf } from './colorPricing.js'
 
 export const MAX_CART_LINES = 100
 export const DEFAULT_COLOR = 'Mặc định'
@@ -14,20 +15,20 @@ export const stockForColor = (product, color) => {
   return Number(product.countInStock) || 0
 }
 
-export const currentPriceOf = (product) => {
-  const fs = computeFlashSale(product)
-  return fs.isFlashSaleActive ? fs.salePrice : product.price
+export const currentPriceOf = (product, color) => {
+  const fs = computeFlashSale(product, color)
+  return fs.isFlashSaleActive ? fs.salePrice : colorPriceOf(product, color)
 }
 
 // Dòng giỏ hàng đầy đủ thông tin hiển thị, cùng dạng frontend đang dùng
 export const buildCartItem = (product, color, qty) => {
-  const fs = computeFlashSale(product)
+  const fs = computeFlashSale(product, color)
   const stock = stockForColor(product, color)
   return {
     product: String(product._id),
     name: product.name,
-    image: product.image,
-    price: fs.isFlashSaleActive ? fs.salePrice : product.price,
+    image: colorImageOf(product, color),
+    price: fs.isFlashSaleActive ? fs.salePrice : colorPriceOf(product, color),
     countInStock: stock === null ? 0 : stock,
     weight: product.weight,
     qty,
@@ -35,7 +36,7 @@ export const buildCartItem = (product, color, qty) => {
     isFlashSaleActive: !!fs.isFlashSaleActive,
     flashSaleEndsAt: fs.isFlashSaleActive ? fs.flashSaleEndsAt : null,
     discountPercent: fs.isFlashSaleActive ? fs.discountPercent : null,
-    originalPrice: fs.isFlashSaleActive ? product.price : null,
+    originalPrice: fs.isFlashSaleActive ? colorPriceOf(product, color) : null,
   }
 }
 
@@ -61,7 +62,7 @@ export const reconcileCart = (items, productMap) => {
       continue
     }
     const stock = stockForColor(p, it.color)
-    const price = currentPriceOf(p)
+    const price = currentPriceOf(p, it.color)
     let qty = it.qty
     if (stock !== null && stock >= 1 && qty > stock) {
       qty = stock

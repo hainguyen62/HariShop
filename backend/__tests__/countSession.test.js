@@ -79,11 +79,22 @@ describe('tem bất thường khi kiểm kê', () => {
   it('tem còn trong kho được tính bình thường', () => {
     expect(unitScanIssue({ status: 'in_stock' })).toBeNull()
   })
-  it('tem đã bán báo kèm mã đơn', () => {
-    expect(unitScanIssue({ status: 'sold' }, 'HS-1')).toMatch(/đã bán cho đơn HS-1/)
-    expect(unitScanIssue({ status: 'sold' })).toMatch(/đã bán/)
+  it('tem của đơn chờ shipper lấy chỉ là thông tin, không bất thường', () => {
+    for (const status of ['packing', 'waiting_pickup']) {
+      const r = unitScanIssue({ status: 'sold' }, { orderCode: 'HS-1', status })
+      expect(r.kind).toBe('staged')
+      expect(r.reason).toMatch(/chờ shipper lấy/)
+    }
+  })
+  it('tem của đơn shipper đã lấy là bất thường, báo kèm mã đơn', () => {
+    const r = unitScanIssue({ status: 'sold' }, { orderCode: 'HS-1', status: 'picked_up' })
+    expect(r.kind).toBe('abnormal')
+    expect(r.reason).toMatch(/đã bán cho đơn HS-1/)
+    expect(unitScanIssue({ status: 'sold' }).kind).toBe('abnormal')
   })
   it('tem đã hủy báo kèm lý do', () => {
-    expect(unitScanIssue({ status: 'void', voidReason: 'rách tem' })).toMatch(/đã hủy \(rách tem\)/)
+    const r = unitScanIssue({ status: 'void', voidReason: 'rách tem' })
+    expect(r.kind).toBe('abnormal')
+    expect(r.reason).toMatch(/đã hủy \(rách tem\)/)
   })
 })

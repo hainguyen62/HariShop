@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { unitPriceOf } from '../utils/colorPricing'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
@@ -155,12 +156,13 @@ const CheckoutScreen = ({ history, location }) => {
         return buyNowProduct.countInStock
       })()
 
+      const buyNowUnitPrice = unitPriceOf(buyNowProduct, buyNowColor)
       const singleItem = {
         product: buyNowProductId,
 
         name: buyNowProduct.name,
-        image: buyNowProduct.image,
-        price: buyNowProduct.price,
+        image: buyNowProduct.colors?.find((c) => c.name === buyNowColor)?.image || buyNowProduct.image,
+        price: buyNowUnitPrice.sale ?? buyNowUnitPrice.base,
         countInStock: colorStockForBuyNow,
         qty: buyNowQty,
         color: buyNowColor,
@@ -282,9 +284,7 @@ const CheckoutScreen = ({ history, location }) => {
     dispatch(saveVoucherDiscount(Number(voucher.discountAmount) || 0))
   }
 
-  // MỚI (VIII): tự động kiểm tra lại điều kiện voucher mỗi khi giỏ hàng
-  // thay đổi (tạm tính hoặc phí ship đổi) — nếu voucher đang áp dụng
-  // không còn đủ điều kiện, tự động bỏ áp dụng + thông báo cho khách.
+  // Kiểm tra lại voucher khi giỏ hàng đổi, hết đủ điều kiện thì bỏ áp dụng và báo khách
   const voucherRecheckKey = `${selectedVoucher?.code || ''}:${itemsPrice}:${deliveryFee}`
   const prevRecheckKey = useRef(voucherRecheckKey)
   useEffect(() => {

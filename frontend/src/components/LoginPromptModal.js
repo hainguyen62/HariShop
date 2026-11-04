@@ -3,6 +3,7 @@ import { Modal, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { closeLoginPrompt } from '../actions/loginPromptActions'
+import { rememberRedirect } from '../utils/redirectTarget'
 
 const panel = { background: '#1a1a2e', color: '#eef0f7', borderColor: 'rgba(51,255,204,0.2)' }
 
@@ -15,6 +16,7 @@ const LoginPromptModal = () => {
   const close = () => dispatch(closeLoginPrompt())
   const goLogin = () => {
     close()
+    rememberRedirect(redirect)
     history.push(`/login?redirect=${redirect || '/'}`)
   }
 
