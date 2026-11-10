@@ -1,10 +1,12 @@
-// ─── A3: Cấu hình dùng chung cho 12 trạng thái đơn hàng theo timeline ─────── Dùng chung giữa OrderScreen.js (chi tiết đơn) và OrderListScreen.js (bảng Admin)
+// ─── A3: Cấu hình dùng chung cho 12 trạng thái đơn hàng theo timeline ───────
+// Dùng chung giữa OrderScreen.js (chi tiết đơn) và OrderListScreen.js (bảng Admin)
+// để đảm bảo nhãn/màu/icon luôn đồng nhất ở mọi nơi hiển thị trạng thái.
 
 // 8 bước chính trong luồng thường (dùng cho Timeline dọc)
 export const STATUS_STEPS = [
   { key: 'pending',           label: 'Đã đặt hàng',        icon: 'fas fa-receipt' },
   { key: 'confirmed',         label: 'Đã xác nhận',        icon: 'fas fa-clipboard-check' },
-  { key: 'packing',           label: 'Đang đóng gói',      icon: 'fas fa-box-open' },
+  { key: 'packing',           label: 'Đã đóng gói',        icon: 'fas fa-box-open' },
   { key: 'waiting_pickup',    label: 'Chờ lấy hàng',       icon: 'fas fa-dolly' },
   { key: 'picked_up',         label: 'Đã lấy hàng',        icon: 'fas fa-truck-loading' },
   { key: 'in_transit',        label: 'Đang vận chuyển',    icon: 'fas fa-shipping-fast' },
@@ -24,7 +26,7 @@ export const BRANCH_STATUSES = {
 export const ORDER_STATUS_LABELS = {
   pending:           { label: 'Đã đặt hàng',       icon: 'fas fa-receipt',          color: '#8a8fa3' },
   confirmed:         { label: 'Đã xác nhận',       icon: 'fas fa-clipboard-check',  color: '#5eb3f6' },
-  packing:           { label: 'Đang đóng gói',     icon: 'fas fa-box-open',         color: '#ffd166' },
+  packing:           { label: 'Đã đóng gói',       icon: 'fas fa-box-open',         color: '#ffd166' },
   waiting_pickup:    { label: 'Chờ lấy hàng',      icon: 'fas fa-dolly',            color: '#ffd166' },
   picked_up:         { label: 'Đã lấy hàng',       icon: 'fas fa-truck-loading',    color: '#33FFCC' },
   in_transit:        { label: 'Đang vận chuyển',   icon: 'fas fa-shipping-fast',    color: '#33FFCC' },

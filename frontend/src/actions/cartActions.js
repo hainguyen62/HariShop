@@ -13,6 +13,7 @@ import {
   CART_SYNC_PRICES,
 } from '../constants/cartConstants'
 import { openLoginPrompt } from './loginPromptActions'
+import { savePendingAction } from '../utils/pendingAction'
 
 const authConfig = (getState) => ({
   headers: { Authorization: `Bearer ${getState().userLogin.userInfo.token}` },
@@ -40,6 +41,7 @@ export const loadCart = () => async (dispatch, getState) => {
 export const addToCart = (id, qty, color = 'Mặc định') => async (dispatch, getState) => {
   const { userInfo } = getState().userLogin
   if (!userInfo) {
+    savePendingAction({ type: 'add', productId: id, qty, color })
     dispatch(openLoginPrompt(window.location.pathname))
     return { ok: false, reason: 'login' }
   }

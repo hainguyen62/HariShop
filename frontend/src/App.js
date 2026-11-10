@@ -8,6 +8,7 @@ import CompareBar from './components/CompareBar'
 import BackToTopButton from './components/BackToTopButton'
 import SocketManager from './components/SocketManager'
 import AuthGate from './components/AuthGate'
+import PostLoginRedirect from './components/PostLoginRedirect'
 
 import HomeScreen from './screens/HomeScreen'
 import SmartSearchScreen from './screens/SmartSearchScreen'
@@ -71,6 +72,7 @@ const App = () => {
   return (
     <AuthGate>
     <Router>
+      <PostLoginRedirect />
       <Header />
       <main className="page-layout"
         style={{

@@ -2625,3 +2625,618 @@ Error: Not Found - /sw.js
     at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
     at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
 [2026-11-03 21:46:21] INFO: Server running in development mode on port 5000
+[2026-11-04 12:55:03] INFO: Server running in development mode on port 5000
+[2026-11-04 12:55:10] ERROR: [GET /4.5.0/node_modules/enhanced-resolve/lib/Resolver.js] Not Found - /4.5.0/node_modules/enhanced-resolve/lib/Resolver.js
+Error: Not Found - /4.5.0/node_modules/enhanced-resolve/lib/Resolver.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 12:55:10] ERROR: [GET /4.5.0/node_modules/enhanced-resolve/lib/UnsafeCachePlugin.js] Not Found - /4.5.0/node_modules/enhanced-resolve/lib/UnsafeCachePlugin.js
+Error: Not Found - /4.5.0/node_modules/enhanced-resolve/lib/UnsafeCachePlugin.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 12:55:10] ERROR: [GET /4.5.0/node_modules/enhanced-resolve/lib/DescriptionFilePlugin.js] Not Found - /4.5.0/node_modules/enhanced-resolve/lib/DescriptionFilePlugin.js
+Error: Not Found - /4.5.0/node_modules/enhanced-resolve/lib/DescriptionFilePlugin.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 12:55:10] ERROR: [GET /1.1.3/node_modules/tapable/lib/HookCodeFactory.js:33:10),%20%3Canonymous%3E] Not Found - /1.1.3/node_modules/tapable/lib/HookCodeFactory.js:33:10),%20%3Canonymous%3E
+Error: Not Found - /1.1.3/node_modules/tapable/lib/HookCodeFactory.js:33:10),%20%3Canonymous%3E
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 12:57:33] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 12:58:15] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 12:58:23] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 12:59:07] INFO: Server running in development mode on port 5000
+[2026-11-04 18:00:20] INFO: Server running in development mode on port 5000
+[2026-11-04 18:00:25] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:00:33] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:00:55] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:01:07] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:02:36] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:02:56] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:03:04] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:04:40] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:11:43] INFO: Server running in development mode on port 5000
+[2026-11-04 18:12:22] INFO: Server running in development mode on port 5000
+[2026-11-04 18:12:33] INFO: Server running in development mode on port 5000
+[2026-11-04 18:12:41] INFO: Server running in development mode on port 5000
+[2026-11-04 18:12:52] INFO: Server running in development mode on port 5000
+[2026-11-04 18:13:12] INFO: Server running in development mode on port 5000
+[2026-11-04 18:13:16] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:13:44] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:14:04] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-04 18:29:13] ERROR: [GET /api/notifications/my/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-11-04 18:44:22] ERROR: [GET /api/notifications/my/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-11-04 18:59:22] ERROR: [GET /api/notifications/my/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-11-04 19:14:22] ERROR: [GET /api/notifications/my/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-11-04 19:29:22] ERROR: [GET /api/notifications/my/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-11-04 19:44:22] ERROR: [GET /api/notifications/my/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-11-05 13:34:43] INFO: Server running in development mode on port 5000
+[2026-11-05 13:34:49] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-05 13:34:58] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-05 13:40:36] INFO: Server running in development mode on port 5000
+[2026-11-05 13:40:55] INFO: Server running in development mode on port 5000
+[2026-11-05 13:41:10] INFO: Server running in development mode on port 5000
+[2026-11-05 13:43:21] INFO: Server running in development mode on port 5000
+[2026-11-05 13:43:28] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-05 13:51:20] INFO: Server running in development mode on port 5000
+[2026-11-05 13:51:25] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-05 13:52:09] ERROR: [GET /api/notifications/unread-count] Not authorized, token failed
+Error: Not authorized, token failed
+    at file:///E:/HariShop_mern/backend/middleware/authMiddleware.js:41:13
+    at asyncUtilWrap (E:\HariShop_mern\node_modules\.pnpm\express-async-handler@1.2.0\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+[2026-11-05 17:18:12] INFO: Server running in development mode on port 5000
+[2026-11-05 17:18:18] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-05 17:23:11] INFO: Server running in development mode on port 5000
+[2026-11-05 17:23:40] INFO: Server running in development mode on port 5000
+[2026-11-05 17:25:41] INFO: Server running in development mode on port 5000
+[2026-11-05 17:25:46] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-05 17:31:51] INFO: Server running in development mode on port 5000
+[2026-11-05 17:31:56] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+[2026-11-05 20:47:19] INFO: Server running in development mode on port 5000
+[2026-11-05 20:47:29] ERROR: [GET /sw.js] Not Found - /sw.js
+Error: Not Found - /sw.js
+    at notFound (file:///E:/HariShop_mern/backend/middleware/errorMiddleware.js:4:17)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at logger (E:\HariShop_mern\node_modules\.pnpm\morgan@1.11.0\node_modules\morgan\index.js:170:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:280:10)
+    at initialize (E:\HariShop_mern\node_modules\.pnpm\passport@0.7.0\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:328:13)
+    at E:\HariShop_mern\node_modules\.pnpm\express@4.22.2\node_modules\express\lib\router\index.js:286:9

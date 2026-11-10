@@ -1,7 +1,7 @@
 /* HariShop Modern Theme - Fixed Contrast #33FFCC */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import './theme.css';
 @import './theme/contrast.css';
+@import './theme/themeFixes.css';
 
 :root {
   /* COLORS - Fixed contrast */
@@ -66,7 +66,7 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
   background: var(--bg-main);
   color: var(--text-primary);
   line-height: 1.6;

@@ -15,6 +15,7 @@ import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 import { addToCart } from '../actions/cartActions'
 import { unitPriceOf } from '../utils/colorPricing'
 import { openLoginPrompt } from '../actions/loginPromptActions'
+import { savePendingAction, takePendingAction } from '../utils/pendingAction'
 import RelatedProducts from '../components/RelatedProducts'
 import ReviewSummary from '../components/ReviewSummary'
 import CountdownTimer from '../components/CountdownTimer'
@@ -63,6 +64,17 @@ const ProductScreen = ({ history, match }) => {
     }
   }, [dispatch, match, product?._id, successProductReview, product?.colors, color]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Sau khi đăng nhập quay lại, khôi phục màu và số lượng khách đã chọn trước đó
+  useEffect(() => {
+    if (!userInfo || !product?._id || product._id !== match.params.id) return
+    const pending = takePendingAction(match.params.id)
+    if (!pending) return
+    const chosen = product.colors?.find((c) => c.name === pending.color)
+    if (chosen && chosen.countInStock > 0) setColor(chosen.name)
+    const stock = chosen ? chosen.countInStock : product.countInStock
+    setQty(Math.max(1, Math.min(pending.qty, stock || 1)))
+  }, [userInfo, product, match.params.id])
+
   const addToCartHandler = async () => {
     const result = await dispatch(addToCart(match.params.id, qty, color))
     if (!result || !result.ok) {
@@ -80,6 +92,7 @@ const ProductScreen = ({ history, match }) => {
 
   const buyNowHandler = () => {
     if (!userInfo) {
+      savePendingAction({ type: 'buyNow', productId: match.params.id, qty, color })
       dispatch(openLoginPrompt(window.location.pathname))
       return
     }

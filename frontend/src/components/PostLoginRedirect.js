@@ -18,9 +18,13 @@ const PostLoginRedirect = () => {
   }, [location.pathname, location.search])
 
   useEffect(() => {
-    if (!userInfo) return
-    const target = takeRedirect()
-    if (target && target !== history.location.pathname) history.replace(target)
+    if (!userInfo) return undefined
+    // Chạy sau các effect khác của lần render này, vì GoogleAuthScreen tự chuyển về trang chủ
+    const timer = setTimeout(() => {
+      const target = takeRedirect()
+      if (target && target !== history.location.pathname) history.replace(target)
+    }, 0)
+    return () => clearTimeout(timer)
   }, [userInfo, history])
 
   return null

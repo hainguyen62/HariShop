@@ -18,9 +18,9 @@
   "dependencies": {
     "@dotenvx/dotenvx": "^1.39.0",
     "bcryptjs": "^2.4.3",
+    "cheerio": "^1.2.0",
     "cloudinary": "^2.5.1",
     "colors": "^1.4.0",
-    "compression": "^1.7.4",
     "compression": "^1.8.2",
     "dotenv": "^8.2.0",
     "exceljs": "^4.4.0",

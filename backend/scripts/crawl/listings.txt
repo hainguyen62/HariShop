@@ -1,0 +1,24 @@
+# Trang theo hãng, mỗi dòng một trang
+https://cellphones.com.vn/mobile/apple.html
+https://cellphones.com.vn/mobile/samsung.html
+https://cellphones.com.vn/mobile/xiaomi.html
+https://cellphones.com.vn/mobile/oppo.html
+https://cellphones.com.vn/mobile/vivo.html
+https://cellphones.com.vn/mobile/realme.html
+https://cellphones.com.vn/mobile/honor.html
+https://cellphones.com.vn/mobile/tecno.html
+https://cellphones.com.vn/mobile/nubia.html
+https://cellphones.com.vn/mobile/infinix.html
+https://cellphones.com.vn/mobile/nokia.html
+https://cellphones.com.vn/mobile/sony.html
+https://cellphones.com.vn/mobile/asus.html
+https://cellphones.com.vn/mobile/oneplus.html
+https://cellphones.com.vn/mobile/nothing.html
+https://cellphones.com.vn/mobile/huawei.html
+# Trang theo dòng máy, bổ sung phần hãng lớn bị cắt bởi nút Xem thêm
+https://cellphones.com.vn/mobile/apple/iphone-17.html
+https://cellphones.com.vn/mobile/apple/iphone-16.html
+https://cellphones.com.vn/mobile/apple/iphone-15.html
+https://cellphones.com.vn/mobile/samsung/galaxy-s.html
+https://cellphones.com.vn/mobile/samsung/galaxy-a.html
+https://cellphones.com.vn/mobile/samsung/galaxy-z.html

@@ -258,6 +258,10 @@ const ProductEditScreen = ({ match, history }) => {
     setColors(colors.map((c, i) => (i === index ? { ...c, price: Number(newPrice) } : c)))
   }
 
+  const updateColorField = (index, field, value) => {
+    setColors(colors.map((c, i) => (i === index ? { ...c, [field]: value } : c)))
+  }
+
   const updateColorStock = (index, newStock) => {
     setColors(
       colors.map((c, i) =>
@@ -496,12 +500,13 @@ const ProductEditScreen = ({ match, history }) => {
                         border: '1px solid rgba(51,255,204,0.2)',
                       }}
                     >
-                      <div style={{
-                        width: 22, height: 22, borderRadius: '50%',
-                        background: c.hexCode,
-                        border: '2px solid rgba(255,255,255,0.4)',
-                        flexShrink: 0,
-                      }} />
+                      <input
+                        type='color'
+                        value={/^#[0-9a-f]{6}$/i.test(c.hexCode) ? c.hexCode : '#888888'}
+                        onChange={(e) => updateColorField(i, 'hexCode', e.target.value)}
+                        title='Bấm để chọn màu hiển thị'
+                        style={{ width: 28, height: 28, padding: 0, border: '2px solid rgba(255,255,255,0.4)', borderRadius: '50%', background: 'none', cursor: 'pointer', flexShrink: 0 }}
+                      />
                       {/* MỚI: Thumbnail ảnh riêng của màu + nút đổi ảnh */}
                       <div style={{ position: 'relative', flexShrink: 0 }}>
                         <label style={{ cursor: 'pointer', margin: 0 }} title='Bấm để đổi ảnh riêng cho màu này'>
@@ -534,9 +539,12 @@ const ProductEditScreen = ({ match, history }) => {
                           </div>
                         )}
                       </div>
-                      <span style={{ color: '#eef0f7', flex: 1, fontSize: 14 }}>
-                        {c.name}
-                      </span>
+                      <Form.Control
+                        type='text'
+                        value={c.name}
+                        onChange={(e) => updateColorField(i, 'name', e.target.value)}
+                        style={{ ...inputStyle, flex: 1, minWidth: 90, padding: '3px 6px', fontSize: 14 }}
+                      />
                       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ color: '#aaa', fontSize: 12 }}>Giá:</span>
                       <Form.Control
